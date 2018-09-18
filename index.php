@@ -4,6 +4,21 @@
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
+require_once('model/db.php');
+require_once('model/UserDbAuthenticator.php');
+
+// start DataBase
+	$dbServername = "localhost";
+	$dbUsername = "fredrik";
+	$dbPassword = "test";
+	$dbName = "user";
+	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
+
+	$dataBase->connect();
+
+	// create authenticator
+	$UserDbAuthenticator = new UserDbAuthenticator($dataBase->getdbName() , $dataBase->getConnection() );
+	$UserDbAuthenticator->authenticateUser('fredrik');
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
@@ -13,7 +28,6 @@ ini_set('display_errors', 'On');
 $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView();
-
 
 $lv->render(false, $v, $dtv);
 
