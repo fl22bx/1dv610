@@ -8,8 +8,11 @@ class DateTimeView {
 		$date = getdate();
 
 		$timeString = "$date[weekday], the $date[mday]th of $date[month] $date[year], The time is ";
-		$time =  '$date[hours]:$date[minutes]';
+		$time =  "$date[hours]:$date[minutes]";
 
-		return '<p>' . $timeString . '</p>';
+
+
+		return "<p> $timeString $time</p>";
+		// '<p>' . $timeString . '</p>' ;
 	}
 }
