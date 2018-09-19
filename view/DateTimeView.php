@@ -1,11 +1,13 @@
 <?php
 
 class DateTimeView {
-	
+
 
 	public function show() {
 
-		$timeString = 'TODO, Write servertime here...';
+		$date = getdate();
+
+		$timeString = "$date[weekday], the $date[mday]th of $date[year], the time is $date[hours]:$date[minutes]";
 
 		return '<p>' . $timeString . '</p>';
 	}

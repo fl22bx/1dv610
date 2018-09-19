@@ -20,6 +20,7 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
+
 		$message = '';
 		
 		$response = $this->generateLoginFormHTML($message);
@@ -33,6 +34,7 @@ class LoginView {
 	* @return  void, BUT writes to standard output!
 	*/
 	private function generateLogoutButtonHTML($message) {
+
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $message .'</p>
@@ -65,12 +67,14 @@ class LoginView {
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
 			</form>
+
 		';
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		//RETURN REQUEST VARIABLE: USERNAME
+		return $_POST['LoginView::UserName'];
 	}
 	
 }

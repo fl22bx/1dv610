@@ -11,6 +11,7 @@ class UserDbAuthenticator {
 
 	public function authenticateUser ($input) {
 		$this->queryDatabaseForUser($input);
+		// echo $_POST['LoginView::Password'];
 	}
 
 

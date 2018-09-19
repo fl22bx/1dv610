@@ -18,7 +18,9 @@ require_once('model/UserDbAuthenticator.php');
 
 	// create authenticator
 	$UserDbAuthenticator = new UserDbAuthenticator($dataBase->getdbName() , $dataBase->getConnection() );
-	$UserDbAuthenticator->authenticateUser('fredrik');
+	//$UserDbAuthenticator->authenticateUser('fredrik:');
+	// skicka med authenticator till view
+
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
