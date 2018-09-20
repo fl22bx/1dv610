@@ -25,6 +25,8 @@
 		
 				 $t = mysqli_fetch_assoc($result);
 
+				 echo 'fungerar det?'
+
 				 echo $t[name];
 
 		}
