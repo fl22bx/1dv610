@@ -53,11 +53,15 @@ require_once('view/LayoutView.php');
 					return "Password is missing";
 				} else if ($this->loggedInBoolian == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
 					return "Wrong name or password";
+				} 	else if ($this->loggedInBoolian && !isset($_COOKIE['LoginView::CookieName'])) {
+					return "Welcome";
 				}
 			} 
-			if ($this->loggedInBoolian) {
-				return "Welcome";
+
+			if (isset($_POST['LoginView::Logout'])) {
+				return "Bye bye!";
 			}
+
 			
 		}
 
