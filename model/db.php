@@ -18,17 +18,6 @@
 			echo $this->servername;
 			$this->dbConnection = mysqli_connect($this->servername, $this->username, $this->password, $this->dbName);
 
-				$sql = " SELECT * from User 
-				WHERE name = 'fredrik';
-				";
-				$result = mysqli_query($this->dbConnection, $sql);
-		
-				 $t = mysqli_fetch_assoc($result);
-
-				 echo 'fungerar det?';
-
-				 echo $t[name];
-
 		}
 
 		public function getdbName () {
