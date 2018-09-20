@@ -18,7 +18,7 @@ require_once('controller/ViewController.php');
 	 $dbServername = "localhost";
 	$dbUsername = "fredrik";
 	$dbPassword = "test";
-	$dbName = "User";
+	$dbName = "user";
 	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
 	$dataBase->connect();
