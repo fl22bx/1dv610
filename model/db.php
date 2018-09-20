@@ -28,6 +28,12 @@
 			return $this->dbConnection;
 		}
 
+		private function displayErrors () {
+			if ($conn->connect_error) {
+    		echo "Failed to connect to database: " . mysqli_connect_error();
+			} 
+		}
+
 	}
 
 /*
