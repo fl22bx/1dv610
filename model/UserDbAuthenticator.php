@@ -3,6 +3,7 @@ class UserDbAuthenticator {
 	private $LoggedInUser;
 	private $dbName;
 	private $dbConnection;
+	private $dbTableUser = User;
 
 	function __construct ($dbName,$dbConnection) {
 		$this->dbName = $dbName;
@@ -25,7 +26,7 @@ class UserDbAuthenticator {
 
 	private function queryDatabaseForUser ($username) {
 
-				$sql = " SELECT * from $this->dbName 
+				$sql = " SELECT * from $this->dbTableUser 
 				WHERE name = '$username';
 				";
 				$result = mysqli_query($this->dbConnection, $sql);
