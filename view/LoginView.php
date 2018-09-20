@@ -1,5 +1,4 @@
 <?php
-
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -28,8 +27,18 @@ class LoginView {
 			$response .= $this->generateLogoutButtonHTML($message);
 		}
 
+		$this->generateCoockie($loggedInBool);
 		
 		return $response;
+	}
+
+	public function generateCoockie ($loggedInBool) {
+		
+		if (isset($_POST[self::$keep]) && $loggedInBool = true ) {
+			setcookie(self::$cookieName, $_POST['LoginView::UserName']);
+			setcookie(self::$cookiePassword, $_POST['LoginView::Password']);
+		}
+		
 	}
 
 	/**

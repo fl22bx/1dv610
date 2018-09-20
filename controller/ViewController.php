@@ -25,11 +25,24 @@ require_once('view/LayoutView.php');
 		}
 
 		function logInController () {
+
 			if (isset($_POST['LoginView::UserName'])) {
 				$this->loggedInBoolian = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
-			}
+			} else if (isset($_COOKIE['LoginView::CookieName'])) {
+					if (isset($_POST['LoginView::Logout'])) {
+						$this->endSession();
+					} else {
+							$this->loggedInBoolian = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
+						}
+
+				}
 
 			$this->LayoutView->render($this->loggedInBoolian, $this->LoginView, $this->DateTimeView, $this->setMessage());
+		}
+
+		private function endSession () {
+			setcookie('LoginView::CookieName');
+			setcookie('LoginView::CookiePassword', "");
 		}
 
 		private function setMessage () {
@@ -39,9 +52,11 @@ require_once('view/LayoutView.php');
 				} else if ($_POST['LoginView::Password'] == '') {
 					return "Password is missing";
 				} else if ($this->loggedInBoolian == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
-					return "Username or Passwrod is wrong";
+					return "Wrong name or password";
 				}
 			}
 			
 		}
+
+
 	}	
