@@ -40,6 +40,5 @@ $row = mysqli_fetch_assoc($result);
 }
 */
 
-
-// $sql = "INSERT INTO User (name, password)
-// VALUES ('fredrik', 'test')";
+//$sql = "INSERT INTO User (name, password)
+//VALUES ('fredrik', 'test')";

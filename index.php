@@ -6,30 +6,31 @@ require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
 require_once('model/db.php');
 require_once('model/UserDbAuthenticator.php');
+require_once('controller/ViewController.php');
 
 // start DataBase
 	$dbServername = "localhost";
 	$dbUsername = "fredrik";
 	$dbPassword = "test";
-	$dbName = "user";
+	$dbName = "User";
 	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
 	$dataBase->connect();
 
-	// create authenticator
+// create authenticator
 	$UserDbAuthenticator = new UserDbAuthenticator($dataBase->getdbName() , $dataBase->getConnection() );
-	//$UserDbAuthenticator->authenticateUser('fredrik:');
-	// skicka med authenticator till view
 
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+	ini_set('display_errors', 'On');
 
 //CREATE OBJECTS OF THE VIEWS
-$v = new LoginView();
-$dtv = new DateTimeView();
-$lv = new LayoutView();
+	$v = new LoginView();
+	$dtv = new DateTimeView();
+	$lv = new LayoutView();
 
-$lv->render(false, $v, $dtv);
+// Create Controller
+	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator );
+	$Controller->logInController();
 
