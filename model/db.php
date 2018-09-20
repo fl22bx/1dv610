@@ -18,6 +18,11 @@
 			echo $this->servername;
 			$this->dbConnection = mysqli_connect($this->servername, $this->username, $this->password, $this->dbName);
 
+if($this->dbConnection == false)
+{
+   die(mysqli_connect_error());
+}
+
 		}
 
 		public function getdbName () {
