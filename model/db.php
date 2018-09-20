@@ -16,7 +16,7 @@
 
 		public function connect () {
 			echo $this->servername;
-			$this->dbConnection = mysqli_connect($this->servername, $this->username, $this->password, $this->dbName);
+			$this->dbConnection = mysqli_connect($this->servername, $this->username, '');
 
 if($this->dbConnection == false)
 {
