@@ -21,10 +21,17 @@ class LoginView {
 	public function response($inputMessage, $loggedInBool) {
 
 		// $message = '';
+		if (!$loggedInBool && isset($_POST['LoginView::UserName'])) {
+			$UsernameUsed = $_POST['LoginView::UserName'];
+		} else {
+			$UsernameUsed = '';
+		}
+
 		$message = $inputMessage;
-		$response = $this->generateLoginFormHTML($message);
+		$response = $this->generateLoginFormHTML($message, $UsernameUsed);
 		if ($loggedInBool) {
-			$response .= $this->generateLogoutButtonHTML($message);
+			// $response .= $this->generateLogoutButtonHTML($message);
+			$response = $this->generateLogoutButtonHTML($message);
 		}
 
 		$this->generateCoockie($loggedInBool);
@@ -61,7 +68,7 @@ class LoginView {
 	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
-	private function generateLoginFormHTML($message) {
+	private function generateLoginFormHTML($message, $UsernameUsed) {
 		return '
 			<form method="post" > 
 				<fieldset>
@@ -69,7 +76,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $UsernameUsed . '" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />

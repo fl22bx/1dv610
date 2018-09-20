@@ -54,6 +54,9 @@ require_once('view/LayoutView.php');
 				} else if ($this->loggedInBoolian == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
 					return "Wrong name or password";
 				}
+			} 
+			if ($this->loggedInBoolian) {
+				return "Welcome";
 			}
 			
 		}
