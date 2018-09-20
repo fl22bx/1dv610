@@ -9,7 +9,11 @@ require_once('model/UserDbAuthenticator.php');
 require_once('controller/ViewController.php');
 
 // start DataBase
-	$dbServername = "localhost";
+
+	// production
+		$dbServername = "138.68.91.93";
+	// local
+	// $dbServername = "localhost";
 	$dbUsername = "fredrik";
 	$dbPassword = "test";
 	$dbName = "User";
