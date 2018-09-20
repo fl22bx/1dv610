@@ -11,13 +11,13 @@ require_once('controller/ViewController.php');
 // start DataBase
 
 	// production
-	 $dbServername = "138.68.91.93";
-	$dbUsername = "root";
-	$dbPassword = "rJ4YA3Km";
+	// $dbServername = "138.68.91.93";
+	//$dbUsername = "root";
+	//$dbPassword = "rJ4YA3Km";
 	// local
-	// $dbServername = "localhost";
-	//$dbUsername = "fredrik";
-	//$dbPassword = "test";
+	 $dbServername = "localhost";
+	$dbUsername = "fredrik";
+	$dbPassword = "test";
 	$dbName = "User";
 	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
