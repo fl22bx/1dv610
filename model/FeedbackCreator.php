@@ -17,11 +17,11 @@ class FeedbackCreator
 		# code...
 	}
 
-	public function getMessage ($loggedInWithCookie) {
+	public function getMessage ($loggedInWithCookie, $authenticated) {
 		// var_dump($_SESSION);
-		$tmpMessage = $this->generateFeedback();
+		$tmpMessage = $this->generateFeedback($authenticated);
 
-		if ($loggedInWithCookie) {
+		if ($loggedInWithCookie && $_SESSION["username"] != $_COOKIE['LoginView::CookieName']) {
 			return $this->cookieWelcome;
 		}
 
@@ -39,7 +39,7 @@ class FeedbackCreator
 		return $_SESSION['feedback'];
 	}
 
-	private function generateFeedback () {
+	private function generateFeedback ($authenticated) {
 			if (isset($_POST['LoginView::UserName'])) {
 				if($_POST['LoginView::UserName'] == '') {
 					return $this->missingUsername;
@@ -47,10 +47,10 @@ class FeedbackCreator
 				} else if ($_POST['LoginView::Password'] == '') {
 					return $this->missingPassword;
 
-				} else if ($_SESSION["loggedInBoolian"] == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
+				} else if ($authenticated == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
 					return $this->wronCredentials;
 
-				} 	else if ($_SESSION["loggedInBoolian"]) {
+				} 	else if ($authenticated) {
 					return $this->welcome;
 				}
 			} 

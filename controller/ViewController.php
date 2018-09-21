@@ -14,6 +14,7 @@ require_once('view/LayoutView.php');
 		private $authenticator;
 		private $feedbackCreator;
 		private $loggedInWithCookie;
+		private $authenticated;
 
 
 
@@ -32,20 +33,24 @@ require_once('view/LayoutView.php');
 		}
 
 		function logInController () {
+
 			if (isset($_POST['LoginView::UserName'])) {
-				$_SESSION["loggedInBoolian"] = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
+				$this->authenticated = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
 			} else if (isset($_POST['LoginView::Logout'])) {
 				$this->endSession();
 			} else if (isset($_COOKIE['LoginView::CookieName'])) {
-				
-				$authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
-				$_SESSION["loggedInBoolian"] = $authenticated;
-				$this->loggedInWithCookie = $authenticated;
-
-				// spara username och password i seassion istället, nu kan man komma rnt inloggning
+				$this->authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'],$_COOKIE['LoginView::CookiePassword']);
+				$this->loggedInWithCookie = $this->authenticated;
+			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"])) {
+				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
 			}
 
-			$this->LayoutView->render($_SESSION["loggedInBoolian"], $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage($this->loggedInWithCookie) );
+
+
+
+
+			$this->LayoutView->render($this->authenticated, $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage($this->loggedInWithCookie, $this->authenticated) );
+						$this->setSessionAuth();
 		}
 
 		private function endSession () {
@@ -54,24 +59,36 @@ require_once('view/LayoutView.php');
 				setcookie('LoginView::CookiePassword', "");
 			}
 
-			$_SESSION["loggedInBoolian"] = false;
+			$this->authenticated = false;
 
 		}
 
 		private function sessionHandler () {
 			session_start();
-			if (!isset($_SESSION["loggedInBoolian"]))  {
-				$_SESSION["loggedInBoolian"] = false;
-			}
-
-						if (!isset($_SESSION["feedback"]))  {
+			if (!isset($_SESSION["feedback"]))  {
 				$_SESSION["feedback"] = '';
 			}
+			if (!isset($_SESSION["username"]))  {
+				$_SESSION["username"] = '';
+			}
+			if (!isset($_SESSION["password"]))  {
+				$_SESSION["password"] = '';
+			}
+
 		}
 
-
+		private function setSessionAuth () {
+		if ($this->authenticated && isset($_POST['LoginView::UserName']) && isset($_POST['LoginView::Password'])){
+			$_SESSION["username"] = $_POST['LoginView::UserName'];
+			$_SESSION["password"] = $_POST['LoginView::Password'];
+			} else if ($this->authenticated && isset($_COOKIE['LoginView::CookieName']) && isset($_COOKIE['LoginView::CookiePassword'])) {
+			$_SESSION["username"] = $_COOKIE['LoginView::CookieName'];
+			$_SESSION["password"] = $_COOKIE['LoginView::CookiePassword'];
+			}
 		
 		}
+
+	}
 
  /*
 		private function setMessage () {
