@@ -5,7 +5,7 @@
  */
 class FeedbackCreator
 {
-	private $welcome = 'welcome';
+	private $welcome = 'Welcome';
 	private $missingUsername = "Username is missing";
 	private $missingPassword = "Password is missing";
 	private $wronCredentials = "Wrong name or password";
