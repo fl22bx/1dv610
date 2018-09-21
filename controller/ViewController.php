@@ -13,6 +13,7 @@ require_once('view/LayoutView.php');
 		private $LayoutView;
 		private $authenticator;
 		private $loggedInBoolian = false;
+		private $loggedInWithCookie = false;
 
 
 
@@ -34,6 +35,7 @@ require_once('view/LayoutView.php');
 						$this->endSession();
 					} else {
 						$this->loggedInBoolian = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
+						$this->loggedInWithCookie = $this->loggedInBoolian;
 						}
 
 			}
@@ -67,12 +69,17 @@ require_once('view/LayoutView.php');
 				}
 			} 
 
+			if ($this->loggedInWithCookie) {
+				return "Welcome back with cookie";
+			}
+
 			if (isset($_POST['LoginView::Logout']) && $this->handleKeySession()) {
 				return "Bye bye!";
 			}
 			
 		}
 
+		// testerna sparar inte seesion så fungerar ej, kom på annan lösning
 		private function createKeySession() {
 			if (isset($_POST["hiddenKey"])) {
 				$_SESSION["hiddenKey"] = $_POST["hiddenKey"];
