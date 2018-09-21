@@ -7,7 +7,7 @@ require_once('view/LayoutView.php');
 require_once('model/db.php');
 require_once('model/UserDbAuthenticator.php');
 require_once('controller/ViewController.php');
-
+require_once('model/FeedbackCreator.php');
 // start DataBase
 
 	// production
@@ -26,6 +26,8 @@ require_once('controller/ViewController.php');
 // create authenticator
 	$UserDbAuthenticator = new UserDbAuthenticator($dataBase->getdbName() , $dataBase->getConnection() );
 
+// feedbackCreator
+	$feedback = new FeedbackCreator();
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 	error_reporting(E_ALL);
@@ -37,6 +39,6 @@ require_once('controller/ViewController.php');
 	$lv = new LayoutView();
 
 // Create Controller
-	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator );
+	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator, $feedback );
 	$Controller->logInController();
 

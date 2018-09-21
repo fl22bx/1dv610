@@ -12,59 +12,77 @@ require_once('view/LayoutView.php');
 		private $LoginView;
 		private $LayoutView;
 		private $authenticator;
-		private $loggedInBoolian = false;
-		private $loggedInWithCookie = false;
+		private $feedbackCreator;
 
 
 
 
-	function __construct( $LoginView,  $DateTimeView,  $LayoutView,  UserDbAuthenticator $authenticator) {
+
+	function __construct( $LoginView,  $DateTimeView,  $LayoutView,  UserDbAuthenticator $authenticator, $feedbackCreator) {
 			$this->DateTimeView = $DateTimeView;
 			$this->LoginView = $LoginView;
 			$this->LayoutView = $LayoutView;
 			$this->authenticator = $authenticator;
-			session_start();
+			$this->feedbackCreator = $feedbackCreator;
+			$this->sessionHandler();
+
+			
 			
 		}
 
 		function logInController () {
 			if (isset($_POST['LoginView::UserName'])) {
-				$this->loggedInBoolian = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
+				$_SESSION["loggedInBoolian"] = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
+			} else if (isset($_POST['LoginView::Logout'])) {
+				$this->endSession();
 			} else if (isset($_COOKIE['LoginView::CookieName'])) {
-					if (isset($_POST['LoginView::Logout'])) {
-						$this->endSession();
-					} else {
-						$this->loggedInBoolian = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
-						$this->loggedInWithCookie = $this->loggedInBoolian;
-						}
-
+				$_SESSION["loggedInBoolian"] = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
 			}
 
 
+			// $feedback = $this->setMessage();
+			// $this->createKeySession();
+			//$this->feedbackCreator->getMessage();
 
-			$feedback = $this->setMessage();
-			$this->createKeySession();
 
-
-
-			$this->LayoutView->render($this->loggedInBoolian, $this->LoginView, $this->DateTimeView,$feedback );
+			$this->LayoutView->render($_SESSION["loggedInBoolian"], $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage() );
 		}
 
 		private function endSession () {
-			setcookie('LoginView::CookieName');
-			setcookie('LoginView::CookiePassword', "");
+			if (isset($_COOKIE['LoginView::CookieName'])) {
+				setcookie('LoginView::CookieName');
+				setcookie('LoginView::CookiePassword', "");
+			}
+
+			$_SESSION["loggedInBoolian"] = false;
 
 		}
 
+		private function sessionHandler () {
+			session_start();
+			if (!isset($_SESSION["loggedInBoolian"]))  {
+				$_SESSION["loggedInBoolian"] = false;
+			}
+
+						if (!isset($_SESSION["feedback"]))  {
+				$_SESSION["feedback"] = '';
+			}
+		}
+
+
+		
+		}
+
+ /*
 		private function setMessage () {
 			if (isset($_POST['LoginView::UserName'])) {
 				if($_POST['LoginView::UserName'] == '') {
 					return "Username is missing";
 				} else if ($_POST['LoginView::Password'] == '') {
 					return "Password is missing";
-				} else if ($this->loggedInBoolian == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
+				} else if ($_SESSION["loggedInBoolian"] == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
 					return "Wrong name or password";
-				} 	else if ($this->loggedInBoolian && $this->handleKeySession()) {
+				} 	else if ($_SESSION["loggedInBoolian"] && $this->handleKeySession()) {
 					return "Welcome";
 				}
 			} 
@@ -94,5 +112,6 @@ require_once('view/LayoutView.php');
 			}
 			
 		}
+		*/
 
-	}	
+	
