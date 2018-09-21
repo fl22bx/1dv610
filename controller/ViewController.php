@@ -38,7 +38,10 @@ require_once('view/LayoutView.php');
 
 			}
 
+
+
 			$feedback = $this->setMessage();
+			$this->handleKeySession();
 
 
 
@@ -59,17 +62,21 @@ require_once('view/LayoutView.php');
 					return "Password is missing";
 				} else if ($this->loggedInBoolian == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
 					return "Wrong name or password";
-				} 	else if ($this->loggedInBoolian && $_SESSION["loggedIn"] != true) {
-					$_SESSION["loggedIn"] = true;
+				} 	else if ($this->loggedInBoolian && $_SESSION["hiddenKey"] != $_POST["hiddenKey"]) {
 					return "Welcome";
 				}
 			} 
 
-			if (isset($_POST['LoginView::Logout']) && $_SESSION["loggedIn"] == true) {
-				$_SESSION["loggedIn"] = false;
+			if (isset($_POST['LoginView::Logout']) && $_SESSION["hiddenKey"] != $_POST["hiddenKey"]) {
 				return "Bye bye!";
 			}
 			
+		}
+
+		private function handleKeySession() {
+			if (isset($_POST["hiddenKey"])) {
+				$_SESSION["hiddenKey"] = $_POST["hiddenKey"];
+			}
 		}
 
 	}	

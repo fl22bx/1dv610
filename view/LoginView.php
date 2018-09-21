@@ -59,6 +59,7 @@ class LoginView {
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $message .'</p>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
+				'. $this->rndHiddenKey() .'
 			</form>
 		';
 	}
@@ -85,10 +86,17 @@ class LoginView {
 					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
 					
 					<input type="submit" name="' . self::$login . '" value="login" />
+					'. $this->rndHiddenKey() .'
 				</fieldset>
 			</form>
 
 		';
+	}
+
+	private function rndHiddenKey () {
+		$rndHiddenKey = rand(1000000, 9999999999);
+		return '<input type="hidden" name="hiddenKey" value="'. $rndHiddenKey .'" />';
+		 
 	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
