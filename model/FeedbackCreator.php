@@ -11,17 +11,19 @@ class FeedbackCreator
 	private $wronCredentials = "Wrong name or password";
 	private $cookieWelcome = "Welcome back with cookie";
 	private $byeMessage = "Bye bye!";
-
-	private $loggedInWithCookie = false;
 	
 	function __construct()
 	{
 		# code...
 	}
 
-	public function getMessage () {
+	public function getMessage ($loggedInWithCookie) {
 		// var_dump($_SESSION);
 		$tmpMessage = $this->generateFeedback();
+
+		if ($loggedInWithCookie) {
+			return $this->cookieWelcome;
+		}
 
 		if ($_SESSION['feedback'] == $this->welcome  && $tmpMessage == $this->welcome) {;
 			return '';
@@ -52,10 +54,6 @@ class FeedbackCreator
 					return $this->welcome;
 				}
 			} 
-
-			if ($this->loggedInWithCookie) {
-				return $this->cookieWelcome;
-			}
 
 			if (isset($_POST['LoginView::Logout'])) {
 				return $this->byeMessage;

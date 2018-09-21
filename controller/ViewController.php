@@ -13,6 +13,7 @@ require_once('view/LayoutView.php');
 		private $LayoutView;
 		private $authenticator;
 		private $feedbackCreator;
+		private $loggedInWithCookie;
 
 
 
@@ -36,16 +37,15 @@ require_once('view/LayoutView.php');
 			} else if (isset($_POST['LoginView::Logout'])) {
 				$this->endSession();
 			} else if (isset($_COOKIE['LoginView::CookieName'])) {
-				$_SESSION["loggedInBoolian"] = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
+				
+				$authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'], $_COOKIE['LoginView::CookiePassword']);
+				$_SESSION["loggedInBoolian"] = $authenticated;
+				$this->loggedInWithCookie = $authenticated;
+
+				// spara username och password i seassion istället, nu kan man komma rnt inloggning
 			}
 
-
-			// $feedback = $this->setMessage();
-			// $this->createKeySession();
-			//$this->feedbackCreator->getMessage();
-
-
-			$this->LayoutView->render($_SESSION["loggedInBoolian"], $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage() );
+			$this->LayoutView->render($_SESSION["loggedInBoolian"], $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage($this->loggedInWithCookie) );
 		}
 
 		private function endSession () {
