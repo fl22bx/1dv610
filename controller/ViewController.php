@@ -80,10 +80,10 @@ require_once('view/LayoutView.php');
 		}
 
 		private function handleKeySession () : bool {
-			if (isset($_SESSION["hiddenKey"]) && isset($_POST["hiddenKey"]) && $_SESSION["hiddenKey"] != $_POST["hiddenKey"]) {
-				return true;
-			} else {
+			if (isset($_SESSION["hiddenKey"]) && isset($_POST["hiddenKey"]) && $_SESSION["hiddenKey"] == $_POST["hiddenKey"]) {
 				return false;
+			} else {
+				return true;
 			}
 			
 		}
