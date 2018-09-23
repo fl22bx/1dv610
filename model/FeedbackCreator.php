@@ -21,8 +21,8 @@ class FeedbackCreator
 		// var_dump($_SESSION);
 		$tmpMessage = $this->generateFeedback($authenticated);
 
-		if ($loggedInWithCookie && $_SESSION["username"] != $_COOKIE['LoginView::CookieName']) {
-			return $this->cookieWelcome;
+		if ($loggedInWithCookie && $_SESSION['feedback'] != $this->cookieWelcome) {
+			$tmpMessage = $this->cookieWelcome;
 		}
 
 		if ($_SESSION['feedback'] == $this->welcome  && $tmpMessage == $this->welcome) {;
