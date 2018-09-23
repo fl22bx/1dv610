@@ -38,7 +38,7 @@ require_once('view/LayoutView.php');
 				$this->authenticated = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
 			} else if (isset($_POST['LoginView::Logout'])) {
 				$this->endSession();
-			} else if (isset($_COOKIE['LoginView::CookieName'])) {
+			} else if (isset($_COOKIE['LoginView::CookieName']) && isset($_COOKIE['LoginView::CookiePassword'])) {
 				$this->authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'],$_COOKIE['LoginView::CookiePassword']);
 				$this->loggedInWithCookie = $this->authenticated;
 			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"])) {
