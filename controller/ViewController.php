@@ -34,17 +34,16 @@ require_once('view/LayoutView.php');
 
 		function logInController () {
 
-			if (isset($_SESSION["username"]) && isset($_SESSION["password"])) {
-				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
-			}
-			else if (isset($_POST['LoginView::UserName'])) {
+			if (isset($_POST['LoginView::UserName'])) {
 				$this->authenticated = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
 			} else if (isset($_POST['LoginView::Logout'])) {
 				$this->endSession();
 			} else if (isset($_COOKIE['LoginView::CookieName'])) {
 				$this->authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'],$_COOKIE['LoginView::CookiePassword']);
 				$this->loggedInWithCookie = $this->authenticated;
-			} 
+			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"])) {
+				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
+			}
 
 
 
