@@ -105,7 +105,7 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		echo 'hello etRequestUserName' ;
+		setcookie('test', 'test');
 	}
 	
 }
