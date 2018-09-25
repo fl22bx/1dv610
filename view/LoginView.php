@@ -24,7 +24,7 @@ class LoginView {
 		if (!$loggedInBool && isset($_POST['LoginView::UserName'])) {
 			$UsernameUsed = $_POST['LoginView::UserName'];
 			
-			$passwodUsed = $_POST['LoginView::CookiePassword'];
+			$passwodUsed = $_POST['LoginView::Password'];
 		} else {
 			$UsernameUsed = '';
 		}
