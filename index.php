@@ -12,7 +12,7 @@ require_once('model/FeedbackCreator.php');
 	 $dbServername = "localhost";
 	$dbUsername = "fredrik";
 	$dbPassword = "test";
-	$dbName = "User";
+	$dbName = "user";
 	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
 	$dataBase->connect();
