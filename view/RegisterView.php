@@ -14,6 +14,11 @@ class RegisterView
 	private static $message = 'RegisterView::Message';
 	private static $register = 'DoRegistration';
 
+	function handelView ($inputMessage) {
+
+		return $this->render($inputMessage);
+	}
+
 	function render($message)
 	{
 		return '
@@ -37,4 +42,80 @@ class RegisterView
 
 		';
 	}
+
+	private function getPassword () {
+		if (isset($_POST[self::$password])) {
+			return $_POST[self::$password];
+		}
+
+	}
+
+	private function getPasswordRepeat () {
+		if (isset($_POST[self::$passwordRepeat])) {
+			return $_POST[self::$passwordRepeat];
+		}
+	}
+
+		private function getUsername () {
+		if (isset($_POST[self::$userName])) {
+			return $_POST[self::$userName];
+		}
+	}
+
+	// feedback
+
+		public function checkIfPasswordMatches() : bool {
+		$password = $this->getPassword();
+		$passwordRepeat = $this->getPasswordRepeat();
+
+		if (isset($password) && isset($passwordRepeat)) {
+			if ($password == $passwordRepeat) {
+			return true;
+			} else {
+			return false;
+			}
+		}
+		return true;
+	}
+
+	public function checkPasswordLengthIsMoreThen6() : bool  {
+		$password = $this->getPassword();
+		if (isset($password)) {
+				if(strlen($password) >= 6) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			return true;
+	}
+
+		public function isUsernameLongerThenThree() : bool {
+		$username = $this->getUsername();
+		if (isset($username)){
+				if(strlen($username) >= 3) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			return true;
+	}
+
+	public function registerViewDispatchFeedbackAction () {
+		if (!$this->checkIfPasswordMatches()) {
+			return 'DOPASSWORDMATCH';
+		} else if (!$this->checkPasswordLengthIsMoreThen6()) {
+			return "PASSWORDLONGERTHEN6";
+		} else if (!$this->isUsernameLongerThenThree()) {
+			return 'USERNAMESHORTERTHENSIX';
+		}
+
+		return "";
+	}
+
+
+
+
 }

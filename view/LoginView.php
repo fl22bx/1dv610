@@ -9,7 +9,7 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	
+	private $loggedIn = false;
 
 	/**
 	 * Create HTTP response
@@ -19,44 +19,35 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response($inputMessage, $loggedInBool, RegisterView $r) {
+		$this->loggedIn = $loggedInBool;
 
-		// $message = '';
-		if (!$loggedInBool && isset($_POST['LoginView::UserName'])) {
-			$UsernameUsed = $_POST['LoginView::UserName'];
-		} else {
-			$UsernameUsed = '';
-		}
-
+		$UsernameUsed = $this->usedUsername();;
 		$message = $inputMessage;
 		$response = $this->generateRegisterLink();
 
 		if ($this->isRegisterLinkSet()) {
-			$response .= $r->render($message);
+			$response .= $r->handelView($inputMessage);
 		} else {
 			$response .= $this->generateLoginFormHTML($message, $UsernameUsed);
-
 		}
-		
+
 		if ($loggedInBool) {
 			//$response .= $this->generateLogoutButtonHTML($message);
 			 $response = $this->generateLogoutButtonHTML($message);
 		}
-
-		$this->generateCoockie($loggedInBool);
+		$this->generateCoockie();
 		
 		return $response;
 	}
 
-	public function generateCoockie ($loggedInBool) {
 
-		if (isset($_POST[self::$keep]) && $loggedInBool = true ) {
+	public function generateCoockie () {
+
+		if (isset($_POST[self::$keep]) && $this->loggedInl = true ) {
 			$passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
 			setcookie(self::$cookieName, $_POST['LoginView::UserName']);
 			setcookie(self::$cookiePassword, $passwordHash);
-		} else if (isset($_COOKIE[self::$cookiePassword])) {
-			// rehash
-			// setcookie(self::$cookiePassword, $passwordHash);
-		}
+		} 
 		
 	}
 
@@ -112,17 +103,103 @@ class LoginView {
 
 	}
 
-
-
-
+	private function usedUsername () {
+		if (!$this->loggedIn) {
+			return $this->getRequestUserName();
+		} else {
+			$UsernameUsed = '';
+		}
+	}
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		setcookie('test', 'test');
+		if (isset($_POST['LoginView::UserName'])) {
+			return $_POST['LoginView::UserName'];
+		} else {
+			return '';
+		}
 	}
 
-		private function isRegisterLinkSet() : bool {
+	private function getRequestPasswod() {
+		if (isset($_POST[self::$password])) {
+			return $_POST[self::$password];
+		} else {
+			return '';
+		}
+	}
+
+
+
+
+	private function isRegisterLinkSet() : bool {
 		return isset($_GET['register']);
+	}
+
+
+	
+	//feedbackpart
+	private function isLoggedOutSet($authenticated) : bool {
+		return isset($_POST[self::$logout]);
+	}
+
+	private function isLoggedInSet($authenticated) : bool {
+		return $authenticated;
+	}
+
+	private function wrongCredentials() : bool {
+		if(!$this->loggedIn && $this->getRequestUserName() != '' && $this->getRequestPasswod() != '') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private function missingUsername() : bool {
+	if(isset($_POST['LoginView::UserName']) && $this->getRequestUserName() == '') {
+		return true;
+		} else {
+			return false;
+		}
+	}
+
+		private function missingPassword() : bool {
+	if(isset($_POST['LoginView::UserName']) && $this->getRequestPasswod() == '') {
+		return true;
+		} else {
+			return false;
+		}
+	}
+
+	private function loggedInWithCookie() : bool {
+		if(isset($_COOKIE['LoginView::CookieName'])) {
+		return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function feedbackChecker ($authenticated) {
+	 if ($this->isLoggedOutSet(!$authenticated)) {
+			return 'LOGGEDOUT';
+
+		} else if ($this->loggedInWithCookie()) {
+			return 'LOGGEDINWITHCOOKIE';
+
+		} else if ($this->isLoggedInSet($authenticated)) {
+			return 'LOGGEDIN';
+
+		} else if ($this->wrongCredentials()) {
+			return 'WRONGCREDENTIALS';
+
+		} else if ($this->missingUsername()) {
+			return 'MISSINGUSERNAME';
+
+		} else if ($this->missingPassword()) {
+			return 'MISSINGPASSWORD';
+
+		} else {
+			return '';
+		}
 	}
 	
 }

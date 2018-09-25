@@ -21,17 +21,14 @@ class FeedbackCreator
 			$tmpMessage = $this->cookieWelcome;
 		}
 
+
 		if ($_SESSION['feedback'] == $this->welcome  && $tmpMessage == $this->welcome) {;
 			return '';
 		}
 		if ($_SESSION['feedback'] == $this->byeMessage  && $tmpMessage == $this->byeMessage) {;
 			return '';
 		}
-
 		$_SESSION['feedback'] = $tmpMessage;
-
-
-
 		return $_SESSION['feedback'];
 	}
 

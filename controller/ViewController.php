@@ -36,6 +36,7 @@ require_once('view/LayoutView.php');
 		}
 
 		function logInController () {
+
 			if (isset($_POST['LoginView::Password'])) {
 				$this->passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
 			}
@@ -56,10 +57,17 @@ require_once('view/LayoutView.php');
 				$this->loggedInWithCookie = $this->authenticated;
 			}
 
+			$_SESSION['loggedIn'] = $this->authenticated;
+	
+			$feedback = $this->feedbackHandlerer();
+
+	
 
 
-			$this->LayoutView->render($this->authenticated, $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage($this->loggedInWithCookie, $this->authenticated), $this->RegisterView );
-						$this->setSessionAuth();
+
+			$this->LayoutView->render($this->authenticated, $this->LoginView, $this->DateTimeView, $feedback, $this->RegisterView);
+
+			$this->setSessionAuth();
 		}
 
 		private function endSession () {
@@ -70,6 +78,7 @@ require_once('view/LayoutView.php');
 
 			$_SESSION["username"] = '';
 			$_SESSION["password"] = '';
+			$_SESSION['loggedIn'] = false;
 
 			$this->authenticated = false;
 
@@ -86,6 +95,14 @@ require_once('view/LayoutView.php');
 			if (!isset($_SESSION["password"]))  {
 				$_SESSION["password"] = '';
 			}
+			if (!isset($_SESSION['loggedIn']))  {
+				$_SESSION['loggedIn'] = false;
+			}
+
+			if (!isset($_SESSION['hasBeenLoggedIn']))  {
+				$_SESSION['hasBeenLoggedIn'] = false;
+			}
+
 
 		}
 
@@ -97,7 +114,24 @@ require_once('view/LayoutView.php');
 			$_SESSION["username"] = $_COOKIE['LoginView::CookieName'];
 			$_SESSION["password"] = $this->passwordHash;
 			}
+
 		
+		}
+
+		private function feedbackHandlerer () {
+			$feedbackMessage = '';
+			$checkFeedbackLogInView = $this->LoginView->feedbackChecker($this->authenticated);
+			$checkFeedbackRegisterView = $this->RegisterView->registerViewDispatchFeedbackAction();
+
+			if ($checkFeedbackLogInView != '') {
+				$feedbackMessage = $checkFeedbackLogInView;
+			} else if ($checkFeedbackRegisterView != '') {
+				$feedbackMessage = $checkFeedbackRegisterView;
+			}
+
+
+
+			return $this->feedbackCreator->CreateFeedback($feedbackMessage);
 		}
 
 	}

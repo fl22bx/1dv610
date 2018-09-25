@@ -9,6 +9,7 @@ require_once('model/UserDbAuthenticator.php');
 require_once('controller/ViewController.php');
 require_once('model/FeedbackCreator.php');
 require_once('view/RegisterView.php');
+require_once('model/FeedbackMessageCreator.php');
 
 // start DataBase
 	 $dbServername = "localhost";
@@ -23,7 +24,8 @@ require_once('view/RegisterView.php');
 	$UserDbAuthenticator = new UserDbAuthenticator($dataBase->getdbName() , $dataBase->getConnection() );
 
 // feedbackCreator
-	$feedback = new FeedbackCreator();
+	// $feedback = new FeedbackCreator();
+	$feedback = new FeedbackMessageCreator();
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 	error_reporting(E_ALL);
@@ -38,3 +40,4 @@ require_once('view/RegisterView.php');
 // Create Controller
 	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator, $feedback, $r );
 	$Controller->logInController();
+
