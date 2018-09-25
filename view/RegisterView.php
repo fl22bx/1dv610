@@ -28,7 +28,7 @@ class RegisterView
 					<p id="' . self::$message . '">' . $message . '</p>
 					
 					<label for="' . self::$userName . '">Username :</label>
-					<input type="text" id="' . self::$userName . '" name="' . self::$userName . '" value="" />
+					<input type="text" id="' . self::$userName . '" name="' . self::$userName . '" value="' . $this->usedUsername() .'" />
 					<br />
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -41,6 +41,20 @@ class RegisterView
 			</form>
 
 		';
+	}
+
+	private function usedUsername () {
+		if (!$this->checkPasswordLengthIsMoreThen6()) {
+			return $this->getUsername();
+		} else if (!$this->isUsernameLongerThenThree()) {
+			return $this->getUsername();
+		} else if (!$this->checkPasswordLengthIsMoreThen6()) {
+			return $this->getUsername();
+		} else if (!$this->checkIfPasswordMatches()) {
+			return $this->getUsername();
+		}
+		return '';
+		
 	}
 
 	private function getPassword () {
@@ -106,11 +120,11 @@ class RegisterView
 	public function registerViewDispatchFeedbackAction () {
 		if (!$this->checkIfPasswordMatches()) {
 			return 'DOPASSWORDMATCH';
-		} else if (!$this->checkPasswordLengthIsMoreThen6()) {
-			return "PASSWORDLONGERTHEN6";
 		} else if (!$this->isUsernameLongerThenThree()) {
 			return 'USERNAMESHORTERTHENSIX';
-		}
+		} else if (!$this->checkPasswordLengthIsMoreThen6()) {
+			return "PASSWORDLONGERTHEN6";
+		} 
 
 		return "";
 	}
