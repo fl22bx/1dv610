@@ -23,8 +23,6 @@ class LoginView {
 		// $message = '';
 		if (!$loggedInBool && isset($_POST['LoginView::UserName'])) {
 			$UsernameUsed = $_POST['LoginView::UserName'];
-			
-			$passwodUsed = $_POST['LoginView::Password'];
 		} else {
 			$UsernameUsed = '';
 		}
@@ -107,7 +105,7 @@ class LoginView {
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
+		echo 'hello etRequestUserName' ;
 	}
 	
 }
