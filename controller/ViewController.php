@@ -15,6 +15,7 @@ require_once('view/LayoutView.php');
 		private $feedbackCreator;
 		private $loggedInWithCookie;
 		private $authenticated;
+		private $passwordHash;
 
 
 
@@ -33,9 +34,12 @@ require_once('view/LayoutView.php');
 		}
 
 		function logInController () {
+			if (isset($_POST['LoginView::Password'])) {
+				$this->passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
+			}
 
 			if (isset($_POST['LoginView::UserName'])) {
-				$this->authenticated = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $_POST['LoginView::Password']);
+				$this->authenticated = $this->authenticator->authenticateUser($_POST['LoginView::UserName'], $this->passwordHash);
 			} else if (isset($_POST['LoginView::Logout'])) {
 				$this->endSession();
 			} else if (isset($_COOKIE['LoginView::CookieName']) && isset($_COOKIE['LoginView::CookiePassword'])) {
@@ -86,55 +90,15 @@ require_once('view/LayoutView.php');
 		private function setSessionAuth () {
 		if ($this->authenticated && isset($_POST['LoginView::UserName']) && isset($_POST['LoginView::Password'])){
 			$_SESSION["username"] = $_POST['LoginView::UserName'];
-			$_SESSION["password"] = $_POST['LoginView::Password'];
+			$_SESSION["password"] = $this->passwordHash;
 			} else if ($this->authenticated && isset($_COOKIE['LoginView::CookieName']) && isset($_COOKIE['LoginView::CookiePassword'])) {
 			$_SESSION["username"] = $_COOKIE['LoginView::CookieName'];
-			$_SESSION["password"] = $_COOKIE['LoginView::CookiePassword'];
+			$_SESSION["password"] = $this->passwordHash;
 			}
 		
 		}
 
 	}
 
- /*
-		private function setMessage () {
-			if (isset($_POST['LoginView::UserName'])) {
-				if($_POST['LoginView::UserName'] == '') {
-					return "Username is missing";
-				} else if ($_POST['LoginView::Password'] == '') {
-					return "Password is missing";
-				} else if ($_SESSION["loggedInBoolian"] == false && $_POST['LoginView::UserName'] != '' && $_POST['LoginView::Password'] != '') {
-					return "Wrong name or password";
-				} 	else if ($_SESSION["loggedInBoolian"] && $this->handleKeySession()) {
-					return "Welcome";
-				}
-			} 
-
-			if ($this->loggedInWithCookie) {
-				return "Welcome back with cookie";
-			}
-
-			if (isset($_POST['LoginView::Logout']) && $this->handleKeySession()) {
-				return "Bye bye!";
-			}
-			
-		}
-
-		// testerna sparar inte seesion så fungerar ej, kom på annan lösning
-		private function createKeySession() {
-			if (isset($_POST["hiddenKey"])) {
-				$_SESSION["hiddenKey"] = $_POST["hiddenKey"];
-			}
-		}
-
-		private function handleKeySession () : bool {
-			if (isset($_SESSION["hiddenKey"]) && isset($_POST["hiddenKey"]) && $_SESSION["hiddenKey"] == $_POST["hiddenKey"]) {
-				return false;
-			} else {
-				return true;
-			}
-			
-		}
-		*/
 
 	

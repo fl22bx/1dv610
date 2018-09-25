@@ -12,12 +12,13 @@ class UserDbAuthenticator {
 
 	public function authenticateUser ($username, $password) : bool {
 		$dbUser = $this->queryDatabaseForUser($username);
+		var_dump($password);
 		if (isset($dbUser['name'])) {
-			if ($dbUser['password'] == $password) {
-			return true;
+			$bool = password_verify($dbUser['password'] , $password);
+			return $bool;
 		}
 
-		}
+		
 		return false;
 
 	}

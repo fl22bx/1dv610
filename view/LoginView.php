@@ -40,10 +40,14 @@ class LoginView {
 	}
 
 	public function generateCoockie ($loggedInBool) {
-		
+
 		if (isset($_POST[self::$keep]) && $loggedInBool = true ) {
+			$passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
 			setcookie(self::$cookieName, $_POST['LoginView::UserName']);
-			setcookie(self::$cookiePassword, $_POST['LoginView::Password']);
+			setcookie(self::$cookiePassword, $passwordHash);
+		} else if (isset($_COOKIE[self::$cookiePassword])) {
+			// rehash
+			// setcookie(self::$cookiePassword, $passwordHash);
 		}
 		
 	}
