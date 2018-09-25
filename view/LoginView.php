@@ -18,7 +18,7 @@ class LoginView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response($inputMessage, $loggedInBool) {
+	public function response($inputMessage, $loggedInBool, RegisterView $r) {
 
 		// $message = '';
 		if (!$loggedInBool && isset($_POST['LoginView::UserName'])) {
@@ -28,10 +28,18 @@ class LoginView {
 		}
 
 		$message = $inputMessage;
-		$response = $this->generateLoginFormHTML($message, $UsernameUsed);
+		$response = $this->generateRegisterLink();
+
+		if ($this->isRegisterLinkSet()) {
+			$response .= $r->render($message);
+		} else {
+			$response .= $this->generateLoginFormHTML($message, $UsernameUsed);
+
+		}
+		
 		if ($loggedInBool) {
-			// $response .= $this->generateLogoutButtonHTML($message);
-			$response = $this->generateLogoutButtonHTML($message);
+			//$response .= $this->generateLogoutButtonHTML($message);
+			 $response = $this->generateLogoutButtonHTML($message);
 		}
 
 		$this->generateCoockie($loggedInBool);
@@ -63,7 +71,6 @@ class LoginView {
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $message .'</p>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
-				'. $this->rndHiddenKey() .'
 			</form>
 		';
 	}
@@ -90,22 +97,32 @@ class LoginView {
 					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
 					
 					<input type="submit" name="' . self::$login . '" value="login" />
-					'. $this->rndHiddenKey() .'
 				</fieldset>
 			</form>
 
 		';
 	}
 
-	private function rndHiddenKey () {
-		$rndHiddenKey = rand(1000000, 9999999999);
-		return '<input type="hidden" name="hiddenKey" value="'. $rndHiddenKey .'" />';
-		 
+	function generateRegisterLink() {
+		if ($this->isRegisterLinkSet()) {
+			return' <a href="/">Back to login</a>';
+		} else {
+			return' <a href="?register">Register a new user</a>';
+		}
+
 	}
+
+
+
+
 	
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		setcookie('test', 'test');
+	}
+
+		private function isRegisterLinkSet() : bool {
+		return isset($_GET['register']);
 	}
 	
 }

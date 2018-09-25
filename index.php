@@ -8,6 +8,8 @@ require_once('model/db.php');
 require_once('model/UserDbAuthenticator.php');
 require_once('controller/ViewController.php');
 require_once('model/FeedbackCreator.php');
+require_once('view/RegisterView.php');
+
 // start DataBase
 	 $dbServername = "localhost";
 	$dbUsername = "fredrik";
@@ -31,7 +33,8 @@ require_once('model/FeedbackCreator.php');
 	$v = new LoginView();
 	$dtv = new DateTimeView();
 	$lv = new LayoutView();
+	$r = new RegisterView();
 
 // Create Controller
-	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator, $feedback );
+	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator, $feedback, $r );
 	$Controller->logInController();

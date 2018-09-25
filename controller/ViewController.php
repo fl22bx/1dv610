@@ -11,6 +11,7 @@ require_once('view/LayoutView.php');
 		private $DateTimeView;
 		private $LoginView;
 		private $LayoutView;
+		private $RegisterView;
 		private $authenticator;
 		private $feedbackCreator;
 		private $loggedInWithCookie;
@@ -21,12 +22,13 @@ require_once('view/LayoutView.php');
 
 
 
-	function __construct( $LoginView,  $DateTimeView,  $LayoutView,  UserDbAuthenticator $authenticator, $feedbackCreator) {
+	function __construct( $LoginView,  $DateTimeView,  $LayoutView,  UserDbAuthenticator $authenticator, $feedbackCreator, RegisterView $r) {
 			$this->DateTimeView = $DateTimeView;
 			$this->LoginView = $LoginView;
 			$this->LayoutView = $LayoutView;
 			$this->authenticator = $authenticator;
 			$this->feedbackCreator = $feedbackCreator;
+			$this->RegisterView = $r;
 			$this->sessionHandler();
 
 			
@@ -56,7 +58,7 @@ require_once('view/LayoutView.php');
 
 
 
-			$this->LayoutView->render($this->authenticated, $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage($this->loggedInWithCookie, $this->authenticated) );
+			$this->LayoutView->render($this->authenticated, $this->LoginView, $this->DateTimeView,$this->feedbackCreator->getMessage($this->loggedInWithCookie, $this->authenticated), $this->RegisterView );
 						$this->setSessionAuth();
 		}
 
