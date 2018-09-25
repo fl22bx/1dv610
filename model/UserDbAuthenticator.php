@@ -3,7 +3,7 @@ class UserDbAuthenticator {
 	private $LoggedInUser;
 	private $dbName;
 	private $dbConnection;
-	private $dbTableUser = User;
+	private $dbTableUser = 'User';
 
 	function __construct ($dbName,$dbConnection) {
 		$this->dbName = $dbName;

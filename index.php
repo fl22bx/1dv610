@@ -9,16 +9,10 @@ require_once('model/UserDbAuthenticator.php');
 require_once('controller/ViewController.php');
 require_once('model/FeedbackCreator.php');
 // start DataBase
-
-	// production
-	// $dbServername = "138.68.91.93";
-	//$dbUsername = "root";
-	//$dbPassword = "rJ4YA3Km";
-	// local
 	 $dbServername = "localhost";
 	$dbUsername = "fredrik";
 	$dbPassword = "test";
-	$dbName = "user";
+	$dbName = "User";
 	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
 	$dataBase->connect();
@@ -41,4 +35,3 @@ require_once('model/FeedbackCreator.php');
 // Create Controller
 	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator, $feedback );
 	$Controller->logInController();
-
