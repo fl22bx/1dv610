@@ -12,10 +12,6 @@ class FeedbackCreator
 	private $cookieWelcome = "Welcome back with cookie";
 	private $byeMessage = "Bye bye!";
 	
-	function __construct()
-	{
-		# code...
-	}
 
 	public function getMessage ($loggedInWithCookie, $authenticated) {
 		// var_dump($_SESSION);
