@@ -28,7 +28,7 @@ class RegisterView
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
 					<br />
-					<label for="' . self::$passwordRepeat . '">Keep me logged in  :</label>
+					<label for="' . self::$passwordRepeat . '">Repeat Password  :</label>
 					<input type="password" id="' . self::$passwordRepeat . '" name="' . self::$passwordRepeat . '" />
 					<br />
 					<input type="submit" name="' . self::$register . '" value="Register" />
