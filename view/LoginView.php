@@ -46,7 +46,7 @@ class LoginView {
 		if (isset($_POST[self::$keep]) && $this->loggedInl = true ) {
 			$passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
 			setcookie(self::$cookieName, $_POST['LoginView::UserName'], time()+60*60*24);
-			setcookie(self::$cookiePassword, $passwordHash, time()+3600);
+			setcookie(self::$cookiePassword, $passwordHash, time()+60*60*24);
 		} 
 		
 	}
