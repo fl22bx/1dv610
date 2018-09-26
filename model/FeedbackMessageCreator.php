@@ -25,6 +25,7 @@ class FeedbackMessageCreator
 
 	//model
 	private $userDuplicateMessage = "User exists, pick another username.";
+	private $cookieManupulationMessage = "Wrong information in cookies";
 
 	// Messageconditionals
 
@@ -45,6 +46,7 @@ class FeedbackMessageCreator
 
 	//model
 	private $dbUserIsDuplicated = 'USERISADUPLICATE';
+	private $cookieManipulation = 'COOKIEMANIPULATION';
 	
 	function CreateFeedback($conditional)
 	{
@@ -112,6 +114,10 @@ class FeedbackMessageCreator
 
 			case $this->usserandpassshort:
 					return $this->usserandpassshortmess;
+					break;				
+			
+			case $this->cookieManipulation:
+					return $this->cookieManupulationMessage;
 					break;				
 			
 			default:

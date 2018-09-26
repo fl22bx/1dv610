@@ -48,7 +48,13 @@ require_once('model/UserDbAuthenticator.php');
 			} else if (isset($_POST['LoginView::Logout'])) {
 				$this->endSession();
 			} else if (isset($_COOKIE['LoginView::CookieName']) && isset($_COOKIE['LoginView::CookiePassword'])) {
-				$this->authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'],$_COOKIE['LoginView::CookiePassword']);
+				$cookieAuth = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'],$_COOKIE['LoginView::CookiePassword']);
+				if ($cookieAuth) {
+					$this->authenticated = true;
+				} else {
+					$this->authenticated = false;
+				}
+
 				
 			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"]) && $_SESSION['agent'] == $_SERVER['HTTP_USER_AGENT']) {
 				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
