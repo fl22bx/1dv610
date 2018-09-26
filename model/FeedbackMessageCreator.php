@@ -6,8 +6,6 @@
 class FeedbackMessageCreator 
 {
 	// messages
-
-	// loginview
 	private $welcome = 'Welcome';
 	private $missingUsername = "Username is missing";
 	private $missingPassword = "Password is missing";
@@ -15,21 +13,16 @@ class FeedbackMessageCreator
 	private $cookieWelcome = "Welcome back with cookie";
 	private $byeMessage = "Bye bye!";
 	private $succesfulRegistrationmessage = "Registered new user.";
-
-	// register view
+	private $remembermemessage = "Welcome and you will be remembered";
 	private $passwordMatchFeedback = "Passwords do not match.";
 	private $passwordLengthMessage = "Password has too few characters, at least 6 characters.";
 	private $userNameLenghtMessage = "Username has too few characters, at least 3 characters.";
 	private $invalidCharactersMessage = 'Username contains invalid characters.';
 	private $usserandpassshortmess ="Username has too few characters, at least 3 characters. Password has too few characters, at least 6 characters.";
-
-	//model
 	private $userDuplicateMessage = "User exists, pick another username.";
 	private $cookieManupulationMessage = "Wrong information in cookies";
 
 	// Messageconditionals
-
-	// view
 	private $loggedOutCondition = 'LOGGEDOUT';
 	private $loggedInCondition = 'LOGGEDIN';
 	private $wrongCredentialsCondition = 'WRONGCREDENTIALS';
@@ -37,14 +30,12 @@ class FeedbackMessageCreator
 	private $missingPasswordCondition = 'MISSINGPASSWORD';
 	private $authWithCookieCondition = 'LOGGEDINWITHCOOKIE';
 	private $succesfulRegistration = 'registersucess';
-	//register
+	private $rememberMe = 'REMEMBERME';
 	private $passwordMatch = 'DOPASSWORDMATCH';
 	private $passwordLength = "PASSWORDLONGERTHEN6";
 	private $userNameLenght = 'USERNAMESHORTERTHENSIX';
 	private $invalidCharacters = 'INVALIDCHARACTERS';
 	private $usserandpassshort ='USERNAMEANDPASSWORDISTOSHORT';
-
-	//model
 	private $dbUserIsDuplicated = 'USERISADUPLICATE';
 	private $cookieManipulation = 'COOKIEMANIPULATION';
 	
@@ -64,7 +55,7 @@ class FeedbackMessageCreator
 					break;
 
 			case $this->loggedInCondition:
-				if ($_SESSION['feedback'] != $this->welcome) {
+				if ($_SESSION['feedback'] != $this->welcome && $_SESSION['feedback'] != $this->remembermemessage) {
 					$_SESSION['feedback'] = $this->welcome;
 					return $this->welcome;
 					}
@@ -83,7 +74,7 @@ class FeedbackMessageCreator
 					break;
 
 			case $this->authWithCookieCondition:
-					if ($_SESSION['feedback'] != $this->cookieWelcome && $_SESSION['feedback'] != $this->welcome) {
+					if ($_SESSION['feedback'] != $this->cookieWelcome && $_SESSION['feedback'] != $this->welcome&& $_SESSION['feedback'] != $this->remembermemessage) {
 					$_SESSION['feedback'] = $this->cookieWelcome;
 					return $this->cookieWelcome;
 					}
@@ -120,6 +111,10 @@ class FeedbackMessageCreator
 					return $this->cookieManupulationMessage;
 					break;				
 			
+			case $this->rememberMe:
+					return $this->remembermemessage;
+					break;			
+
 			default:
 					return '';
 					break;

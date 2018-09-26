@@ -45,8 +45,8 @@ class LoginView {
 
 		if (isset($_POST[self::$keep]) && $this->loggedInl = true ) {
 			$passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
-			setcookie(self::$cookieName, $_POST['LoginView::UserName'], time()+3);
-			setcookie(self::$cookiePassword, $passwordHash, time()+3);
+			setcookie(self::$cookieName, $_POST['LoginView::UserName'], time()+60);
+			setcookie(self::$cookiePassword, $passwordHash, time()+60);
 		} 
 		
 	}
@@ -94,7 +94,7 @@ class LoginView {
 		';
 	}
 
-	function generateRegisterLink() {
+	private function generateRegisterLink() {
 		if ($this->isRegisterLinkSet()) {
 			$_SESSION['feedback'] = '';
 			return' <a href="/">Back to login</a>';
@@ -138,9 +138,6 @@ class LoginView {
 		return isset($_GET['register']);
 	}
 
-
-	
-	//feedbackpart
 	private function isLoggedOutSet($authenticated) : bool {
 		return isset($_POST[self::$logout]);
 	}
@@ -188,10 +185,19 @@ class LoginView {
 		return '';
 	}
 
+	private function isKeepMeLoggedInSet () {
+		if(isset($_POST[self::$keep])) {
+			return true;
+		}
+		return false;
+	}
+
 	public function feedbackChecker ($authenticated) {
 	 if ($this->isLoggedOutSet(!$authenticated)) {
 			return 'LOGGEDOUT';
 
+		} else if ($this->isKeepMeLoggedInSet()) {
+			return 'REMEMBERME';
 		} else if ($this->loggedInWithCookie()) {
 			return 'LOGGEDINWITHCOOKIE';
 
