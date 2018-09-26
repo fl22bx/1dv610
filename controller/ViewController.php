@@ -52,6 +52,8 @@ require_once('model/UserDbAuthenticator.php');
 				
 			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"]) && $_SESSION['agent'] == $_SERVER['HTTP_USER_AGENT']) {
 				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
+			} else {
+				$this->authenticated = false;
 			}
 
 			$this->registerNewUserInDB();
