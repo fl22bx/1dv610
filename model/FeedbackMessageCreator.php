@@ -81,7 +81,7 @@ class FeedbackMessageCreator
 					break;
 
 			case $this->authWithCookieCondition:
-					if ($_SESSION['feedback'] != $this->cookieWelcome) {
+					if ($_SESSION['feedback'] != $this->cookieWelcome && $_SESSION['feedback'] != $this->welcome) {
 					$_SESSION['feedback'] = $this->cookieWelcome;
 					return $this->cookieWelcome;
 					}
