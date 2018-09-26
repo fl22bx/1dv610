@@ -24,7 +24,7 @@ class FeedbackMessageCreator
 	private $usserandpassshortmess ="Username has too few characters, at least 3 characters. Password has too few characters, at least 6 characters.";
 
 	//model
-	private $userDuplicateMessage = "User exists, pick another username";
+	private $userDuplicateMessage = "User exists, pick another username.";
 
 	// Messageconditionals
 
