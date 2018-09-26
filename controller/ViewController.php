@@ -53,6 +53,7 @@ require_once('model/UserDbAuthenticator.php');
 					$this->authenticated = true;
 				} else {
 					$this->authenticated = false;
+					$this->feedbackFromModel = 'COOKIEMANIPULATION';
 				}
 
 				
@@ -148,13 +149,14 @@ require_once('model/UserDbAuthenticator.php');
 			$checkFeedbackLogInView = $this->LoginView->feedbackChecker($this->authenticated);
 			$checkFeedbackRegisterView = $this->RegisterView->registerViewDispatchFeedbackAction();
 
-			if ($checkFeedbackLogInView != '') {
+			if ($this->feedbackFromModel != '') {
+				$feedbackMessage = $this->feedbackFromModel;
+			}else if ($checkFeedbackLogInView != '') {
 				$feedbackMessage = $checkFeedbackLogInView;
 			} else if ($checkFeedbackRegisterView != '') {
 				$feedbackMessage = $checkFeedbackRegisterView;
-			} else if ($this->feedbackFromModel != '') {
-				$feedbackMessage = $this->feedbackFromModel;
-			}
+			} 
+			
 			return $this->feedbackCreator->CreateFeedback($feedbackMessage);
 		}
 

@@ -174,7 +174,7 @@ class LoginView {
 	}
 
 	private function loggedInWithCookie() : bool {
-		if(isset($_COOKIE['LoginView::CookieName'])) {
+		if(isset($_COOKIE['LoginView::CookieName']) && ) {
 		return true;
 		} else {
 			return false;
