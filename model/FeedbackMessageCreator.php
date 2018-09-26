@@ -21,6 +21,7 @@ class FeedbackMessageCreator
 	private $passwordLengthMessage = "Password has too few characters, at least 6 characters.";
 	private $userNameLenghtMessage = "Username has too few characters, at least 3 characters.";
 	private $invalidCharactersMessage = 'Username contains invalid characters.';
+	private $usserandpassshortmess ='Username has too few characters, at least 3 characters. Password has too few characters, at least 6 characters';
 
 	//model
 	private $userDuplicateMessage = "User exists, pick another username";
@@ -40,6 +41,7 @@ class FeedbackMessageCreator
 	private $passwordLength = "PASSWORDLONGERTHEN6";
 	private $userNameLenght = 'USERNAMESHORTERTHENSIX';
 	private $invalidCharacters = 'INVALIDCHARACTERS';
+	private $usserandpassshort ='USERNAMEANDPASSWORDISTOSHORT';
 
 	//model
 	private $dbUserIsDuplicated = 'USERISADUPLICATE';
@@ -106,6 +108,10 @@ class FeedbackMessageCreator
 					$_SESSION['feedback'] = $this->succesfulRegistrationmessage;
 					return $this->succesfulRegistrationmessage;
 					}
+					break;	
+
+			case $this->usserandpassshort:
+					return $this->usserandpassshortmess;
 					break;				
 			
 			default:
