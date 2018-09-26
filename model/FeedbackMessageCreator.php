@@ -112,8 +112,10 @@ class FeedbackMessageCreator
 					break;				
 			
 			case $this->rememberMe:
-					return $this->remembermemessage;
-					break;			
+				if ($_SESSION['feedback'] != $this->cookieWelcome && $_SESSION['feedback'] != $this->welcome&& $_SESSION['feedback'] != $this->remembermemessage) {
+					$_SESSION['feedback'] = $this->cookieWelcome;
+					return $this->remembermemessage;					}
+					break;		
 
 			default:
 					return '';
