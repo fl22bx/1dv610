@@ -85,7 +85,10 @@ require_once('model/UserDbAuthenticator.php');
 			$tmpNewUserArray = $this->RegisterView->newUserDetailsArray();
 			if($this->RegisterView->registerViewDispatchFeedbackAction() == '' && isset($tmpNewUserArray['username'])) {
 				$this->feedbackFromModel = RegisterNewUser::setNewUser($tmpNewUserArray, $this->db);
-				$this->redirect($tmpNewUserArray['username']);
+				if($this->feedbackFromModel == '') {
+				$this->redirect($tmpNewUserArray['username']);					
+				}
+
 			}
 
 		}

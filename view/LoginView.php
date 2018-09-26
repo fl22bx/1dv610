@@ -96,6 +96,7 @@ class LoginView {
 
 	function generateRegisterLink() {
 		if ($this->isRegisterLinkSet()) {
+			$_SESSION['feedback'] = '';
 			return' <a href="/">Back to login</a>';
 		} else {
 			return' <a href="?register">Register a new user</a>';
