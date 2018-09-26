@@ -23,9 +23,7 @@ class RegisterNewUser
 			";
 
 			if (!$isDuplicate) {
-				$dbConnection->query($sql)
-			} else {
-				// message
+				$dbConnection->query($sql);
 			}
 
 			$db->stopDb();
