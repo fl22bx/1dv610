@@ -5,7 +5,9 @@ class DateTimeView {
 
 	public function show() {
 		date_default_timezone_set('America/Los_Angeles');
-		$date = date('l\, jS \of F Y\,');
+		$date = date('l\,');
+		$date .= ' the ';
+		$date  .= date('jS \of F Y\,');
 		$date .= ' The time is ';
 		$date .= date('H\:i');
 

@@ -15,8 +15,8 @@ class RegisterView
 	private static $register = 'DoRegistration';
 
 	function handelView ($inputMessage) {
-
 		return $this->render($inputMessage);
+
 	}
 
 	function render($message)
@@ -28,7 +28,7 @@ class RegisterView
 					<p id="' . self::$message . '">' . $message . '</p>
 					
 					<label for="' . self::$userName . '">Username :</label>
-					<input type="text" id="' . self::$userName . '" name="' . self::$userName . '" value="' . $this->usedUsername() .'" />
+					<input type="text" id="' . self::$userName . '" name="' . self::$userName . '" value="' . $this->usedUsername($message) .'" />
 					<br />
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -43,7 +43,7 @@ class RegisterView
 		';
 	}
 
-	private function usedUsername () {
+	private function usedUsername ($message) {
 		if (!$this->checkPasswordLengthIsMoreThen6()) {
 			return $this->getUsername();
 		} else if (!$this->isUsernameLongerThenThree()) {
@@ -52,6 +52,11 @@ class RegisterView
 			return $this->getUsername();
 		} else if (!$this->checkIfPasswordMatches()) {
 			return $this->getUsername();
+		} else if ($this->checkIfinValidChar()) {
+			$username = $this->getUsername();
+			return strip_tags($username);
+		}else if ($message != '') {
+    		return $this->getUsername();
 		}
 		return '';
 		
@@ -80,6 +85,17 @@ class RegisterView
 		if (isset($_POST[self::$userName])) {
 			return $_POST[self::$userName];
 		}
+	}
+
+	private function checkIfinValidChar() {
+		$username = $this->getUsername();
+		$regExp = '/[<>]/';
+		if (isset($username) && preg_match($regExp, $username, $matches)) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	// feedback
@@ -126,11 +142,13 @@ class RegisterView
 	public function registerViewDispatchFeedbackAction () {
 		if (!$this->checkIfPasswordMatches()) {
 			return 'DOPASSWORDMATCH';
-		} else if (!$this->checkPasswordLengthIsMoreThen6()) {
-			return "PASSWORDLONGERTHEN6";
 		} else if (!$this->isUsernameLongerThenThree()) {
 			return 'USERNAMESHORTERTHENSIX';
-		} 
+		}  else if (!$this->checkPasswordLengthIsMoreThen6()) {
+			return "PASSWORDLONGERTHEN6";
+		} else if ($this->checkIfinValidChar()) {
+			return 'INVALIDCHARACTERS';
+		}
 
 		return "";
 	}

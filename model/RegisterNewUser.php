@@ -14,19 +14,20 @@ class RegisterNewUser
 
 			$isDuplicate = self::isUserDuplicate($dbConnection,$username);
 
-			var_dump($t);
-
-
-
 			$sql = "INSERT INTO User (name, password)
 					VALUES('$username', '$password')
 			";
 
 			if (!$isDuplicate) {
 				$dbConnection->query($sql);
-			}
 
-			$db->stopDb();
+			} else {
+				$db->stopDb();				
+				return 'USERISADUPLICATE';
+			}
+				$db->stopDb();
+				return '';
+
 	}
 
 			private static function isUserDuplicate($dbConnection, $username) {
@@ -38,6 +39,7 @@ class RegisterNewUser
 		
 				$tmp = mysqli_fetch_assoc($result);
 
-				return !isset($tmp["name"]);
+				return isset($tmp["name"]);
+
 			}
 }

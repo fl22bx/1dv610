@@ -5,7 +5,6 @@ require_once('view/LayoutView.php');
 require_once('view/RegisterView.php');
 require_once('model/RegisterNewUser.php');
 require_once('model/UserDbAuthenticator.php');
-
 /**
 	 * 
 	 */
@@ -21,6 +20,7 @@ require_once('model/UserDbAuthenticator.php');
 		private $authenticated;
 		private $passwordHash;
 		private $db;
+		private $feedbackFromModel = "";
 
 
 
@@ -39,7 +39,6 @@ require_once('model/UserDbAuthenticator.php');
 		}
 
 		function logInController () {
-
 			if (isset($_POST['LoginView::Password'])) {
 				$this->passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
 			}
@@ -85,9 +84,14 @@ require_once('model/UserDbAuthenticator.php');
 		public function registerNewUserInDB () {
 			$tmpNewUserArray = $this->RegisterView->newUserDetailsArray();
 			if($this->RegisterView->registerViewDispatchFeedbackAction() == '' && isset($tmpNewUserArray['username'])) {
-				$dbHandler = RegisterNewUser::setNewUser($tmpNewUserArray, $this->db);
+				$this->feedbackFromModel = RegisterNewUser::setNewUser($tmpNewUserArray, $this->db);
+				$this->redirect($tmpNewUserArray['username']);
 			}
 
+		}
+
+		private function redirect($username) {
+			header("Location:/?username=$username&message=registersucess");
 		}
 
 		private function sessionHandler () {
@@ -133,10 +137,9 @@ require_once('model/UserDbAuthenticator.php');
 				$feedbackMessage = $checkFeedbackLogInView;
 			} else if ($checkFeedbackRegisterView != '') {
 				$feedbackMessage = $checkFeedbackRegisterView;
+			} else if ($this->feedbackFromModel != '') {
+				$feedbackMessage = $this->feedbackFromModel;
 			}
-
-
-
 			return $this->feedbackCreator->CreateFeedback($feedbackMessage);
 		}
 

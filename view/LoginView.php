@@ -34,7 +34,7 @@ class LoginView {
 		if ($loggedInBool) {
 			 $response = $this->generateLogoutButtonHTML($message);
 		}
-		
+
 		$this->generateCoockie();
 		
 		return $response;
@@ -104,7 +104,9 @@ class LoginView {
 	}
 
 	private function usedUsername () {
-		if (!$this->loggedIn) {
+		if (isset($_GET['username'])){
+			return $_GET['username'];
+		}else if (!$this->loggedIn) {
 			return $this->getRequestUserName();
 		} else {
 			$UsernameUsed = '';
@@ -178,6 +180,13 @@ class LoginView {
 		}
 	}
 
+	private function getMessageFromGet () {
+		if(isset($_GET['message'])) {
+			return $_GET['message'];
+		}
+		return '';
+	}
+
 	public function feedbackChecker ($authenticated) {
 	 if ($this->isLoggedOutSet(!$authenticated)) {
 			return 'LOGGEDOUT';
@@ -196,6 +205,9 @@ class LoginView {
 
 		} else if ($this->missingPassword()) {
 			return 'MISSINGPASSWORD';
+
+		} else if ($this->getMessageFromGet() != '') {
+			return $this->getMessageFromGet();
 
 		} else {
 			return '';
