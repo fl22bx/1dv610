@@ -57,6 +57,12 @@ class RegisterView
 		
 	}
 
+	public function newUserDetailsArray () {
+		$newUser = $this->getUsername();
+		$newPassword = $this->getPassword(); 
+		return  array('username' => $newUser, 'password' => $newPassword);
+	}
+
 	private function getPassword () {
 		if (isset($_POST[self::$password])) {
 			return $_POST[self::$password];
@@ -120,10 +126,10 @@ class RegisterView
 	public function registerViewDispatchFeedbackAction () {
 		if (!$this->checkIfPasswordMatches()) {
 			return 'DOPASSWORDMATCH';
-		} else if (!$this->isUsernameLongerThenThree()) {
-			return 'USERNAMESHORTERTHENSIX';
 		} else if (!$this->checkPasswordLengthIsMoreThen6()) {
 			return "PASSWORDLONGERTHEN6";
+		} else if (!$this->isUsernameLongerThenThree()) {
+			return 'USERNAMESHORTERTHENSIX';
 		} 
 
 		return "";

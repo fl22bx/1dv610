@@ -2,6 +2,9 @@
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
+require_once('view/RegisterView.php');
+require_once('model/RegisterNewUser.php');
+require_once('model/UserDbAuthenticator.php');
 
 /**
 	 * 
@@ -17,18 +20,18 @@ require_once('view/LayoutView.php');
 		private $loggedInWithCookie;
 		private $authenticated;
 		private $passwordHash;
+		private $db;
 
 
 
-
-
-	function __construct( $LoginView,  $DateTimeView,  $LayoutView,  UserDbAuthenticator $authenticator, $feedbackCreator, RegisterView $r) {
-			$this->DateTimeView = $DateTimeView;
-			$this->LoginView = $LoginView;
-			$this->LayoutView = $LayoutView;
-			$this->authenticator = $authenticator;
+	function __construct($dataBase, $feedbackCreator) {
+			$this->db = $dataBase;
+			$this->LoginView = new LoginView();
+			$this->DateTimeView = new DateTimeView();
+			$this->LayoutView = new LayoutView();
+			$this->RegisterView = new RegisterView();
+			$this->authenticator = new UserDbAuthenticator($this->db);
 			$this->feedbackCreator = $feedbackCreator;
-			$this->RegisterView = $r;
 			$this->sessionHandler();
 
 			
@@ -52,16 +55,11 @@ require_once('view/LayoutView.php');
 				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
 			}
 
-			// egen funktion
-			if (isset($_COOKIE['LoginView::CookieName'])) {
-				$this->loggedInWithCookie = $this->authenticated;
-			}
+			$this->registerNewUserInDB();
 
 			$_SESSION['loggedIn'] = $this->authenticated;
 	
 			$feedback = $this->feedbackHandlerer();
-
-	
 
 
 
@@ -81,6 +79,14 @@ require_once('view/LayoutView.php');
 			$_SESSION['loggedIn'] = false;
 
 			$this->authenticated = false;
+
+		}
+
+		public function registerNewUserInDB () {
+			$tmpNewUserArray = $this->RegisterView->newUserDetailsArray();
+			if($this->RegisterView->registerViewDispatchFeedbackAction() == '' && isset($tmpNewUserArray['username'])) {
+				$dbHandler = RegisterNewUser::setNewUser($tmpNewUserArray, $this->db);
+			}
 
 		}
 

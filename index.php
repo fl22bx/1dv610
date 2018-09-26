@@ -5,23 +5,19 @@ require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
 require_once('model/db.php');
-require_once('model/UserDbAuthenticator.php');
+
 require_once('controller/ViewController.php');
-require_once('model/FeedbackCreator.php');
 require_once('view/RegisterView.php');
 require_once('model/FeedbackMessageCreator.php');
 
 // start DataBase
-	 $dbServername = "localhost";
+	$dbServername = "localhost";
 	$dbUsername = "fredrik";
 	$dbPassword = "test";
 	$dbName = "user";
 	$dataBase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
-	$dataBase->connect();
-
-// create authenticator
-	$UserDbAuthenticator = new UserDbAuthenticator($dataBase->getdbName() , $dataBase->getConnection() );
+	// $dataBase->connect();
 
 // feedbackCreator
 	// $feedback = new FeedbackCreator();
@@ -31,13 +27,7 @@ require_once('model/FeedbackMessageCreator.php');
 	error_reporting(E_ALL);
 	ini_set('display_errors', 'On');
 
-//CREATE OBJECTS OF THE VIEWS
-	$v = new LoginView();
-	$dtv = new DateTimeView();
-	$lv = new LayoutView();
-	$r = new RegisterView();
-
 // Create Controller
-	$Controller = new ViewController($v ,$dtv,$lv ,$UserDbAuthenticator, $feedback, $r );
+	$Controller = new ViewController($dataBase, $feedback );
 	$Controller->logInController();
 

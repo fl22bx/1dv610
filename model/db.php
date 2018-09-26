@@ -17,12 +17,17 @@
 		public function connect () {
 			$this->dbConnection = mysqli_connect($this->servername, $this->username, $this->password, $this->dbName);
 
-if($this->dbConnection == false)
-{
-   die(mysqli_connect_error());
-}
+			if($this->dbConnection == false)
+			{
+			   die(mysqli_connect_error());
+			}
 
 		}
+
+		public function stopDb () {
+			$this->dbConnection->close();
+		}
+
 
 		public function getdbName () {
 			return $this->dbName;

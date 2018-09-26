@@ -32,9 +32,9 @@ class LoginView {
 		}
 
 		if ($loggedInBool) {
-			//$response .= $this->generateLogoutButtonHTML($message);
 			 $response = $this->generateLogoutButtonHTML($message);
 		}
+		
 		$this->generateCoockie();
 		
 		return $response;

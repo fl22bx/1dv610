@@ -5,13 +5,15 @@ class DateTimeView {
 
 	public function show() {
 		date_default_timezone_set('America/Los_Angeles');
-		$date = getdate();
+		$date = date('l\, jS \of F Y\,');
+		$date .= ' The time is ';
+		$date .= date('H\:i');
 
-		$timeString = "$date[weekday], the $date[mday]th of $date[month] $date[year], The time is ";
-		$time =  "$date[hours]:$date[minutes]";
+		// $timeString = "$date[weekday], the $date[mday] of $date[month] $date[year], The time is ";
+		// $time =  "$date[hours]:$date[minutes]";
 
 
 
-		return "<p> $timeString $time</p>";
+		return "<p> $date</p>";
 	}
 }
