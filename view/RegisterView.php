@@ -142,7 +142,9 @@ class RegisterView
 	public function registerViewDispatchFeedbackAction () {
 		if (!$this->checkIfPasswordMatches()) {
 			return 'DOPASSWORDMATCH';
-		} else if (!$this->isUsernameLongerThenThree()) {
+		} else if (!$this->isUsernameLongerThenThree() && !$this->checkPasswordLengthIsMoreThen6()) {
+			return 'USERNAMEANDPASSWORDISTOSHORT';
+		}else if (!$this->isUsernameLongerThenThree()) {
 			return 'USERNAMESHORTERTHENSIX';
 		}  else if (!$this->checkPasswordLengthIsMoreThen6()) {
 			return "PASSWORDLONGERTHEN6";
