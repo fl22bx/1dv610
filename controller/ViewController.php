@@ -50,7 +50,7 @@ require_once('model/UserDbAuthenticator.php');
 			} else if (isset($_COOKIE['LoginView::CookieName']) && isset($_COOKIE['LoginView::CookiePassword'])) {
 				$this->authenticated = $this->authenticator->authenticateUser($_COOKIE['LoginView::CookieName'],$_COOKIE['LoginView::CookiePassword']);
 				
-			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"])) {
+			} else if (isset($_SESSION["username"]) && isset($_SESSION["password"]) && $_SESSION['agent'] == $_SERVER['HTTP_USER_AGENT']) {
 				$this->authenticated = $this->authenticator->authenticateUser($_SESSION["username"], $_SESSION["password"]);
 			}
 
@@ -114,6 +114,10 @@ require_once('model/UserDbAuthenticator.php');
 
 			if (!isset($_SESSION['hasBeenLoggedIn']))  {
 				$_SESSION['hasBeenLoggedIn'] = false;
+			}
+
+			if (!isset($_SESSION['agent']))  {
+				$_SESSION['agent'] = $_SERVER['HTTP_USER_AGENT'];
 			}
 
 
