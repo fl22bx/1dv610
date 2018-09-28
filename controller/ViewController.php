@@ -121,7 +121,6 @@ require_once('model/UserDbAuthenticator.php');
 */
 		private function redirect($username) {
 			header("Location:/?username=$username&message=registersucess");
-			unset($_GET["register"]);
 		}
 
 		private function sessionHandler () {
