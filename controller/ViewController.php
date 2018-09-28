@@ -151,7 +151,6 @@ require_once('model/UserDbAuthenticator.php');
 
 /*
 	set session
-
 */
 		private function setSessionAuth () {
 		if ($this->authenticated && isset($_POST['LoginView::UserName']) && isset($_POST['LoginView::Password'])){
