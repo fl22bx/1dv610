@@ -19,6 +19,10 @@ class RegisterView
 
 	}
 
+	/*
+	Render register form
+
+	*/
 	function render($message)
 	{
 		return '
@@ -43,6 +47,10 @@ class RegisterView
 		';
 	}
 
+/*
+	if error returns wich username
+
+*/
 	private function usedUsername ($message) {
 		if (!$this->checkPasswordLengthIsMoreThen6()) {
 			return $this->getUsername();
@@ -62,12 +70,20 @@ class RegisterView
 		
 	}
 
+/*
+	new user array
+
+*/
 	public function newUserDetailsArray () {
 		$newUser = $this->getUsername();
 		$newPassword = $this->getPassword(); 
 		return  array('username' => $newUser, 'password' => $newPassword);
 	}
 
+/*
+	password from post
+
+*/
 	private function getPassword () {
 		if (isset($_POST[self::$password])) {
 			return $_POST[self::$password];
@@ -81,12 +97,20 @@ class RegisterView
 		}
 	}
 
+/*
+	username from post
+
+*/
 		private function getUsername () {
 		if (isset($_POST[self::$userName])) {
 			return $_POST[self::$userName];
 		}
 	}
 
+/*
+	check input for invalid characters
+
+*/
 	private function checkIfinValidChar() {
 		$username = $this->getUsername();
 		$regExp = '/[<>]/';
@@ -98,7 +122,10 @@ class RegisterView
 
 	}
 
-	// feedback
+/*
+	chackes if password matches
+
+*/
 
 		public function checkIfPasswordMatches() : bool {
 		$password = $this->getPassword();
@@ -114,6 +141,10 @@ class RegisterView
 		return true;
 	}
 
+/*
+	passwordvalidation
+
+*/
 	public function checkPasswordLengthIsMoreThen6() : bool  {
 		$password = $this->getPassword();
 		if (isset($password)) {
@@ -139,6 +170,10 @@ class RegisterView
 			return true;
 	}
 
+/*
+	flash dispatcher
+
+*/
 	public function registerViewDispatchFeedbackAction () {
 		if (!$this->checkIfPasswordMatches()) {
 			return 'DOPASSWORDMATCH';

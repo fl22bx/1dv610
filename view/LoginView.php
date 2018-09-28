@@ -41,6 +41,10 @@ class LoginView {
 	}
 
 
+	/*
+	Set cookie
+
+	*/	
 	public function generateCoockie () {
 
 		if (isset($_POST[self::$keep]) && $this->loggedInl = true ) {
@@ -94,6 +98,10 @@ class LoginView {
 		';
 	}
 
+	/*
+	Render register Link
+
+	*/
 	private function generateRegisterLink() {
 		if ($this->isRegisterLinkSet()) {
 			$_SESSION['feedback'] = '';
@@ -103,6 +111,11 @@ class LoginView {
 		}
 
 	}
+
+	/*
+	Checks if not logged unseccesfull and return wich username
+
+	*/
 
 	private function usedUsername () {
 		if (isset($_GET['username'])){
@@ -130,9 +143,6 @@ class LoginView {
 			return '';
 		}
 	}
-
-
-
 
 	private function isRegisterLinkSet() : bool {
 		return isset($_GET['register']);
@@ -191,6 +201,11 @@ class LoginView {
 		}
 		return false;
 	}
+
+	/*
+	Dispatch flashmessage
+
+	*/
 
 	public function feedbackChecker ($authenticated) {
 	 if ($this->isLoggedOutSet(!$authenticated)) {

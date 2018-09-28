@@ -14,6 +14,10 @@
 			$this->dbName = $DbName;
 		} 
 
+/*
+	connects to db
+
+*/
 		public function connect () {
 			$this->dbConnection = mysqli_connect($this->servername, $this->username, $this->password, $this->dbName);
 
@@ -24,6 +28,10 @@
 
 		}
 
+/*
+	stops db
+
+*/
 		public function stopDb () {
 			$this->dbConnection->close();
 		}
@@ -44,18 +52,3 @@
 		}
 
 	}
-
-/*
-function queryUser ($user) {
-
-// query string
-$sql = "SELECT $user from user;";
-// query
-$result = mysqli_query($conn, $sql);
-// query to array
-$row = mysqli_fetch_assoc($result);
-}
-*/
-
-//$sql = "INSERT INTO User (name, password)
-//VALUES ('fredrik', 'test')";

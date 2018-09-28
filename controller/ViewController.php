@@ -38,6 +38,11 @@ require_once('model/UserDbAuthenticator.php');
 			
 		}
 
+/*
+	main controller
+
+*/
+
 		function logInController () {
 			if (isset($_POST['LoginView::Password'])) {
 				$this->passwordHash = password_hash($_POST['LoginView::Password'], PASSWORD_DEFAULT);
@@ -76,6 +81,10 @@ require_once('model/UserDbAuthenticator.php');
 			$this->setSessionAuth();
 		}
 
+/*
+	destroys session
+
+*/
 		private function endSession () {
 			if (isset($_COOKIE['LoginView::CookieName'])) {
 				setcookie('LoginView::CookieName');
@@ -90,6 +99,10 @@ require_once('model/UserDbAuthenticator.php');
 
 		}
 
+/*
+	saves new user in db
+
+*/
 		public function registerNewUserInDB () {
 			$tmpNewUserArray = $this->RegisterView->newUserDetailsArray();
 			if($this->RegisterView->registerViewDispatchFeedbackAction() == '' && isset($tmpNewUserArray['username'])) {
@@ -102,6 +115,10 @@ require_once('model/UserDbAuthenticator.php');
 
 		}
 
+/*
+	link handler
+
+*/
 		private function redirect($username) {
 			header("Location:/?username=$username&message=registersucess");
 		}
@@ -132,6 +149,10 @@ require_once('model/UserDbAuthenticator.php');
 
 		}
 
+/*
+	set session
+
+*/
 		private function setSessionAuth () {
 		if ($this->authenticated && isset($_POST['LoginView::UserName']) && isset($_POST['LoginView::Password'])){
 			$_SESSION["username"] = $_POST['LoginView::UserName'];
@@ -144,6 +165,10 @@ require_once('model/UserDbAuthenticator.php');
 		
 		}
 
+/*
+	actions to feedbackcreator
+
+*/
 		private function feedbackHandlerer () {
 			$feedbackMessage = '';
 			$checkFeedbackLogInView = $this->LoginView->feedbackChecker($this->authenticated);

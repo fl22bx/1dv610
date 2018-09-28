@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * 
+ *  save new user
  */
 class RegisterNewUser
 {

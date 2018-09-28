@@ -3,6 +3,10 @@
 
 class LayoutView {
   
+  /*
+  LayoutView
+
+  */
   public function render($isLoggedIn, LoginView $v, DateTimeView $dtv, $inputMessage, RegisterView $r) {
         echo '<!DOCTYPE html>
       <html>
@@ -24,6 +28,10 @@ class LayoutView {
     ';
   }
   
+  /*
+  Logged in header
+
+  */
   private function renderIsLoggedIn($isLoggedIn) {
     if ($isLoggedIn) {
       return '<h2>Logged in</h2>';

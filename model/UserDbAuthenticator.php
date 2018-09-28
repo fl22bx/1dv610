@@ -10,6 +10,10 @@ class UserDbAuthenticator {
 		$this->db = $db;
 	}
 
+/*
+	authenticates user
+
+*/
 	public function authenticateUser ($username, $password) : bool {
 		$this->db->connect();
 

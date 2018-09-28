@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * 
+ * generates flash messages
  */
 class FeedbackMessageCreator 
 {
@@ -22,7 +22,7 @@ class FeedbackMessageCreator
 	private $userDuplicateMessage = "User exists, pick another username.";
 	private $cookieManupulationMessage = "Wrong information in cookies";
 
-	// Messageconditionals
+	// actions
 	private $loggedOutCondition = 'LOGGEDOUT';
 	private $loggedInCondition = 'LOGGEDIN';
 	private $wrongCredentialsCondition = 'WRONGCREDENTIALS';
@@ -39,6 +39,10 @@ class FeedbackMessageCreator
 	private $dbUserIsDuplicated = 'USERISADUPLICATE';
 	private $cookieManipulation = 'COOKIEMANIPULATION';
 	
+	/*
+	handles wich message to display
+
+	*/
 	function CreateFeedback($conditional)
 	{
 
@@ -114,7 +118,8 @@ class FeedbackMessageCreator
 			case $this->rememberMe:
 				if ($_SESSION['feedback'] != $this->cookieWelcome && $_SESSION['feedback'] != $this->welcome&& $_SESSION['feedback'] != $this->remembermemessage) {
 					$_SESSION['feedback'] = $this->cookieWelcome;
-					return $this->remembermemessage;					}
+					return $this->remembermemessage;
+				}
 					break;		
 
 			default:
