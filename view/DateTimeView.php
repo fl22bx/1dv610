@@ -2,7 +2,7 @@
 
 class DateTimeView {
 
-*/
+/*
 	Render date and time
 
 */
