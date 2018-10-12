@@ -18,7 +18,7 @@
 	connects to db
 
 */
-		public function connect () {
+		public function connect () : void {
 			$this->dbConnection = mysqli_connect($this->servername, $this->username, $this->password, $this->dbName);
 
 			if($this->dbConnection == false)
@@ -27,6 +27,33 @@
 			}
 
 		}
+			public function setNewUser (User $user) : void {
+			$db->connect();
+			$isDuplicate = $this->isUserDuplicate($this->dbConnection,$username);
+			if($isDuplicate)
+				throw new Exception();
+
+			$sql = "INSERT INTO User (name, password)
+					VALUES('$username', '$password')
+			";
+
+			$dbConnection->query($sql);
+			$db->stopDb();
+
+	}
+
+			private function isUserDuplicate(string $dbConnection, string $username) : bool {
+
+				$sql = " SELECT * from User
+					WHERE name = '$username';
+					";
+				$result = mysqli_query($dbConnection, $sql);
+		
+				$tmp = mysqli_fetch_assoc($result);
+
+				return isset($tmp["name"]);
+
+			}
 
 /*
 	stops db
@@ -37,17 +64,9 @@
 		}
 
 
-		public function getdbName () {
-			return $this->dbName;
-		}
-
-		public function getConnection () {
-			return $this->dbConnection;
-		}
-
 		private function displayErrors () {
 			if ($conn->connect_error) {
-    		echo "Failed to connect to database: " . mysqli_connect_error();
+    		throw new Exception();
 			} 
 		}
 
