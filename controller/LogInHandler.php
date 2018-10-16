@@ -7,15 +7,18 @@ class LogInHandler
 {
 	private $_layoutView;
 	private $_logInView;
+	private $_registerView;
 	private $_logInDb;
 	private $_loggedInUser = null;
 	private $_exceptionHandlerview;
 
+
 	
-	function __construct(LoginView $logInView, LayoutView $layoutView, LogInPercistency $logInDb, ExceptionHandlerView $exceptionHandlerview)
+	function __construct(LoginView $logInView, LayoutView $layoutView, LogInPercistency $logInDb, ExceptionHandlerView $exceptionHandlerview, RegisterView $registerView)
 	{
 			$this->_layoutView = $layoutView;
 			$this->_logInView = $logInView;
+			$this->_registerView = $registerView;
 			$this->_exceptionHandlerview = $exceptionHandlerview;
 			$this->_logInDb = $logInDb;
 	}
@@ -24,6 +27,7 @@ class LogInHandler
 		try {
 			$msg = "";
 			$this->handleLogOutRequest();
+			$this->handleCookiesLogIn();
 			$this->handleSession();
 			$this->handleLogInTry();
 			$this->handleKeepMeLoggedIn();
@@ -31,8 +35,18 @@ class LogInHandler
 		} catch (exception $e) {
 			$msg = $e->getMessage();
 		} finally {
-			$this->_layoutView->render($this->isLoggedIn(), $this->_logInView, $msg);
+			$this->_logInView->setLoggedInStatus($this->isLoggedIn());
+			$viewToRender = $this->navigateLogInView();
+			$this->_layoutView->render($this->isLoggedIn(), $viewToRender, $msg);
 		}
+
+	}
+
+	private function navigateLogInView () : IDivHtml {
+		if ($this->_logInView->wantsToRegister())
+			return $this->_registerView;
+		else 
+			return $this->_logInView;
 
 	}
 
@@ -60,6 +74,13 @@ class LogInHandler
 		if ($this->_logInView->wantsToStayLoggedIn()) 
 			$this->_logInView->stayLoggedIn($this->_loggedInUser->GetName(),$this->_loggedInUser->GetPassword());
 
+	}
+
+	private function handleCookiesLogIn() : void {
+		if($this->_logInView->isCookieSet()) {
+			$this->_loggedInUser = new User($this->_logInView->getCookieUsername(), $this->_logInView->getCookiePassword());
+			$this->_logInView->setCookieMessage();
+		} 
 	}
 
 	private function isLoggedIn() : bool {

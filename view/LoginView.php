@@ -10,8 +10,10 @@ class LoginView implements IDivHtml {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
+	private static $registerView = 'RegisterView';
 
 	private $_message;
+	private $_isLoggedIn;
 
 	/**
 	 * Create HTTP response
@@ -20,8 +22,8 @@ class LoginView implements IDivHtml {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response(bool $isLoggedIn) {
-		if($isLoggedIn) {
+	public function response() {
+		if($this->_isLoggedIn) {
 			$this->setWelcomeMessage();
 			$response = $this->generateLogoutButtonHTML();
 		} else {
@@ -68,6 +70,7 @@ class LoginView implements IDivHtml {
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
 			</form>
+					<a href="?' . self::$registerView . '">Register a new user</a>
 		';
 	}
 	
@@ -79,6 +82,10 @@ class LoginView implements IDivHtml {
 			return true;
 		else
 			return false;
+	}
+
+	public function setLoggedInStatus(bool $loggedInStatus) : void {
+		$this->_isLoggedIn = $loggedInStatus;
 	}
 
 	public function setMessage (string $message) : void {
@@ -93,6 +100,11 @@ class LoginView implements IDivHtml {
 	public function setByeMessage () : void {
 		// check if session maby or loged in before? not exist dont render
 		$this->setMessage("ByeBye");
+	}
+
+		public function setCookieMessage () : void {
+		// check if session maby or loged in before? not exist dont render
+		$this->setMessage("Welcome with cookie");
 	}
 
 	public function getRequestUserName() : string {
@@ -114,9 +126,26 @@ class LoginView implements IDivHtml {
 		return isset($_POST[self::$keep]);
 	}
 
+	public function isCookieSet() : bool {
+		$bool = isset($_COOKIE[self::$cookieName]);
+		return $bool;
+	}
+
+	public function getCookiePassword () : string {
+		return $_COOKIE[self::$cookiePassword];
+	}
+
+	public function getCookieUsername () : string {
+		return $_COOKIE[self::$cookieName];
+	}
+
 	public function stayLoggedIn (string $username, string $password) : void {
 		setcookie(self::$cookieName, $username, time()+60);
 		setcookie(self::$cookiePassword, $password, time()+60);
+	}
+
+	public function wantsToRegister() : bool {
+		return isset($_GET[self::$registerView]);
 	}
 	
 }

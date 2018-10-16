@@ -2,6 +2,6 @@
 
 interface IDivHtml
 {
-    public function response(bool $isLoggedIn);
+    public function response();
     public function setMessage(string $message);
 }

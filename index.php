@@ -4,6 +4,7 @@
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
+require_once('view/RegisterView.php');
 require_once('view/ExceptionHandlerView.php');
 require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
@@ -32,9 +33,10 @@ $v = new LoginView();
 $dtv = new DateTimeView();
 $lv = new LayoutView($dtv );
 $ehv = new ExceptionHandlerView();
+$rv = new RegisterView();
 
 //CREATE CONTROLLER
-$c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv);
+$c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
 $c->startLogInHandler();
 
 // $lv->render(false, $v, $dtv);
