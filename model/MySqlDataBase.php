@@ -6,6 +6,7 @@
 		private $dbName;
 		private $dbConnection;
 
+
 		 function __construct ($Servername, $Username,$password, $DbName){
 
 			$this->servername = $Servername;
@@ -27,6 +28,16 @@
 			}
 
 		}
+
+		/*
+	stops db
+
+	*/
+		public function stopDb () {
+			$this->dbConnection->close();
+		}
+
+
 			public function setNewUser (User $user) : void {
 			$db->connect();
 			$isDuplicate = $this->isUserDuplicate($this->dbConnection,$username);
@@ -42,32 +53,9 @@
 
 	}
 
-			private function isUserDuplicate(string $dbConnection, string $username) : bool {
 
-				$sql = " SELECT * from User
-					WHERE name = '$username';
-					";
-				$result = mysqli_query($dbConnection, $sql);
-		
-				$tmp = mysqli_fetch_assoc($result);
-
-				return isset($tmp["name"]);
-
-			}
-
-/*
-	stops db
-
-*/
-		public function stopDb () {
-			$this->dbConnection->close();
-		}
-
-
-		private function displayErrors () {
-			if ($conn->connect_error) {
-    		throw new Exception();
-			} 
-		}
+	public function getConnection () {
+		return $this->dbConnection;
+	}
 
 	}

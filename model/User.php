@@ -9,33 +9,36 @@ class User
 	private  $_password;
 
 	public function GetName () : string {
-		return $_name;
+		return $this->_name;
 	}
 
 	public function GetPassword () : string {
-		return $_password;
+		return $this->_password;
 	}
 	
 	function __construct(string $name, string $password )
 	{
+		if($name == "")
+			throw new Exception("name_missing", 10);
+		if($password == "")
+			throw new Exception("password_missing", 11);
 		$this->setName($name);
 		$this->setPassword($password) ;// hash
 
-		// validate throw errors
 	}
 
 	private function setName (string $name) : void {
-		if(strlen($name) >= 3)
-			throw new Exception(1);
+		if(strlen($name) <= 3)
+			throw new Exception("name_to_short", 12);
 		if (preg_match('/[<>]/', $name))
-			throw new Exception(3);
+			throw new Exception("invalid_char", 13);
 		
 		$this->_name = $name;
 	}
 
 	private function setPassword (string $password) : void {
 		if(strlen($password) >= 6)
-			throw new Exception(2);
+			throw new Exception("password_to_short", 14);
 		$this->_password = $password;
 	}
 }
