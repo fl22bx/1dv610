@@ -30,17 +30,12 @@ class LogInPercistency
 	}
 
 
-		public function getUserFromDB(string $username, string $password) : user {
+		public function isAuthenticated (User $user) : bool {
 			$this->_sqlDatabase->connect();
-			$userFromDatabase = $this->queryDatabaseForUser($username);
-			$isAuthenticated = $this->authenticateUser($password, $userFromDatabase['password']);
+			$userFromDatabase = $this->queryDatabaseForUser($user->GetName());
+			$isAuthenticated = $this->authenticateUser($user->GetPassword(), $userFromDatabase['password']);
 			$this->_sqlDatabase->stopDb();
-
-			if(!$isAuthenticated)
-				throw new Exception("not_auth", 21);
-			$user = new User($userFromDatabase['name'], $userFromDatabase['password']);
-			return $user;
-				
+			return $isAuthenticated;
 		}
 
 		private function authenticateUser (string $Inputpassword, string $Dbpassword) : bool {

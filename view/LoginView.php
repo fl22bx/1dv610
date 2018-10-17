@@ -13,7 +13,7 @@ class LoginView implements IDivHtml {
 	private static $registerView = 'RegisterView';
 
 	private $_message;
-	private $_isLoggedIn;
+	private $_loggedInUser;
 
 	/**
 	 * Create HTTP response
@@ -23,7 +23,7 @@ class LoginView implements IDivHtml {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		if($this->_isLoggedIn) {
+		if($this->userIsLoggedIn()) {
 			$this->setWelcomeMessage();
 			$response = $this->generateLogoutButtonHTML();
 		} else {
@@ -84,9 +84,13 @@ class LoginView implements IDivHtml {
 			return false;
 	}
 
-	public function setLoggedInStatus(bool $loggedInStatus) : void {
-		$this->_isLoggedIn = $loggedInStatus;
-	}
+	private function userIsLoggedIn() : bool {
+    	if (isset($this->_loggedInUser))
+     	 return $this->_loggedInUser->isLoggedIn();
+    	else
+     	 return false;
+  }
+
 
 	public function setMessage (string $message) : void {
 		$this->_message .= $message;
@@ -107,8 +111,13 @@ class LoginView implements IDivHtml {
 		$this->setMessage("Welcome with cookie");
 	}
 
+	  public function setUser(User $user = null) : void {
+    	$this->_loggedInUser = $user;
+  		}	
+
 	public function getRequestUserName() : string {
-		return $_POST[self::$name];
+		$username =  $_POST[self::$name];
+		return $username;
 	}
 
 	public function getRequestPassword() : string {

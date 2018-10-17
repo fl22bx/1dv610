@@ -7,6 +7,7 @@ class User
 {
 	private  $_name;
 	private  $_password;
+	private $_authenticated = false;
 
 	public function GetName () : string {
 		return $this->_name;
@@ -14,6 +15,10 @@ class User
 
 	public function GetPassword () : string {
 		return $this->_password;
+	}
+
+	public function isLoggedIn() : bool {
+		return $this->_authenticated;
 	}
 	
 	function __construct(string $name, string $password )
@@ -40,5 +45,9 @@ class User
 		if(strlen($password) >= 6)
 			throw new Exception("password_to_short", 14);
 		$this->_password = $password;
+	}
+
+	public function setAuthenticated(bool $authenticated) : void{
+		$this->_authenticated = $authenticated;
 	}
 }

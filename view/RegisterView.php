@@ -12,6 +12,7 @@ class RegisterView implements IDivHtml
 	private static $register = 'DoRegistration';
 
 	private $_message = "";
+	private $_loggedInUser;
 	
 		function response() : string {
 		return '
@@ -42,6 +43,10 @@ class RegisterView implements IDivHtml
 		// todo: set sused username
 		return "";
 	}
+
+	 public function setUser(User $user = null) : void {
+    	$this->_loggedInUser = $user;
+  	}	
 
 	public function setMessage (string $message) : void {
 		$this->_message .= $message;

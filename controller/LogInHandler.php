@@ -9,7 +9,7 @@ class LogInHandler
 	private $_logInView;
 	private $_registerView;
 	private $_logInDb;
-	private $_loggedInUser = null;
+	private $_loggedInUser;
 	private $_exceptionHandlerview;
 
 
@@ -35,11 +35,16 @@ class LogInHandler
 		} catch (exception $e) {
 			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
 		} finally {
-			$this->_logInView->setLoggedInStatus($this->isLoggedIn());
+			$this->setLogedInUserToView();
 			$viewToRender = $this->navigateLogInView();
-			$this->_layoutView->render($this->isLoggedIn(), $viewToRender, $msg);
+			$this->_layoutView->startView($viewToRender, $msg);
 		}
 
+	}
+
+	private function setLogedInUserToView() : void {
+		if(isset($this->_loggedInUser))
+			$this->_layoutView->setUser($this->_loggedInUser);
 	}
 
 	private function navigateLogInView () : IDivHtml {
@@ -65,7 +70,13 @@ class LogInHandler
 		if($isLogInTry) {
 		$userName = $this->_logInView->getRequestUserName();
 		$password = $this->_logInView->getRequestPassword();
-		$this->_loggedInUser = $this->_logInDb->getUserFromDB($userName, $password);
+		$this->_loggedInUser = new User($userName, $password);
+		$authenticated = $this->_logInDb->isAuthenticated($this->_loggedInUser);
+		$this->_loggedInUser->setAuthenticated($authenticated);
+
+		if (!$authenticated)
+			throw new Exception("not_auth", 21);
+			
 		$this->_logInDb->setSession($this->_loggedInUser);
 		}
 	}
@@ -76,14 +87,17 @@ class LogInHandler
 
 	}
 
+	private function isLoggedIn() : bool {
+		if(isset($this->_loggedInUser))
+			return $this->_loggedInUser->isLoggedIn();
+		else
+			return false;
+	}
+
 	private function handleCookiesLogIn() : void {
 		if($this->_logInView->isCookieSet()) {
 			$this->_loggedInUser = new User($this->_logInView->getCookieUsername(), $this->_logInView->getCookiePassword());
 			$this->_logInView->setCookieMessage();
 		} 
-	}
-
-	private function isLoggedIn() : bool {
-		return isset($this->_loggedInUser);
 	}
 }
