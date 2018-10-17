@@ -33,7 +33,7 @@ class LogInHandler
 			$this->handleKeepMeLoggedIn();
 
 		} catch (exception $e) {
-			$msg = $e->getMessage();
+			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
 		} finally {
 			$this->_logInView->setLoggedInStatus($this->isLoggedIn());
 			$viewToRender = $this->navigateLogInView();
