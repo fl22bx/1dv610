@@ -10,7 +10,7 @@ class LayoutView {
   }
 
   public function render($isLoggedIn, IDivHtml $ViewToRender, string $message = "") {
-    $ViewToRender->setMessage($message);
+    $ViewToRender->setMessage($message); // gör i controlelr
     echo '<!DOCTYPE html>
       <html>
         <head>
