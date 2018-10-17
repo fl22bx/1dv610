@@ -9,10 +9,10 @@ class ExceptionHandlerView
 	public function handleErrorRendering (Exception $e) {
 		switch ($e->getCode()) {
 			case 10:
-				return “Username is missing”;
+				return "Username is missing";
 				break;
 			case 11:
-				return “Password is missing”;
+				return "Password is missing";
 				break;
 			case 12:
 				# name smaller the 3
