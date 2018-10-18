@@ -93,7 +93,7 @@ class LoginView implements IDivHtml {
 	}
 
 	private function getMessage() : string {
-		if (isset($_GET[$this->registerSucess]))
+		if (isset($_GET[$this->registerSucess]) && !$this->_isSession)
 			$this->setMessage("Registered new user.");
 		return $this->_message;
 	}
@@ -147,7 +147,8 @@ class LoginView implements IDivHtml {
 	public function logInTry() : User {
 		$username =  $_POST[self::$name];
 		$password = $_POST[self::$password];
-		return new User($username, $password);
+		$user = new User($username, password_hash($password, PASSWORD_DEFAULT));
+		return $user;
 	}
 
 		public function isCookieSet() : bool {

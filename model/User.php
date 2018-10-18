@@ -41,7 +41,6 @@ class User
 	private function setPassword (string $password) : void {
 		if(strlen($password) < 6)
 			throw new Exception("password_to_short", 14);
-		#$password = password_hash($password, PASSWORD_DEFAULT);
 		$this->_password = $password;
 	}
 

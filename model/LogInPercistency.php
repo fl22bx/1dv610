@@ -59,11 +59,10 @@ class LogInPercistency
 		}
 
 		private function authenticateUser (string $Inputpassword, string $Dbpassword) : bool {
-		//isnt hashed yet, this part unhashes
-		#$bool = password_verify($Dbpassword, $Inputpassword);
-		#return $bool;
+		$bool = password_verify($Dbpassword, $Inputpassword);
+		return $bool;
 
-			 return ($Inputpassword == $Dbpassword) ? true : false;
+		#	 return ($Inputpassword == $Dbpassword) ? true : false;
 
 		}
 
