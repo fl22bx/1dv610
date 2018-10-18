@@ -122,7 +122,7 @@ class LoginView implements IDivHtml {
 	}
 
 		public function setCookieMessage () : void {
-		if($this->_isSession)
+		if(!$this->_isSession)
 			$this->setMessage("Welcome back with cookie");
 	}
 
