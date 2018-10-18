@@ -11,7 +11,7 @@ class LoginView implements IDivHtml {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
-	private static $registerView = 'RegisterView';
+	private static $registerView = 'register';
 
 	private $_message;
 	private $_loggedInUser;
