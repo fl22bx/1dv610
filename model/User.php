@@ -23,13 +23,8 @@ class User
 	
 	function __construct(string $name, string $password )
 	{
-
-		#if($name == "")
-		#	throw new Exception("name_missing", 10);
-		#if($password == "")
-		#	throw new Exception("password_missing", 11); // sätt i vie är view logic inte model
 		$this->setName($name);
-		$this->setPassword($password) ;// hash
+		$this->setPassword($password) ;
 
 
 	}
@@ -46,6 +41,7 @@ class User
 	private function setPassword (string $password) : void {
 		if(strlen($password) < 6)
 			throw new Exception("password_to_short", 14);
+		#$password = password_hash($password, PASSWORD_DEFAULT);
 		$this->_password = $password;
 	}
 

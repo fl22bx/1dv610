@@ -12,8 +12,8 @@ class LoginView implements IDivHtml {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	private static $registerView = 'register';
-	private static $registerSucess = "username";
-
+	
+	private $registerSucess = "username";
 	private $_message = "";
 	private $_loggedInUser;
 	private $_isSession;
@@ -59,7 +59,7 @@ class LoginView implements IDivHtml {
 			<form method="post" > 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
-					<p id="' . self::$messageId . '">'. $this->_message . '</p>
+					<p id="' . self::$messageId . '">'. $this->getMessage() . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->triedUsername() .'" />
@@ -93,7 +93,7 @@ class LoginView implements IDivHtml {
 	}
 
 	private function getMessage() : string {
-		if (isset($_GET[self::$registerSucess]))
+		if (isset($_GET[$this->registerSucess]))
 			$this->setMessage("Registered new user.");
 		return $this->_message;
 	}
@@ -107,8 +107,8 @@ class LoginView implements IDivHtml {
 			return $this->_loggedInUser->GetName();
 		else if (isset($_POST[self::$name]))
 			return $_POST[self::$name];
-		else if (isset($_GET[self::$messageId]))
-			return $_GET[self::$registerSucess];
+		else if (isset($_GET[$this->registerSucess]))
+			return $_GET[$this->registerSucess];
 		else
 			return "";
 	}
@@ -190,7 +190,7 @@ class LoginView implements IDivHtml {
 		return isset($_GET[self::$registerView]);
 	}
 	public function redirect(string $userName) : void {
-		header("Location:/?' . self::$messageId . '=$userName");
+		header("Location:/?$this->registerSucess=$userName");
 	}
 
 	}
