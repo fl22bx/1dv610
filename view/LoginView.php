@@ -15,6 +15,7 @@ class LoginView implements IDivHtml {
 
 	private $_message;
 	private $_loggedInUser;
+	private $_isSession;
 
 	/**
 	 * Create HTTP response
@@ -60,7 +61,7 @@ class LoginView implements IDivHtml {
 					<p id="' . self::$messageId . '">' . $this->_message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->triedUsername() .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -85,6 +86,19 @@ class LoginView implements IDivHtml {
 			return false;
 	}
 
+	public function setIsSession(bool $isSession) : void {
+		$this->_isSession = $isSession;
+	}
+
+	public function triedUsername() : string {
+		if (isset($this->_loggedInUser))
+			return $this->_loggedInUser->GetName();
+		else if (isset($_POST[self::$name]))
+			return $_POST[self::$name];
+		else
+			return "";
+	}
+
 	private function userIsLoggedIn() : bool {
     	if (isset($this->_loggedInUser))
      	 return $this->_loggedInUser->isLoggedIn();
@@ -98,18 +112,18 @@ class LoginView implements IDivHtml {
 	}
 
 	public function setWelcomeMessage () : void {
-		// check if session maby?
-		$this->setMessage("welcome");
+		if(!$this->_isSession)
+			$this->setMessage("welcome");
 	}
 
 	public function setByeMessage () : void {
-		// check if session maby or loged in before? not exist dont render
+	if($this->_isSession)
 		$this->setMessage("ByeBye");
 	}
 
 		public function setCookieMessage () : void {
 		// check if session maby or loged in before? not exist dont render
-		$this->setMessage("Welcome with cookie");
+		$this->setMessage("Welcome back with cookie");
 	}
 
 	 public function setUser(User $user = null) : void {

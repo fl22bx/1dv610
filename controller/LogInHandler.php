@@ -25,10 +25,11 @@ class LogInHandler
 
 	public function startLogInHandler() {
 		try {
-			$msg = "";
+			$msg = "";		
+			$this->_logInView->setIsSession($this->_logInDb->isSessionActive());	
 			$this->handleLogOutRequest();
-			$this->handleCookiesLogIn();
 			$this->handleSession();
+			$this->handleCookiesLogIn();
 			$this->handleLogInTry();
 
 		} catch (exception $e) {
@@ -49,11 +50,13 @@ class LogInHandler
 	}
 
 	private function handleSession () : void {
-		if ($this->_logInDb->isSessionActive()) {
+		$isSessionActive = $this->_logInDb->isSessionActive();
+		if ($this->_logInDb->isSessionActive($isSessionActive)) {
 			$user = $this->_logInDb->getSessionUser();
 			$user->authenticate($this->_logInDb->isAuthenticated($user));
 			$this->setUserInView($user);
-		}
+		} 
+
 
 	}
 
