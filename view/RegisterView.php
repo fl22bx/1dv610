@@ -47,11 +47,6 @@ class RegisterView implements IDivHtml
 		 else 
     		return "";
 	}
-
-	public function redirect() : void {
-		header("Location:/?username=$this->_loggedInUser&registrated=true");
-	}
-
 	public function sucess() : bool {
 		return isset($_GET[username]);
 	}
