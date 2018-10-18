@@ -10,8 +10,7 @@ class LayoutView {
     $this->_dtv =  $dtv;
   }
 
-  public function startView(IDivHtml $ViewToRender, string $message = "") : void {
-    $ViewToRender->setMessage($message); // gör i controlelr
+  public function startView(IDivHtml $ViewToRender) : void {
     if (isset($this->_loggedInUser))
       $ViewToRender->setUser($this->_loggedInUser);
     $this->render($ViewToRender);

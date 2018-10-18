@@ -25,7 +25,7 @@ class LogInHandler
 
 	public function startLogInHandler() {
 		try {
-			$msg = "";		
+			//$msg = "";		
 			$this->_logInView->setIsSession($this->_logInDb->isSessionActive());	
 			$this->handleLogOutRequest();
 			$this->handleSession();
@@ -36,7 +36,9 @@ class LogInHandler
 			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
 		} finally {
 			$viewToRender = $this->navigateLogInView();
-			$this->_layoutView->startView($viewToRender, $msg);
+			if(isset($msg))
+				$viewToRender->setMessage($msg);
+			$this->_layoutView->startView($viewToRender);
 		}
 
 	}
