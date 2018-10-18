@@ -23,12 +23,13 @@ class User
 	
 	function __construct(string $name, string $password )
 	{
+				$this->setName($name);
+		$this->setPassword($password) ;// hash
 		if($name == "")
 			throw new Exception("name_missing", 10);
 		if($password == "")
 			throw new Exception("password_missing", 11);
-		$this->setName($name);
-		$this->setPassword($password) ;// hash
+
 
 	}
 
