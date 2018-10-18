@@ -101,9 +101,14 @@ class LoginView implements IDivHtml {
 		else if (isset($_POST[self::$name]))
 			return $_POST[self::$name];
 		else if (isset($_GET["username"]))
-			return $_GET["username"];
+			return $this->sucessfullRegistration();
 		else
 			return "";
+	}
+
+	private function sucessfullRegistration () : string {
+		$this->sucesfullRegistrationMessage();
+		return $_GET["username"];
 	}
 
 	private function userIsLoggedIn() : bool {
