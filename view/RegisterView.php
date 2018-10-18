@@ -48,7 +48,7 @@ class RegisterView implements IDivHtml
 		 else 
     		$userName = "";
 
-    	strip_tags($userName);
+    	return strip_tags($userName);
 	}
 	public function sucess() : bool {
 		return isset($_GET[username]);
