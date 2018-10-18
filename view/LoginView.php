@@ -92,10 +92,11 @@ class LoginView implements IDivHtml {
 	}
 
 	private function getMessage() : string {
+		var_dump(isset($_GET[self::$registerSucess]));
 		if (isset($_GET[self::$registerSucess]))
 			 $this->setMessage("Registered new user.");
-		if($this->setWelcomeMessage());
-			 $this->setMessage("Registered new user.");
+		if($this->userIsLoggedIn());
+			 $this->setWelcomeMessage();
 		if($this->wantsToLogOut())
 			 $this->setByeMessage();
 
