@@ -126,6 +126,10 @@ class LoginView implements IDivHtml {
 			$this->setMessage("Welcome back with cookie");
 	}
 
+	public function sucesfullRegistrationMessage()() : void {
+		$this->setMessage("Registered new user.");
+	}
+
 	 public function setUser(User $user = null) : void {
 	 	$this->_loggedInUser = $user;
 	 }
@@ -172,9 +176,9 @@ class LoginView implements IDivHtml {
 		}
 
 	}
-
 	public function wantsToRegister() : bool {
 		return isset($_GET[self::$registerView]);
 	}
-		}
+
+	}
 	

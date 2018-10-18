@@ -27,9 +27,9 @@ class LogInPercistency
 			$sql = "INSERT INTO User (name, password)
 					VALUES('$username', '$password')
 			";
-
-			$this->_sqlDatabase->getConnection->query($sql);
-			$db->stopDb();
+			$conn = $this->_sqlDatabase->getConnection();
+			$conn->query($sql);
+			$this->_sqlDatabase->stopDb();
 	}
 
 	private function isUserDuplicate(string $username) : void{

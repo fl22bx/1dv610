@@ -16,7 +16,7 @@ class RegisterView implements IDivHtml
 	
 		function response() : string {
 		return '
-			<form method="post" > 
+			<form  action="/" method="post" > 
 				<fieldset>
 					<legend>Register a new user</legend>
 					<p id="' . self::$message . '">' . $this->_message . '</p>
@@ -46,6 +46,10 @@ class RegisterView implements IDivHtml
 			return $_POST[self::$userName];
 		 else 
     		return "";
+	}
+
+	public function sucess() : bool {
+		return isset($_GET[username]);
 	}
 
 	 public function setUser(User $user = null) : void {

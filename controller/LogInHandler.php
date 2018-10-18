@@ -30,7 +30,7 @@ class LogInHandler
 			$this->handleSession();
 			$this->handleCookiesLogIn();
 			$this->handleLogInTry();
-			$this->wantsToRegister();
+			$this->handleWantsToRegister();
 
 		} catch (exception $e) {
 			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
@@ -50,10 +50,13 @@ class LogInHandler
 			return $this->_logInView;
 	}
 
-	private function wantsToRegister() : void {
+	private function handleWantsToRegister() : void {
 		if($this->_registerView->wantsToCreateNewUser()) {
 			$user = $this->_registerView->newUser();
 			$this->_logInDb->setNewUser($user);
+			$this->setUserInView($user);
+			$this->_logInView->sucesfullRegistrationMessage();
+
 		}
 
 	}
