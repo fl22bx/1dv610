@@ -28,8 +28,9 @@ class User
 		#	throw new Exception("name_missing", 10);
 		#if($password == "")
 		#	throw new Exception("password_missing", 11); // sätt i vie är view logic inte model
-		$this->setName($name);
 		$this->setPassword($password) ;// hash
+		$this->setName($name);
+
 	}
 
 	private function setName (string $name) : void {
