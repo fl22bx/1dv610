@@ -54,6 +54,8 @@ class LogInPercistency
 		private function isSessionManipulated () : bool {
 			if(isset($_SESSION[self::$thisSession]))
 				return $_SESSION[self::$thisSession] != $_SERVER[self::$thisSession];
+			else 
+				return false;
 
 		}
 
