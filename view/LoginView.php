@@ -12,6 +12,7 @@ class LoginView implements IDivHtml {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 	private static $registerView = 'register';
+	private static $registerSucess = "username";
 
 	private $_message;
 	private $_loggedInUser;
@@ -42,7 +43,7 @@ class LoginView implements IDivHtml {
 	private function generateLogoutButtonHTML() {
 		return '
 			<form  method="post" >
-				<p id="' . self::$messageId . '">' . $this->_message .'</p>
+				<p id="' . self::$messageId . '">'. $this->getMessage() .'</p>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
@@ -58,7 +59,7 @@ class LoginView implements IDivHtml {
 			<form method="post" > 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
-					<p id="' . self::$messageId . '">' . $this->_message . '</p>
+					<p id="' . self::$messageId . '">'. $this->_message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->triedUsername() .'" />
@@ -91,6 +92,17 @@ class LoginView implements IDivHtml {
 			return false;
 	}
 
+	private function getMessage() : string {
+		if (isset($_GET[self::$messageId]))
+			return $this->setMessage("Registered new user.");
+		if($this->setWelcomeMessage());
+			return $this->setMessage("Registered new user.");
+		if($this->wantsToLogOut())
+			return $this->setByeMessage();
+
+		return $this->_message;
+	}
+
 	public function setIsSession(bool $isSession) : void {
 		$this->_isSession = $isSession;
 	}
@@ -100,15 +112,10 @@ class LoginView implements IDivHtml {
 			return $this->_loggedInUser->GetName();
 		else if (isset($_POST[self::$name]))
 			return $_POST[self::$name];
-		else if (isset($_GET["username"]))
-			return $this->sucessfullRegistration();
+		else if (isset($_GET[self::$messageId]))
+			return $_GET[self::$messageId];
 		else
 			return "";
-	}
-
-	private function sucessfullRegistration () : string {
-		$this->sucesfullRegistrationMessage();
-		return $_GET["username"];
 	}
 
 	private function userIsLoggedIn() : bool {
@@ -138,10 +145,6 @@ class LoginView implements IDivHtml {
 			$this->setMessage("Welcome back with cookie");
 	}
 
-	public function sucesfullRegistrationMessage() : void {
-		$this->setMessage("Registered new user.");
-	}
-
 	 public function setUser(User $user = null) : void {
 	 	$this->_loggedInUser = $user;
 	 }
@@ -164,10 +167,7 @@ class LoginView implements IDivHtml {
 	}
 
 	public function wantsToLogOut() : bool {
-		$logOutBool = isset($_POST[self::$logout]);
-		if($logOutBool)
-			$this->setByeMessage();
-		return $logOutBool;
+		return isset($_POST[self::$logout]);
 	}
 
 	public function wantsToStayLoggedIn () : bool {
@@ -192,7 +192,7 @@ class LoginView implements IDivHtml {
 		return isset($_GET[self::$registerView]);
 	}
 	public function redirect(string $userName) : void {
-		header("Location:/?username=$userName");
+		header("Location:/?' . self::$messageId . '=$userName");
 	}
 
 	}
