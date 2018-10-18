@@ -81,6 +81,10 @@ class LoginView implements IDivHtml {
 		$logInTrytUsername = isset($_POST[self::$name]);
 		$logInTrytPassword = isset($_POST[self::$password]);
 		if ($logInTrytUsername || $logInTrytPassword)
+			if($name == "")
+				throw new Exception("name_missing", 10);
+			if($password == "")
+				throw new Exception("password_missing", 11); // sätt i vie är view logic inte model
 			return true;
 		else
 			return false;
