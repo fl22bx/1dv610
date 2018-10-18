@@ -108,22 +108,22 @@ class LoginView implements IDivHtml {
 
 
 	public function setMessage (string $message) : void {
-		$this->_message .= $message;
+		$this->_message = $message;
 	}
 
 	public function setWelcomeMessage () : void {
 		if(!$this->_isSession)
-			$this->setMessage("welcome");
+			$this->setMessage("Welcome");
 	}
 
 	public function setByeMessage () : void {
 	if($this->_isSession)
-		$this->setMessage("ByeBye");
+		$this->setMessage("Bye bye!");
 	}
 
 		public function setCookieMessage () : void {
-		// check if session maby or loged in before? not exist dont render
-		$this->setMessage("Welcome back with cookie");
+		if($this->_isSession)
+			$this->setMessage("Welcome back with cookie");
 	}
 
 	 public function setUser(User $user = null) : void {
