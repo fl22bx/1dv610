@@ -54,9 +54,7 @@ class LogInHandler
 		if($this->_registerView->wantsToCreateNewUser()) {
 			$user = $this->_registerView->newUser();
 			$this->_logInDb->setNewUser($user);
-			$this->setUserInView($user);
-			$this->_logInView->sucesfullRegistrationMessage();
-
+			$this->_logInView->redirect($user->GetName());
 		}
 
 	}

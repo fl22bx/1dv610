@@ -95,6 +95,8 @@ class LoginView implements IDivHtml {
 			return $this->_loggedInUser->GetName();
 		else if (isset($_POST[self::$name]))
 			return $_POST[self::$name];
+		else if (isset($_GET["username"]))
+			return $_GET["username"];
 		else
 			return "";
 	}
@@ -178,6 +180,9 @@ class LoginView implements IDivHtml {
 	}
 	public function wantsToRegister() : bool {
 		return isset($_GET[self::$registerView]);
+	}
+	public function redirect(string $userName) : void {
+		header("Location:/?username=$userName");
 	}
 
 	}
