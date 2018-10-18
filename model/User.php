@@ -42,7 +42,7 @@ class User
 	}
 
 	private function setPassword (string $password) : void {
-		if(strlen($password) < 6)
+		if(strlen($password) <= 6)
 			throw new Exception("password_to_short", 14);
 		$this->_password = $password;
 	}
