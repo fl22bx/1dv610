@@ -15,14 +15,14 @@ class ExceptionHandlerView
 				return "Password is missing";
 				break;
 			case 12:
-				# name smaller the 3
+				return "name smaller the 3"
 				break;
 			case 13:
-				# unauth char
+				return "unauth char"
 				break;
 
 			case 14:
-				# password size
+				return "password size"
 				break;
 			case 21:
 				return "Wrong name or password";
@@ -30,7 +30,9 @@ class ExceptionHandlerView
 			case 22:
 				return "Wrong name or password" ;
 				break;
-			
+			case 31:
+				return "Wrong information in cookies" ;
+				break;
 			default:
 				# code...
 				break;

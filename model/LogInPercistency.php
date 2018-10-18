@@ -8,6 +8,7 @@ class LogInPercistency
 
 	private static $userName = "Session::User";
 	private static $password = "Session::Password";
+	private static $thisSession = "HTTP_USER_AGENT";
 	private $_sqlDatabase;
 	private $SQLTableForUsers = 'User';
 	
@@ -31,6 +32,8 @@ class LogInPercistency
 
 
 		public function isAuthenticated (User $user) : bool {
+			if($_SESSION[$thisSession] != $_SERVER[self::$thisSession])
+				return false;
 			$this->_sqlDatabase->connect();
 			$userFromDatabase = $this->queryDatabaseForUser($user->GetName());
 			$isAuthenticated = $this->authenticateUser($user->GetPassword(), $userFromDatabase['password']);
@@ -64,6 +67,7 @@ class LogInPercistency
 		public function setSession(User $user) : void {
 			$_SESSION[self::$userName] = $user->GetName();
 			$_SESSION[self::$password] = $user->GetPassword();
+			$_SESSION[self::$thisSession] = $_SERVER[self::$thisSession];
 
 		}
 
@@ -74,11 +78,11 @@ class LogInPercistency
 		}
 
 		public function isSessionActive () : bool {
-			$bool = isset($_SESSION["Session::User"]);
+			$bool = isset($_SESSION[self::$userName]);
 			return $bool;
 		}
 
-		public function getSessionUser() : User {
+		public function getSessionUser() : User {				
 			$user = new User($_SESSION[self::$userName], $_SESSION[self::$password]);
 			return $user;
 		}
