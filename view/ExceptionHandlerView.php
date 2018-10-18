@@ -18,7 +18,7 @@ class ExceptionHandlerView
 				return "Username has too few characters, at least 3 characters.";
 				break;
 			case 13:
-				return "unauth char";
+				return "Username contains invalid characters.";
 				break;
 
 			case 14:
@@ -34,7 +34,10 @@ class ExceptionHandlerView
 				return "Wrong information in cookies" ;
 				break;
 			case 41:
-				return "User Already Exists" ;
+				return "User exists, pick another username." ;
+				break;
+			case 42:
+				return "Passwords do not match." ;
 				break;
 			default:
 				# code...

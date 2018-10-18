@@ -64,6 +64,9 @@ class RegisterView implements IDivHtml
 	}
 
 	public function newUser() : User {
+		if($_POST[self::$password] != $_POST[self::$passwordRepeat])
+			throw new Exception("password_match", 42);
+			
 		return new User($_POST[self::$userName], $_POST[self::$password]);
 	}
 }
