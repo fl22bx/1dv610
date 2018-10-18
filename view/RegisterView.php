@@ -56,7 +56,7 @@ class RegisterView implements IDivHtml
   	}	
 
 	public function setMessage (string $message) : void {
-		$this->_message = $message;
+		$this->_message .= $message;
 	}
 
 	public function wantsToCreateNewUser() : bool {
