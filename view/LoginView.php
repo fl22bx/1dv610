@@ -14,7 +14,7 @@ class LoginView implements IDivHtml {
 	private static $registerView = 'register';
 	private static $registerSucess = "username";
 
-	private $_message;
+	private $_message = "";
 	private $_loggedInUser;
 	private $_isSession;
 
