@@ -17,16 +17,32 @@ class LogInPercistency
 		$this->_sqlDatabase = $SqlDatabase;
 	}
 
-	private function isUserDuplicate(string $username) : bool {
+		public function setNewUser (User $user) {
+			$this->_sqlDatabase->connect();
+			$dbConnection = $this->_sqlDatabase->getConnection();
+			$username = $user->GetName();
+			$password = $user->GetPassword();
+			$this->isUserDuplicate($username);
+
+			$sql = "INSERT INTO User (name, password)
+					VALUES('$username', '$password')
+			";
+
+			$this->_sqlDatabase->getConnection->query($sql);
+			$db->stopDb();
+	}
+
+	private function isUserDuplicate(string $username) : void{
 
 		$sql = " SELECT * from User
 				WHERE name = '$username';
 					";
 		$result = mysqli_query($this->_sqlDatabase->getConnection(), $sql);
-		
-			$tmp = mysqli_fetch_assoc($result);
+		$tmp = mysqli_fetch_assoc($result);
 
-			return isset($tmp["name"]);
+		if(isset($tmp["name"]))
+			throw new Exception("user_duplication", 41);
+			
 
 	}
 

@@ -40,8 +40,12 @@ class RegisterView implements IDivHtml
 	}
 
 	private function usedUsername() : string {
-		// todo: set sused username
-		return "";
+		if (isset($this->_loggedInUser))
+			return $this->_loggedInUser->GetName();
+		else if (isset($_POST[self::$userName]))
+			return $_POST[self::$userName];
+		 else 
+    		return "";
 	}
 
 	 public function setUser(User $user = null) : void {
@@ -49,6 +53,17 @@ class RegisterView implements IDivHtml
   	}	
 
 	public function setMessage (string $message) : void {
-		$this->_message .= $message;
+		$this->_message = $message;
+	}
+
+	public function wantsToCreateNewUser() : bool {
+		if(isset($_POST[self::$userName]) || isset($_POST[self::$password]))
+			return true;
+		else 
+			return false;
+	}
+
+	public function newUser() : User {
+		return new User($_POST[self::$userName], $_POST[self::$password]);
 	}
 }

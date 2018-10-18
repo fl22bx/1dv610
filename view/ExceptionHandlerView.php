@@ -15,14 +15,14 @@ class ExceptionHandlerView
 				return "Password is missing";
 				break;
 			case 12:
-				return "name smaller the 3";
+				return "Username has too few characters, at least 3 characters.";
 				break;
 			case 13:
 				return "unauth char";
 				break;
 
 			case 14:
-				return "password size";
+				return "Password has too few characters, at least 6 characters.";
 				break;
 			case 21:
 				return "Wrong name or password";
@@ -32,6 +32,9 @@ class ExceptionHandlerView
 				break;
 			case 31:
 				return "Wrong information in cookies" ;
+				break;
+			case 41:
+				return "User Already Exists" ;
 				break;
 			default:
 				# code...

@@ -24,13 +24,13 @@ class LogInHandler
 	}
 
 	public function startLogInHandler() {
-		try {
-			//$msg = "";		
+		try {		
 			$this->_logInView->setIsSession($this->_logInDb->isSessionActive());	
 			$this->handleLogOutRequest();
 			$this->handleSession();
 			$this->handleCookiesLogIn();
 			$this->handleLogInTry();
+			$this->wantsToRegister();
 
 		} catch (exception $e) {
 			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
@@ -48,6 +48,13 @@ class LogInHandler
 			return $this->_registerView;
 		else 
 			return $this->_logInView;
+	}
+
+	private function wantsToRegister() : void {
+		if($this->_registerView->wantsToCreateNewUser()) {
+			$user = $this->_registerView->newUser();
+			$this->_logInDb->setNewUser($user);
+		}
 
 	}
 
