@@ -14,7 +14,7 @@ class LoginView implements IDivHtml {
 	private static $registerView = 'register';
 	private static $registerSucess = "username";
 
-	private $_message = "";
+	private $_message;
 	private $_loggedInUser;
 	private $_isSession;
 
@@ -27,6 +27,7 @@ class LoginView implements IDivHtml {
 	 */
 	public function response() {
 		if($this->userIsLoggedIn()) {
+			$this->setWelcomeMessage();
 			$response = $this->generateLogoutButtonHTML();
 		} else {
 			$response = $this->generateLoginFormHTML();
@@ -92,14 +93,8 @@ class LoginView implements IDivHtml {
 	}
 
 	private function getMessage() : string {
-		var_dump(isset($_GET[self::$registerSucess]));
 		if (isset($_GET[self::$registerSucess]))
-			 $this->setMessage("Registered new user.");
-		if($this->userIsLoggedIn());
-			 $this->setWelcomeMessage();
-		if($this->wantsToLogOut())
-			 $this->setByeMessage();
-
+			$this->setMessage("Registered new user.");
 		return $this->_message;
 	}
 
@@ -113,7 +108,7 @@ class LoginView implements IDivHtml {
 		else if (isset($_POST[self::$name]))
 			return $_POST[self::$name];
 		else if (isset($_GET[self::$messageId]))
-			return $_GET[self::$messageId];
+			return $_GET[self::$registerSucess];
 		else
 			return "";
 	}
@@ -127,6 +122,8 @@ class LoginView implements IDivHtml {
 
 
 	public function setMessage (string $message) : void {
+		var_dump($this->_message);
+		var_dump($message);
 		$this->_message = $message;
 	}
 
@@ -167,7 +164,10 @@ class LoginView implements IDivHtml {
 	}
 
 	public function wantsToLogOut() : bool {
-		return isset($_POST[self::$logout]);
+		$logOutBool = isset($_POST[self::$logout]);
+		if($logOutBool)
+			$this->setByeMessage();
+		return $logOutBool;
 	}
 
 	public function wantsToStayLoggedIn () : bool {
