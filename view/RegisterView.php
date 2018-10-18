@@ -22,7 +22,7 @@ class RegisterView implements IDivHtml
 					<p id="' . self::$message . '">' . $this->_message . '</p>
 					
 					<label for="' . self::$userName . '">Username :</label>
-					<input type="text" id="' . self::$userName . '" name="' . self::$userName . '" value="' . $this->usedUsername() .'" />
+					<input type="text" id="' . self::$userName . '" name="'.self::$userName.'" value="'. $this->usedUsername() .'" />
 					<br />
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -56,7 +56,7 @@ class RegisterView implements IDivHtml
   	}	
 
 	public function setMessage (string $message) : void {
-		$this->_message .= $message;
+		$this->_message = $message;
 	}
 
 	public function wantsToCreateNewUser() : bool {
