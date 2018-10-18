@@ -27,7 +27,6 @@ class LoginView implements IDivHtml {
 	 */
 	public function response() {
 		if($this->userIsLoggedIn()) {
-			$this->setWelcomeMessage();
 			$response = $this->generateLogoutButtonHTML();
 		} else {
 			$response = $this->generateLoginFormHTML();
