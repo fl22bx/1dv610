@@ -40,12 +40,15 @@ class RegisterView implements IDivHtml
 	}
 
 	private function usedUsername() : string {
+		$userName;
 		if (isset($this->_loggedInUser))
-			return $this->_loggedInUser->GetName();
+			$userName = $this->_loggedInUser->GetName();
 		else if (isset($_POST[self::$userName]))
-			return $_POST[self::$userName];
+			$userName = $_POST[self::$userName];
 		 else 
-    		return "";
+    		$userName = "";
+
+    	strip_tags($userName);
 	}
 	public function sucess() : bool {
 		return isset($_GET[username]);
