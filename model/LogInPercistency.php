@@ -32,8 +32,9 @@ class LogInPercistency
 
 
 		public function isAuthenticated (User $user) : bool {
-			if($_SESSION[$thisSession] != $_SERVER[self::$thisSession])
+			if($this->isSessionManipulated())
 				return false;
+
 			$this->_sqlDatabase->connect();
 			$userFromDatabase = $this->queryDatabaseForUser($user->GetName());
 			$isAuthenticated = $this->authenticateUser($user->GetPassword(), $userFromDatabase['password']);
@@ -47,6 +48,12 @@ class LogInPercistency
 		// return $bool;
 
 			return ($Inputpassword == $Dbpassword) ? true : false;
+
+		}
+
+		private function isSessionManipulated () : bool {
+			if(isset($_SESSION[self::$thisSession]))
+				return $_SESSION[self::$thisSession] != $_SERVER[self::$thisSession];
 
 		}
 

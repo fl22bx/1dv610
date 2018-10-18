@@ -98,7 +98,8 @@ class LogInHandler
 			$user = $this->_logInView->cookieLogInTry();
 			$user->authenticate($this->_logInDb->isAuthenticated($user));
 			if (!$user->isLoggedIn())
-				throw new Exception("wrong_cookies",31)
+				throw new Exception("wrong_cookies",31);
+			
 			$this->setUserInView($user);
 			$this->_logInView->setCookieMessage();
 		} 
