@@ -126,7 +126,7 @@ class LoginView implements IDivHtml {
 			$this->setMessage("Welcome back with cookie");
 	}
 
-	public function sucesfullRegistrationMessage()() : void {
+	public function sucesfullRegistrationMessage() : void {
 		$this->setMessage("Registered new user.");
 	}
 
