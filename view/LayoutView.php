@@ -1,11 +1,10 @@
 <?php
 
-
 class LayoutView {
   
-
   private $_loggedInUser;
   private $_dtv;
+
     function __construct(DateTimeView $dtv)
   {
     $this->_dtv =  $dtv;

@@ -30,21 +30,14 @@ class LogInHandler
 			$this->handleCookiesLogIn();
 			$this->handleSession();
 			$this->handleLogInTry();
-			$this->handleKeepMeLoggedIn();
 
 		} catch (exception $e) {
 			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
 		} finally {
-			$this->setLogedInUserToView();
 			$viewToRender = $this->navigateLogInView();
 			$this->_layoutView->startView($viewToRender, $msg);
 		}
 
-	}
-
-	private function setLogedInUserToView() : void {
-		if(isset($this->_loggedInUser))
-			$this->_layoutView->setUser($this->_loggedInUser);
 	}
 
 	private function navigateLogInView () : IDivHtml {
@@ -56,47 +49,51 @@ class LogInHandler
 	}
 
 	private function handleSession () : void {
-		if ($this->_logInDb->isSessionActive())
-			$this->_loggedInUser = $this->_logInDb->getSessionUser();
+		if ($this->_logInDb->isSessionActive()) {
+			$user = $this->_logInDb->getSessionUser();
+			$user->authenticate($this->_logInDb->isAuthenticated($user));
+			$this->setUserInView($user);
+		}
+
 	}
 
 	private function handleLogOutRequest () {
-		if ($this->_logInView->wantsToLogOut())
+		if ($this->_logInView->wantsToLogOut()){
 			$this->_logInDb->endSession();
+			$this->_logInView->unsetCookie();
+		}
 	}
 
 	private function handleLogInTry () : void {
 		$isLogInTry = $this->_logInView->isLogInTry();
 		if($isLogInTry) {
-		$userName = $this->_logInView->getRequestUserName();
-		$password = $this->_logInView->getRequestPassword();
-		$this->_loggedInUser = new User($userName, $password);
-		$authenticated = $this->_logInDb->isAuthenticated($this->_loggedInUser);
-		$this->_loggedInUser->setAuthenticated($authenticated);
-
-		if (!$authenticated)
+			$user = $this->_logInView->logInTry();
+			$user->authenticate($this->_logInDb->isAuthenticated($user));
+			$this->setUserInView($user);
+		if (!$user->isLoggedIn())
 			throw new Exception("not_auth", 21);
 			
-		$this->_logInDb->setSession($this->_loggedInUser);
+		$this->_logInDb->setSession($user);
+		$this->handleKeepMeLoggedIn($user);
 		}
 	}
 
-	private function handleKeepMeLoggedIn() : void {
-		if ($this->_logInView->wantsToStayLoggedIn()) 
-			$this->_logInView->stayLoggedIn($this->_loggedInUser->GetName(),$this->_loggedInUser->GetPassword());
+	private function handleKeepMeLoggedIn(User $user) : void {
+		if ($this->_logInView->wantsToStayLoggedIn())
+			$this->_logInView->stayLoggedIn($user->GetName(),$user->GetPassword());
 
 	}
 
-	private function isLoggedIn() : bool {
-		if(isset($this->_loggedInUser))
-			return $this->_loggedInUser->isLoggedIn();
-		else
-			return false;
+	private function setUserInView (User $user) : void {
+		$this->_layoutView->setUser($user);
 	}
 
 	private function handleCookiesLogIn() : void {
 		if($this->_logInView->isCookieSet()) {
-			$this->_loggedInUser = new User($this->_logInView->getCookieUsername(), $this->_logInView->getCookiePassword());
+			var_dump($_COOKIE);
+			$user = $this->_logInView->cookieLogInTry();
+			$user->authenticate($this->_logInDb->isAuthenticated($user));
+			$this->setUserInView($user);
 			$this->_logInView->setCookieMessage();
 		} 
 	}

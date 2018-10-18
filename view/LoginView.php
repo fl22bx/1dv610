@@ -1,5 +1,6 @@
 <?php
 require_once('view/IDivHtml.php');
+require_once('model/User.php');
 
 class LoginView implements IDivHtml {
 	private static $login = 'LoginView::Login';
@@ -111,17 +112,25 @@ class LoginView implements IDivHtml {
 		$this->setMessage("Welcome with cookie");
 	}
 
-	  public function setUser(User $user = null) : void {
-    	$this->_loggedInUser = $user;
-  		}	
+	 public function setUser(User $user = null) : void {
+	 	$this->_loggedInUser = $user;
+	 }
 
-	public function getRequestUserName() : string {
+	public function logInTry() : User {
 		$username =  $_POST[self::$name];
-		return $username;
+		$password = $_POST[self::$password];
+		return new User($username, $password);
 	}
 
-	public function getRequestPassword() : string {
-		return $_POST[self::$password];
+		public function isCookieSet() : bool {
+		$bool = isset($_COOKIE[self::$cookieName]);
+		return $bool;
+	}
+
+		public function cookieLogInTry () : User {
+		$username = $_COOKIE[self::$cookieName];
+		$password = $_COOKIE[self::$cookiePassword];
+		return new User($username, $password);
 	}
 
 	public function wantsToLogOut() : bool {
@@ -135,26 +144,23 @@ class LoginView implements IDivHtml {
 		return isset($_POST[self::$keep]);
 	}
 
-	public function isCookieSet() : bool {
-		$bool = isset($_COOKIE[self::$cookieName]);
-		return $bool;
-	}
-
-	public function getCookiePassword () : string {
-		return $_COOKIE[self::$cookiePassword];
-	}
-
-	public function getCookieUsername () : string {
-		return $_COOKIE[self::$cookieName];
-	}
-
-	public function stayLoggedIn (string $username, string $password) : void {
+		public function stayLoggedIn (string $username, string $password) : void {
 		setcookie(self::$cookieName, $username, time()+60);
 		setcookie(self::$cookiePassword, $password, time()+60);
+	}
+
+	public function unsetCookie() : void {
+		if($this->isCookieSet()){
+			unset($_COOKIE[self::$cookieName]);
+			unset($_COOKIE[self::$cookiePassword]);
+			setcookie(self::$cookieName);
+			setcookie(self::$cookiePassword);
+		}
+
 	}
 
 	public function wantsToRegister() : bool {
 		return isset($_GET[self::$registerView]);
 	}
+		}
 	
-}

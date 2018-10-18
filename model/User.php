@@ -47,7 +47,7 @@ class User
 		$this->_password = $password;
 	}
 
-	public function setAuthenticated(bool $authenticated) : void{
+	public function authenticate(bool $authenticated) : void{
 		$this->_authenticated = $authenticated;
 	}
 }
