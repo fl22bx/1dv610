@@ -15,7 +15,9 @@ require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
 require_once('controller/LogInHandler.php');
 require_once('controller/Navigator.php');
-require_once('controller/calenderHandler.php');
+
+require_once('controller/CalenderHandler.php');
+
 require_once('model/LogInPercistency.php');
 
 require_once('model/Calendar/Calendar.php');
@@ -55,7 +57,7 @@ $cal =  new Model\Calendar\Calendar();
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
-//$calenderHandler = new Controller\CalenderHandler($calendarView);
+$calenderHandler = new Controller\CalenderHandler($calendarView);
 $navigator = new Navigator($lv, $c);
 
 $c->startLogInHandler();
