@@ -40,7 +40,7 @@ session_start();
 $v = new LoginView();
 $navigatorView = new NavigatorView();
 $dtv = new DateTimeView();
-$lv = new LayoutView($dtv,$navigatorView);
+$lv = new LayoutView($dtv);
 $ehv = new ExceptionHandlerView();
 $rv = new RegisterView();
 //$calendarView = new CalendarView();
