@@ -1,16 +1,20 @@
 <?php
 
-/**
- * 
- */
-class NavigatorView
-{
-	
-	public function show(IDivHtml $logOutButton) : string {
-		return '
-			<div>
-				<p>hej</p>
-			</div>
-		';
+class NavigatorView {
+
+/*
+	Render date and time
+
+*/
+
+	public function show() {
+		date_default_timezone_set('America/Los_Angeles');
+		$date = date('l\,');
+		$date .= ' the ';
+		$date  .= date('jS \of F Y\,');
+		$date .= ' The time is ';
+		$date .= date('H\:i');
+
+		return "<p> $date</p>";
 	}
 }
