@@ -53,7 +53,7 @@ $cal =  new Model\Calendar\Calendar();
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
-$calenderHandler = new Controller\Calender\CalenderHandler($calendarView);
+//$calenderHandler = new Controller\Calender\CalenderHandler($calendarView);
 //$navigator = new Controller\Navigator($lv,$calenderHandler , $c);
 
 $c->startLogInHandler();
