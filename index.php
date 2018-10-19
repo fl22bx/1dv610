@@ -15,7 +15,7 @@ require_once('controller/LogInHandler.php');
 require_once('controller/Navigator.php');
 require_once('controller/calenderHandler.php');
 require_once('model/LogInPercistency.php');
-
+*/
 require_once('model/Calendar/Calendar.php');
 require_once('model/Calendar/CalendarSettings.php');
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
@@ -60,7 +60,6 @@ $c->startLogInHandler();
 
 
 // $lv->render(false, $v, $dtv);
-*/
 
-echo "hello world";
+
 
