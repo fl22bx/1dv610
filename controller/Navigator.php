@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+//namespace Controller;
 
 /**
  * 
@@ -19,7 +19,7 @@ class Navigator
 	}
 
 	public function Navigate () : void {
-		$viewToRender = $this->_logInHandler->startLogInHandler();
+		//$viewToRender = $this->_logInHandler->startLogInHandler();
 		//$this->_layoutView->startView($viewToRender);
 		}
 
