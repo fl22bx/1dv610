@@ -10,6 +10,9 @@ require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
 require_once('controller/LogInHandler.php');
 require_once('model/LogInPercistency.php');
+
+require_once('model/Calendar/Calendar.php');
+require_once('model/Calendar/CalendarSettings.php');
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -35,9 +38,15 @@ $lv = new LayoutView($dtv );
 $ehv = new ExceptionHandlerView();
 $rv = new RegisterView();
 
+//create Claendar
+$cal =  new Model\Calendar\Calendar();
+$calSett = new Model\Calendar\CalendarSettings();
+
+
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
 $c->startLogInHandler();
+
 
 // $lv->render(false, $v, $dtv);
 
