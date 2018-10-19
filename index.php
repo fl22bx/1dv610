@@ -42,18 +42,18 @@ $dtv = new DateTimeView();
 $lv = new LayoutView($dtv,$navigatorView);
 $ehv = new ExceptionHandlerView();
 $rv = new RegisterView();
-$calendarView = new CalendarView();
+//$calendarView = new CalendarView();
 
 
 //create Claendar
-$cal =  new Model\Calendar\Calendar();
-$calSett = new Model\Calendar\CalendarSettings();
+//$cal =  new Model\Calendar\Calendar();
+//$calSett = new Model\Calendar\CalendarSettings();
 
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
-$calenderHandler = new Controller\Calender\CalenderHandler($calendarView);
-$navigator = new Controller\Navigator($lv,$calenderHandler , $c);
+$//calenderHandler = new Controller\Calender\CalenderHandler($calendarView);
+//$navigator = new Controller\Navigator($lv,$calenderHandler , $c);
 
 $c->startLogInHandler();
 
