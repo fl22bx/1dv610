@@ -8,7 +8,7 @@ require_once('view/LayoutView.php');
 require_once('view/RegisterView.php');
 require_once('view/ExceptionHandlerView.php');
 //require_once('view/navigatorView.php');
-//require_once('view/CalendarView.php');
+require_once('view/CalendarView.php');
 require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
 require_once('controller/LogInHandler.php');
@@ -43,7 +43,7 @@ $dtv = new DateTimeView();
 $lv = new LayoutView($dtv);
 $ehv = new ExceptionHandlerView();
 $rv = new RegisterView();
-//$calendarView = new CalendarView();
+$calendarView = new CalendarView();
 
 
 //create Claendar
