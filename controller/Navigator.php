@@ -14,7 +14,7 @@ class Navigator
 	{
 		$this->_layoutView = $layoutView;
 		$this->_logInHandler = $logInHandler;
-		//$this->_calenderHandler = $calenderHandler;
+		$this->_calenderHandler = $calenderHandler;
 
 	}
 

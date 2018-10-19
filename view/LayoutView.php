@@ -6,10 +6,10 @@ class LayoutView {
   private $_dtv;
     private $_navigator;
 
-    function __construct(DateTimeView $dtv)
+    function __construct(DateTimeView $dtv, NavigatorView $navigatorView)
   {
     $this->_dtv = $dtv;
-    //$this->_navigator = $navigator;
+    $this->_navigator = $navigatorView;
   }
 
   public function startView(IDivHtml $ViewToRender) : void {
@@ -28,7 +28,7 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-
+          ' . $this->showNavigator() . '
           ' . $this->renderIsLoggedIn() . '
           
           <div class="container">
@@ -41,14 +41,14 @@ class LayoutView {
     ';
   }
 
-/*
-  public function showNavigator () : string {
+
+  public function showNavigator() : string {
         if($this->userIsLoggedIn())
           return $this->_navigator->show();
         else
           return "";
   }
-  */
+  
 
   // i login View kanske??
   private function renderIsLoggedIn() : string {
