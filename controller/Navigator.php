@@ -10,7 +10,7 @@ class Navigator
 	private $_logInHandler;
 	private $_calenderHandler;
 
-	function __construct(LayoutView $layoutView, LogInHandler $logInHandler)
+	function __construct(LayoutView $layoutView, LogInHandler $logInHandler, Controller\CalenderHandler $calenderHandler)
 	{
 		$this->_layoutView = $layoutView;
 		$this->_logInHandler = $logInHandler;
@@ -19,8 +19,8 @@ class Navigator
 	}
 
 	public function Navigate () : void {
-		//$viewToRender = $this->_logInHandler->startLogInHandler();
-		//$this->_layoutView->startView($viewToRender);
+		$viewToRender = $this->_logInHandler->startLogInHandler();
+		$this->_layoutView->startView($viewToRender);
 		}
 
 
