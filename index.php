@@ -15,7 +15,7 @@ require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
 require_once('controller/LogInHandler.php');
 require_once('controller/Navigator.php');
-//require_once('controller/calenderHandler.php');
+require_once('controller/calenderHandler.php');
 require_once('model/LogInPercistency.php');
 
 require_once('model/Calendar/Calendar.php');
