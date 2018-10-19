@@ -38,7 +38,7 @@ session_start();
 
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
-$navigatorView = new NavigatorView();
+//$navigatorView = new NavigatorView();
 $dtv = new DateTimeView();
 $lv = new LayoutView($dtv);
 $ehv = new ExceptionHandlerView();
