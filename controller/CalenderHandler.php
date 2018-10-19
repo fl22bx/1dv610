@@ -1,5 +1,5 @@
 <?php
-namespace Controller\Calender;
+namespace Controller;
 
 /**
  * 
