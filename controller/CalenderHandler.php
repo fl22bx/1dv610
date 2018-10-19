@@ -14,6 +14,6 @@ class CalenderHandler
 	}
 
 	public function startCalender() {
-		// return $this->_calendarHandler;
+		return $this->_calendarHandler;
 	} 
 }
