@@ -7,8 +7,8 @@ require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
 require_once('view/RegisterView.php');
 require_once('view/ExceptionHandlerView.php');
-require_once('view/navigatorView.php');
-require_once('view/CalendarView.php');
+//require_once('view/navigatorView.php');
+//require_once('view/CalendarView.php');
 require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
 require_once('controller/LogInHandler.php');
@@ -38,7 +38,7 @@ session_start();
 
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
-$navigatorView = new NavigatorView();
+//$navigatorView = new NavigatorView();
 $dtv = new DateTimeView();
 $lv = new LayoutView($dtv);
 $ehv = new ExceptionHandlerView();
