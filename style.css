@@ -1,0 +1,29 @@
+.li {
+	    display: inline-block;
+	    list-style-type: none;
+	    text-align: center;
+	    width: 13%;
+	    margin: 0px:;
+}
+
+.weekdays {
+	background-color: grey;
+	color: white;
+	padding-bottom:5px;
+	padding-top: 5px
+	margin: 0px:;
+}
+
+.days  {
+	background-color: lightblue;
+	margin: 0px;
+}
+
+.day {
+	padding-top: 10px;
+	height: 70px;
+}
+
+ul {
+	margin: 0px;
+}

@@ -6,14 +6,14 @@ namespace Controller;
  */
 class CalenderHandler
 {
-	private $_calendarHandler;
+	private $_calendarView;
 	
 	function __construct($calenderView)
 	{
-		$this->_calendarHandler = $calenderView;
+		$this->_calendarView = $calenderView;
 	}
 
 	public function startCalender() {
-		return $this->_calendarHandler;
+		return $this->_calendarView;
 	} 
 }

@@ -18,4 +18,8 @@ class Calendar
 		
 	}
 
+	public function getMonth(int $month) : Month {
+		return $this->_months[$month];
+	}
+
 }

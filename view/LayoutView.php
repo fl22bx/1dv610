@@ -23,6 +23,7 @@ class LayoutView {
     echo '<!DOCTYPE html>
       <html>
         <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
           <meta charset="utf-8">
           <title>Login Example</title>
         </head>

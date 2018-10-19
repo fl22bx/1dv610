@@ -5,13 +5,13 @@ namespace Model\Calendar;
  */
 class Day
 {
-	private $_dayIndex;
+	private $_date;
 	private $_isRed;
 	private $_hollidayName = "";
 	
-	function __construct()
+	function __construct(int $date)
 	{
-
+		$this->_date = $date;
 	}
 
 	public function setHollidayStatus () : void {
@@ -27,7 +27,7 @@ class Day
 		return $this->_isRed;
 	}
 
-	public function getDayIndex() : string {
-		return $this->_dayName;
+	public function getDate() : int {
+		return $this->_date;
 	}
 }

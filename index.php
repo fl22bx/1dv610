@@ -40,6 +40,10 @@ session_start();
 
 	$SqlLogInDatabase = new LogInPercistency($SqlDatabase);
 
+//create Claendar
+$cal =  new Model\Calendar\Calendar();
+$calSett = new Model\Calendar\CalendarSettings();
+
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
 $navigatorView = new NavigatorView();
@@ -47,18 +51,16 @@ $dtv = new DateTimeView();
 $lv = new LayoutView($dtv, $navigatorView);
 $ehv = new ExceptionHandlerView();
 $rv = new RegisterView();
-$calendarView = new CalendarView();
+$calendarView = new CalendarView($cal,$calSett);
 
 
-//create Claendar
-$cal =  new Model\Calendar\Calendar();
-//$calSett = new Model\Calendar\CalendarSettings();
+
 
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
 $calenderHandler = new Controller\CalenderHandler($calendarView);
-$navigator = new Navigator($lv, $c, $calenderHandler);
+$navigator = new Navigator($lv, $c, $calenderHandler, $navigatorView);
 
 //$c->startLogInHandler();
 $navigator->Navigate();

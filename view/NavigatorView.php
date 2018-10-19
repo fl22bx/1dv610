@@ -1,20 +1,17 @@
 <?php
 
 class NavigatorView {
-
-/*
-	Render date and time
-
-*/
+	private static $calendar = "calendar";
 
 	public function show() {
-		date_default_timezone_set('America/Los_Angeles');
-		$date = date('l\,');
-		$date .= ' the ';
-		$date  .= date('jS \of F Y\,');
-		$date .= ' The time is ';
-		$date .= date('H\:i');
+		
 
-		return "<p> $date</p>";
+		return '
+			<a href="?' . self::$calendar . '">Calendar</a>
+		';
+	}
+
+	public function wantsToViewCalendar() : bool {
+		return isset($_GET[self::$calendar]);
 	}
 }

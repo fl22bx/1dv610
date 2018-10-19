@@ -17,7 +17,7 @@ class CalendarSettings
 
 		public function swedishCalendar() : void {
 		$this->_nameOfMonths = ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"];
-		$this->$_nameOfWeekDays = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
+		$this->_nameOfWeekDays = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
 	}
 
 	public function getNameOfMonths() : Array {
