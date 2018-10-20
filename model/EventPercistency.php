@@ -29,7 +29,7 @@ class EventPercistency
 	}
 
 	public function getEvents(string $userName) {
-		$sql = "SELECT * from Events WHERE owner = "$userName""
+		$sql = "SELECT * from Events WHERE owner = '$userName'";
 
 		$result = mysqli_query($this->_sqlDatabase->getConnection(), $sql);
 		$ResultInAssArray = mysqli_fetch_assoc($result);
