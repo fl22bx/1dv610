@@ -23,6 +23,7 @@ require_once('model/LogInPercistency.php');
 require_once('model/Calendar/Calendar.php');
 require_once('model/Calendar/CalendarSettings.php');
 require_once('model/Calendar/Event.php');
+require_once('model/EventPercistency.php');
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -40,10 +41,11 @@ session_start();
 	$SqlDatabase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
 	$SqlLogInDatabase = new LogInPercistency($SqlDatabase);
-
+	$eventPercistency = new EventPercistency($SqlDatabase);
 //create Claendar
 $cal =  new Model\Calendar\Calendar();
 $calSett = new Model\Calendar\CalendarSettings();
+
 
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
@@ -60,9 +62,8 @@ $addEvent = new View\Calender\AddEventView();
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
-$calenderHandler = new Controller\CalenderHandler($calendarView, $addEvent, $ehv);
+$calenderHandler = new Controller\CalenderHandler($calendarView, $addEvent, $ehv, $eventPercistency);
 $navigator = new Navigator($lv, $c, $calenderHandler, $navigatorView);
-
 //$c->startLogInHandler();
 $navigator->Navigate();
 

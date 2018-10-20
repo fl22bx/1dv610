@@ -77,7 +77,7 @@ class Event
 	}
 
 	public function setOwner(string $name) : void {
-		$this->_owner = $value;
+		$this->_owner = $name;
 	}
 
 		public function getOwner() : string {

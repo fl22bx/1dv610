@@ -13,7 +13,6 @@ class EventPercistency
 
 	public function setNewUser (Model\Calendar\Event $event) {
 		$this->_sqlDatabase->connect();
-		$dbConnection = $this->_sqlDatabase->getConnection();
 		$day = $event->getDay();
 		$month = $event->getMonth();
 		$name = $event->getName();
@@ -21,11 +20,20 @@ class EventPercistency
 		$description = $event->getDescription();
 		$owner = $event->getOwner();
 
-		$sql = "INSERT INTO Event (day, month, name, place, description, owner)
-			VALUES('$event', '$event->getDay', '$event', '$event', '$event')
+		$sql = "INSERT INTO Events (day, month, name, place, description, owner)
+			VALUES('$day', '$month', '$name', '$place', '$description', '$owner')
 		";
 		$conn = $this->_sqlDatabase->getConnection();
 		$conn->query($sql);
 		$this->_sqlDatabase->stopDb();
+	}
+
+	public function getEvents(string $userName) {
+		$sql = "SELECT * from Events WHERE owner = "$userName""
+
+		$result = mysqli_query($this->_sqlDatabase->getConnection(), $sql);
+		$ResultInAssArray = mysqli_fetch_assoc($result);
+
+		return $ResultInAssArray;
 	}
 }

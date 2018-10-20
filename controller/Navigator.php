@@ -22,7 +22,7 @@ class Navigator
 	public function Navigate () : void {
 		$viewToRender = $this->_logInHandler->startLogInHandler();
 		if($this->_navigation->wantsToViewCalendar())
-			$viewToRender = $this->_calenderHandler->startCalender();
+			$viewToRender = $this->_calenderHandler->startCalender($this->_layoutView->getLoggedInUserName());
 		
 
 		
