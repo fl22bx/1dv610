@@ -7,7 +7,9 @@ class NavigatorView {
 		
 
 		return '
+			<a href="/">Home |</a>
 			<a href="?' . self::$calendar . '">Calendar</a>
+
 		';
 	}
 

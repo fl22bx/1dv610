@@ -6,6 +6,9 @@ require_once('view/IDivHtml.php');
  */
 class CalendarView implements IDivHtml
 {
+
+	private static $_eventMonth = "Event::Month";
+	private static $_eventDay = "Event::Day";
 	private $_calendar;
 	private $_calenderSettings;
 
@@ -39,7 +42,7 @@ class CalendarView implements IDivHtml
 	 	$header = "";
 	 	foreach ($weekdays as $weekday) {
 	 		$header .= '	
-	 		<li class=" li">	
+	 		<li class="dayName li">	
 					'.$weekday.'
 			</li>';
 	 	}
@@ -64,7 +67,11 @@ class CalendarView implements IDivHtml
 		foreach ($days as $day) {
 			$result .=  '
 				<li class="li day">	
-				' . $day->getDate() .'
+				<p class="dateNumber">' . $day->getDate() .' </p>
+				<div class="add"><a href="?calendar&'.Self::$_eventDay.'='.$day->getDate().'&'.Self::$_eventMonth.'='.$monthToView.'">+</a></div>
+				
+				<p class="event" >möte /p>
+
 				</li>
 				';
 		}
@@ -77,7 +84,24 @@ class CalendarView implements IDivHtml
     	//
     }
 
-    public function setUser(User $user = null) : void {
-    	//
+    public function wantsToRegisterEvent() : bool {
+    	if(isset($_GET[Self::$_eventDay]) || isset($_GET[Self::$_eventMonth]))
+    		return true;
+    	else
+    		return false;
     }
+
+    public function setUser(User $user = null) {
+    	// behandla, kallas i layout
+    	// hämta event här kanske
+    }
+
+    public function getEventDay() : string {
+    	return $_GET[Self::$_eventDay];
+    }
+
+    public function getEventMonth() : string {
+    	return $_GET[Self::$_eventMonth];
+    }
+
 }

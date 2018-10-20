@@ -2,28 +2,85 @@
 	    display: inline-block;
 	    list-style-type: none;
 	    text-align: center;
-	    width: 13%;
-	    margin: 0px:;
+	    width: 12%;
+	    margin:2px;
 }
 
 .weekdays {
 	background-color: grey;
 	color: white;
-	padding-bottom:5px;
-	padding-top: 5px
+	padding-bottom:30px;
+	padding-top: 30px
 	margin: 0px:;
 }
 
 .days  {
-	background-color: lightblue;
+	background-color: lightgrey;
 	margin: 0px;
 }
 
 .day {
-	padding-top: 10px;
-	height: 70px;
+	min-height: : 70px;
+	margin-top: 10px;
+	border: 1px solid black;
+	background-color: white;
+}
+
+.dayName {
+		padding-top: 30px;
+}
+
+.add {
+	padding-right: 5px;
+	padding-top:5px;
+	float: right;
+	font-size: 20px;
+
 }
 
 ul {
 	margin: 0px;
+	padding-bottom: 20px;
+}
+
+.dateNumber {
+	color: red;
+	font-size: 30px;
+	float: left;
+	font-weight: bold;
+	margin: 0px;
+	padding: 5px;
+
+}
+
+.event {
+	padding-top:20px;
+}
+
+.calendar {
+	margin: auto;
+	width: 80%;
+
+}
+
+.roundate {
+	display: inline-block;
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	background-color: black;
+	color: white;
+	padding: 5px;
+	font-size: 20px;
+	clear: right;
+}
+
+a:link {
+    text-decoration: none;
+       color: black;
+}
+
+a:visited {
+    text-decoration: none;
+        color: black;
 }

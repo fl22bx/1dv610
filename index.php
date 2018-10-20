@@ -8,8 +8,8 @@ require_once('view/LayoutView.php');
 require_once('view/RegisterView.php');
 require_once('view/ExceptionHandlerView.php');
 
+require_once('view/calendar/AddEventView.php');
 require_once('view/NavigatorView.php');
-
 require_once('view/CalendarView.php');
 require_once('model/MySqlDataBase.php');
 require_once('model/User.php');
@@ -53,13 +53,13 @@ $ehv = new ExceptionHandlerView();
 $rv = new RegisterView();
 $calendarView = new CalendarView($cal,$calSett);
 
-
+$addEvent = new View\Calender\AddEventView();
 
 
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
-$calenderHandler = new Controller\CalenderHandler($calendarView);
+$calenderHandler = new Controller\CalenderHandler($calendarView, $addEvent);
 $navigator = new Navigator($lv, $c, $calenderHandler, $navigatorView);
 
 //$c->startLogInHandler();
