@@ -38,7 +38,7 @@ class LogInHandler
 			$viewToRender = $this->navigateLogInView();
 			if(isset($msg))
 				$viewToRender->setMessage($msg);
-				//$this->_layoutView->startView($viewToRender);
+			
 			return $viewToRender;
 		}
 

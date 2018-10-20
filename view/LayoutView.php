@@ -71,4 +71,9 @@ class LayoutView {
     else
       return false;
   }
+
+  public function getLoggedInUserName() : string {
+      return $this->_loggedInUser->GetName();
+    }
+
 }

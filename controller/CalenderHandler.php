@@ -8,22 +8,36 @@ class CalenderHandler
 {
 	private $_calendarView;
 	private $_eventView;
-	
-	function __construct($calenderView, $eventView)
+	private $_exceptionHandler;
+
+	function __construct($calenderView, $eventView, \ExceptionHandlerView $exceptionHandlerview)
 	{
 		$this->_calendarView = $calenderView;
 		$this->_eventView = $eventView;
-		$this->registerEvent();
+		$this->_exceptionHandler = $exceptionHandlerview;
 	}
 
 	public function startCalender() {
-		//return $this->_calendarView;
-		return $this->_eventView;
+		$this->registerEvent();
+		return $this->_calendarView;
 	} 
 
 	private function registerEvent() : void {
-		// return  eventregister view kanske?
-		if($this->_calendarView->wantsToRegisterEvent())
-			echo "yes";
+		try {
+			if($this->_calendarView->wantsToRegisterEvent()) {
+				$this->_eventView->setDate($this->_calendarView->getEventMonth(),
+							$this->_calendarView->getEventDay());
+				$this->_calendarView->registerEvent($this->_eventView->response());
+
+			}
+			if($this->_eventView->isEventRegistered()){
+				$event = $this->_eventView->getEvent();
+			}
+		} catch (\Exception $e) {
+			$msg = $this->_exceptionHandler->handleErrorRendering($e);
+			$this->_calendarView->setMessage($msg);
+		}
+
 	}
 }
+		

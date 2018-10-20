@@ -1,3 +1,19 @@
+.registerevent {
+	  background-color:rgba(159, 165, 159, .9);
+    padding: 10px;
+  	position: absolute;
+ 	top:30%;
+    left:30%;
+  	overflow: auto;
+
+
+}
+
+.closeevent {
+	float:right;
+}
+
+
 .li {
 	    display: inline-block;
 	    list-style-type: none;
@@ -63,6 +79,8 @@ ul {
 
 }
 
+
+
 .roundate {
 	display: inline-block;
 	border-radius: 50%;
@@ -84,3 +102,5 @@ a:visited {
     text-decoration: none;
         color: black;
 }
+
+

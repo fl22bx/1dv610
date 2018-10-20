@@ -39,6 +39,21 @@ class ExceptionHandlerView
 			case 42:
 				return "Passwords do not match." ;
 				break;
+			case 51:
+				return "Event Day Is Missing" ;
+				break;
+			case 52:
+				return "Event month is missing." ;
+				break;
+			case 53:
+				return "Event Day Is Missing." ;
+				break;
+			case 54:
+				return "Event Place is missing." ;
+				break;
+			case 55:
+				return "Event description is missing." ;
+				break;
 			default:
 				# code...
 				break;

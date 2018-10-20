@@ -22,6 +22,7 @@ require_once('model/LogInPercistency.php');
 
 require_once('model/Calendar/Calendar.php');
 require_once('model/Calendar/CalendarSettings.php');
+require_once('model/Calendar/Event.php');
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -59,7 +60,7 @@ $addEvent = new View\Calender\AddEventView();
 
 //CREATE CONTROLLER
 $c = new LogInHandler($v, $lv, $SqlLogInDatabase, $ehv, $rv);
-$calenderHandler = new Controller\CalenderHandler($calendarView, $addEvent);
+$calenderHandler = new Controller\CalenderHandler($calendarView, $addEvent, $ehv);
 $navigator = new Navigator($lv, $c, $calenderHandler, $navigatorView);
 
 //$c->startLogInHandler();

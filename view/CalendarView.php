@@ -11,6 +11,9 @@ class CalendarView implements IDivHtml
 	private static $_eventDay = "Event::Day";
 	private $_calendar;
 	private $_calenderSettings;
+	private $_registerForm;
+	private $_message = "";
+	private $_user;
 
 
 	function __construct(Model\Calendar\Calendar $calendar, model\Calendar\CalendarSettings $calSetting)
@@ -20,9 +23,11 @@ class CalendarView implements IDivHtml
 		 }
 
 
-	public function response() : string {
+	public function response() : string {	
 		return '
-		<div class="calendar">	
+		<div class="calendar">
+		<p>'.$this->_message.'</p>
+		'.$this->_registerForm.'
 			<ul class="weekdays">
 				' . $this->calenderHeader() . '
 	
@@ -34,6 +39,10 @@ class CalendarView implements IDivHtml
 
 		</div>
 		';
+	 }
+
+	 public function registerEvent(string $registerForm) {
+	 	$this->_registerForm = $registerForm;
 	 }
 
 	 private function calenderHeader() : string {
@@ -80,9 +89,9 @@ class CalendarView implements IDivHtml
 	 	return $result;
 	 }
 
-    public function setMessage(string $message) {
-    	//
-    }
+	public function setMessage (string $message) : void {
+		$this->_message = $message;
+	}
 
     public function wantsToRegisterEvent() : bool {
     	if(isset($_GET[Self::$_eventDay]) || isset($_GET[Self::$_eventMonth]))
@@ -91,9 +100,8 @@ class CalendarView implements IDivHtml
     		return false;
     }
 
-    public function setUser(User $user = null) {
-    	// behandla, kallas i layout
-    	// hämta event här kanske
+    public function setUser(User $user = null) : void {
+    	$this->_user = $user;
     }
 
     public function getEventDay() : string {
