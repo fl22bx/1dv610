@@ -14,6 +14,7 @@ class CalendarView implements \View\IDivHtml
 	private static $_swe = "Event::Swe";
 	private static $_eng = "Event::Eng";
 	private static $_lang = "Event::Language";
+	private static $_monthToView = "Event::MonthToView";
 	private $_calendar;
 	private $_calenderSettings;
 	private $_divOverlay;
@@ -29,14 +30,13 @@ class CalendarView implements \View\IDivHtml
 		 }
 
 
-	public function response(int $monthToViewInRelation = 0) : string {	
+	public function response() : string {	
 		if($this->isSweCalSet())
 			$this->_calenderSettings->swedishCalendar();
 		else
 			$this->_calenderSettings->englishCalendar();
 
-		$date = date('n');
-	 	$monthToView = $date - 1 + $monthToViewInRelation;
+		$monthToView = $this->getMonthToView();
 		return '
 		<div class="calendar">
 		'.$this->monthHeader($monthToView).'
@@ -62,8 +62,12 @@ class CalendarView implements \View\IDivHtml
 	 private function monthHeader(int $monthToView) : string {
 	 	$month = $this->_calenderSettings->getNameOfMonths();
 	 	$month = $month[$monthToView];
+	 	$nextMonth = $monthToView + 1;
+	 	$previousMonth = $monthToView - 1;
 	 	return '<div class"monthHeader">
+	 	<a href="?calendar&'.Self::$_monthToView.'='.$previousMonth.'" class="next"><</a>
 		<h1>'.$month.'</h1>
+		<a href="?calendar&'.Self::$_monthToView.'='.$nextMonth.'" class="next">></a>
 			<form method="post" class="form"> 
 				<select name="'.Self::$_lang.'">
   					<option name="'.Self::$_swe.'" value="'.Self::$_swe.'">Swe</option>
@@ -72,6 +76,13 @@ class CalendarView implements \View\IDivHtml
 				<input type="submit" value="ChangeLanguage" />
 			</form>
 	 	</div>';
+	 }
+
+	 public function getMonthToView() : int {
+	 	if(isset($_GET[Self::$_monthToView ]))
+	 		return $_GET[Self::$_monthToView];
+	 	else 
+	 		return date('n');;
 	 }
 
 	 private function calenderHeader() : string {
@@ -88,7 +99,7 @@ class CalendarView implements \View\IDivHtml
 
 	 private function daysInCalender(int $monthToView) : string {
 
-	 	$Month = $this->_calendar->getMonth($monthToView);
+	 	$Month = $this->_calendar->getMonth($this->getMonthToView());
 	 	$firstWeekDay = $Month->getFirstDay();
 	 	$days = $Month->getDays();
 

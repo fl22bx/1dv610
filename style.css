@@ -108,6 +108,13 @@ ul {
 	display: inline;
 }
 
+.next {
+	display: inline;
+	font-size: 2em;
+	padding: 20px;
+
+}
+
 .form {
 	float: right;
 }

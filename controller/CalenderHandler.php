@@ -20,11 +20,8 @@ class CalenderHandler
 		$this->_eventPercistency = $eventPercistency;
 	}
 
-	public function startCalender(string $nameOfloggedInUser, int $month = 13 ) {
-		if($month == 13)
-			$month = date('n') - 1;
-
-
+	public function startCalender(string $nameOfloggedInUser) {
+		$month = $this->_calendarView->getMonthToView();
 		$userEvents = $this->_eventPercistency->getEvents($nameOfloggedInUser, $month);
 		$this->registerEvent($nameOfloggedInUser);
 		$this->viewEvent($userEvents);
