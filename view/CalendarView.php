@@ -11,6 +11,9 @@ class CalendarView implements \View\IDivHtml
 	private static $_eventDay = "Event::Day";
 	private static $_add = "Event::Add";
 	private static $_view = "Event::View";
+	private static $_swe = "Event::Swe";
+	private static $_eng = "Event::Eng";
+	private static $_lang = "Event::Language";
 	private $_calendar;
 	private $_calenderSettings;
 	private $_divOverlay;
@@ -26,9 +29,17 @@ class CalendarView implements \View\IDivHtml
 		 }
 
 
-	public function response() : string {	
+	public function response(int $monthToViewInRelation = 0) : string {	
+		if($this->isSweCalSet())
+			$this->_calenderSettings->swedishCalendar();
+		else
+			$this->_calenderSettings->englishCalendar();
+
+		$date = date('n');
+	 	$monthToView = $date - 1 + $monthToViewInRelation;
 		return '
 		<div class="calendar">
+		'.$this->monthHeader($monthToView).'
 		<p>'.$this->_message.'</p>
 		'.$this->_divOverlay.'
 			<ul class="weekdays">
@@ -36,7 +47,7 @@ class CalendarView implements \View\IDivHtml
 	
 			</ul>
 			<ul class="days">
-				' . $this->daysInCalender(0) . '
+				' . $this->daysInCalender($monthToView) . '
 			</ul>
 
 
@@ -48,8 +59,22 @@ class CalendarView implements \View\IDivHtml
 	 	$this->_divOverlay = $divOverlay;
 	 }
 
+	 private function monthHeader(int $monthToView) : string {
+	 	$month = $this->_calenderSettings->getNameOfMonths();
+	 	$month = $month[$monthToView];
+	 	return '<div class"monthHeader">
+		<h1>'.$month.'</h1>
+			<form method="post" class="form"> 
+				<select name="'.Self::$_lang.'">
+  					<option name="'.Self::$_swe.'" value="'.Self::$_swe.'">Swe</option>
+  					<option name="'.Self::$_eng.'" value="'.Self::$_eng.'">Eng</option>
+				</select>
+				<input type="submit" value="ChangeLanguage" />
+			</form>
+	 	</div>';
+	 }
+
 	 private function calenderHeader() : string {
-	 	$this->_calenderSettings->swedishCalendar();
 	 	$weekdays = $this->_calenderSettings->getNameOfWeekDays();
 	 	$header = "";
 	 	foreach ($weekdays as $weekday) {
@@ -61,9 +86,8 @@ class CalendarView implements \View\IDivHtml
 	 	return $header;
 	 }
 
-	 private function daysInCalender(int $monthToViewInRelation = 0) : string {
-	 	$date = date('n');
-	 	$monthToView = $date - 1 + $monthToViewInRelation;
+	 private function daysInCalender(int $monthToView) : string {
+
 	 	$Month = $this->_calendar->getMonth($monthToView);
 	 	$firstWeekDay = $Month->getFirstDay();
 	 	$days = $Month->getDays();
@@ -99,10 +123,17 @@ class CalendarView implements \View\IDivHtml
 	 			$eventsCalc++;
 	 		}
 	 	}
-	 	return '
-	 	<a href="?calendar&'.Self::$_view.'&'.Self::$_eventMonth.'='.$month.'&
-	 	'.Self::$_eventDay.'='.$day.'" class="eventCalc">Events('.$eventsCalc.')</a>
-	 	';
+
+	 	if ($eventsCalc == 0) {
+	 		return '<p class="event0">Events(0)</p>';
+	 	} else {
+	 		return '
+	 		<p><a href="?calendar&'.Self::$_view.'&'.Self::$_eventMonth.'='.$month.'&
+	 		'.Self::$_eventDay.'='.$day.'" class="eventCalc event'.$eventsCalc.'">Events('.$eventsCalc.')</a></p>
+	 		';
+	 	}
+
+
 	 }
 
 	 public function setEvents(array $userEvents) : void {
@@ -134,5 +165,12 @@ class CalendarView implements \View\IDivHtml
     public function getEventMonth() : string {
     	return $_GET[Self::$_eventMonth];
     }
+
+    private function isSweCalSet() : bool {
+		if (isset($_POST[Self::$_lang]) && $_POST[Self::$_lang] == Self::$_swe)
+			return true;
+		else 
+			return false;
+	}
 
 }

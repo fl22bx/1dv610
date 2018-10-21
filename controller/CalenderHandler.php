@@ -44,7 +44,6 @@ class CalenderHandler
 				$event = $this->_eventView->getEvent();
 				$event->setOwner($nameOfloggedInUser);
 				$this->_eventPercistency->setNewEvent($event);
-				$msg = "Event Succefull Added";
 			}
 		} catch (\Exception $e) {
 			$msg = $this->_exceptionHandler->handleErrorRendering($e);
@@ -62,5 +61,6 @@ class CalenderHandler
 		}
 
 	}
+
 }
 		

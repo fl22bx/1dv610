@@ -12,7 +12,7 @@ class CalendarSettings
 	
 	public function englishCalendar() : void {
 		$this->_nameOfMonths = ["January", "Februar", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		$this->$_nameOfWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+		$this->_nameOfWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 	}
 
 		public function swedishCalendar() : void {
