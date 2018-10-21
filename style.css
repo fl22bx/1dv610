@@ -11,13 +11,24 @@
 
 .closeevent {
 	float:right;
+
 }
 
 .eventdet {
+	background-color: rgba(136, 170, 155, .9) !important;
+		width: 40%;
+		height: 40%;
+}
+.eventdet p {
 	margin: 0px;
 	padding: 0px;
+	font-size: 1.2em;
+	overflow: auto;
 }
 
+.eventCalc {
+	display: inline;
+}
 
 .li {
 	    display: inline-block;

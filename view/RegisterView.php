@@ -71,7 +71,7 @@ class RegisterView implements \View\IDivHtml
 
 	public function newUser() : \Model\LogInModel\User {
 		if($_POST[self::$password] != $_POST[self::$passwordRepeat])
-			throw new Exception("password_match", 42);
+			throw new \Exception("password_match", 42);
 			
 		return new \Model\LogInModel\User($_POST[self::$userName], $_POST[self::$password]);
 	}

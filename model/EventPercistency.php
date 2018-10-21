@@ -12,7 +12,7 @@ class EventPercistency
 		$this->_sqlDatabase = $SqlDatabase;
 	}
 
-	public function setNewEvent(Event $event) { // nej fel event
+	public function setNewEvent(Event $event) {
 		$this->_sqlDatabase->connect();
 		$day = $event->getDay();
 		$month = $event->getMonth();

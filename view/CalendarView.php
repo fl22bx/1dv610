@@ -9,9 +9,11 @@ class CalendarView implements \View\IDivHtml
 
 	private static $_eventMonth = "Event::Month";
 	private static $_eventDay = "Event::Day";
+	private static $_add = "Event::Add";
+	private static $_view = "Event::View";
 	private $_calendar;
 	private $_calenderSettings;
-	private $_registerForm;
+	private $_divOverlay;
 	private $_message = "";
 	private $_user;
 	private $_events;
@@ -28,7 +30,7 @@ class CalendarView implements \View\IDivHtml
 		return '
 		<div class="calendar">
 		<p>'.$this->_message.'</p>
-		'.$this->_registerForm.'
+		'.$this->_divOverlay.'
 			<ul class="weekdays">
 				' . $this->calenderHeader() . '
 	
@@ -42,8 +44,8 @@ class CalendarView implements \View\IDivHtml
 		';
 	 }
 
-	 public function registerEvent(string $registerForm) {
-	 	$this->_registerForm = $registerForm;
+	 public function renderOverlayDiv(string $divOverlay) {
+	 	$this->_divOverlay = $divOverlay;
 	 }
 
 	 private function calenderHeader() : string {
@@ -59,7 +61,7 @@ class CalendarView implements \View\IDivHtml
 	 	return $header;
 	 }
 
-	 private function daysInCalender(int $monthToViewInRelation) : string {
+	 private function daysInCalender(int $monthToViewInRelation = 0) : string {
 	 	$date = date('n');
 	 	$monthToView = $date - 1 + $monthToViewInRelation;
 	 	$Month = $this->_calendar->getMonth($monthToView);
@@ -78,9 +80,9 @@ class CalendarView implements \View\IDivHtml
 			$result .=  '
 				<li class="li day">	
 				<p class="dateNumber">' . $day->getDate() .' </p>
-				<div class="add"><a href="?calendar&'.Self::$_eventDay.'='.$day->getDate().'&'.Self::$_eventMonth.'='.$monthToView.'">+</a></div>
+				<div class="add"><a href="?calendar&'.Self::$_add.'&'.Self::$_eventDay.'='.$day->getDate().'&'.Self::$_eventMonth.'='.$monthToView.'">+</a></div>
 				
-				<p class="event" > '.$this->events($day->getDate()).'</p>
+				<p class="event" > '.$this->events($day->getDate(), $monthToView).'</p>
 
 				</li>
 				';
@@ -90,26 +92,25 @@ class CalendarView implements \View\IDivHtml
 	 	return $result;
 	 }
 
-	 private function events(int $day) : string {
-	 	$name = "";
-	 	$place = "";
-	 	$description = "";
+	 private function events(int $day, int $month) : string {
+	 	$eventsCalc = 0;
 	 	foreach ($this->_events as $event) {
 	 		if($event->getDay() == $day) {
-	 			$name = $event->getName();
-	 			$place = $event->getPlace();
-	 			$description = $event->getDescription();
+	 			$eventsCalc++;
 	 		}
 	 	}
 	 	return '
-	 	<p class="eventdet">'.$name.'</p>
-	 	<p class="eventdet">'.$place.'</p>
-	 	<p class="eventdet">'.$description.'</p>
+	 	<a href="?calendar&'.Self::$_view.'&'.Self::$_eventMonth.'='.$month.'&
+	 	'.Self::$_eventDay.'='.$day.'" class="eventCalc">Events('.$eventsCalc.')</a>
 	 	';
 	 }
 
 	 public function setEvents(array $userEvents) : void {
 	 	$this->_events = $userEvents;
+	 }
+
+	 public function wantsToViewEvent() : bool {
+	 	return isset($_GET[Self::$_view]);
 	 }
 
 
@@ -118,10 +119,8 @@ class CalendarView implements \View\IDivHtml
 	}
 
     public function wantsToRegisterEvent() : bool {
-    	if(isset($_GET[Self::$_eventDay]) || isset($_GET[Self::$_eventMonth]))
-    		return true;
-    	else
-    		return false;
+    	return isset($_GET[Self::$_add]);
+
     }
 
     public function setUser(\Model\LogInModel\User $user = null) : void {

@@ -10,7 +10,7 @@ require_once('view/ExceptionHandlerView.php');
 require_once('view/calendar/AddEventView.php');
 require_once('view/NavigatorView.php');
 require_once('view/CalendarView.php');
-
+require_once('view/calendar/SpecificEventView.php');
 
 require_once('model/MySqlDataBase.php');
 require_once('model/User.php');

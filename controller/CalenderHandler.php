@@ -24,8 +24,10 @@ class CalenderHandler
 		if($month == 13)
 			$month = date('n') - 1;
 
+
 		$userEvents = $this->_eventPercistency->getEvents($nameOfloggedInUser, $month);
 		$this->registerEvent($nameOfloggedInUser);
+		$this->viewEvent($userEvents);
 		$this->_calendarView->setEvents($userEvents);
 		return $this->_calendarView;
 	} 
@@ -35,7 +37,7 @@ class CalenderHandler
 			if($this->_calendarView->wantsToRegisterEvent()) {
 				$this->_eventView->setDate($this->_calendarView->getEventMonth(),
 							$this->_calendarView->getEventDay());
-				$this->_calendarView->registerEvent($this->_eventView->response());
+				$this->_calendarView->renderOverlayDiv($this->_eventView->response());
 
 			}
 			if($this->_eventView->isEventRegistered()){
@@ -47,6 +49,16 @@ class CalenderHandler
 		} catch (\Exception $e) {
 			$msg = $this->_exceptionHandler->handleErrorRendering($e);
 			$this->_calendarView->setMessage($msg);
+		}
+
+	}
+
+	private function viewEvent(array $userEvents) : void {
+		if($this->_calendarView->wantsToViewEvent()) {
+			$day = $this->_calendarView->getEventDay();
+
+			$view = new \View\Calender\EventView();
+			$this->_calendarView->renderOverlayDiv($view->renderEvent($userEvents, $day));
 		}
 
 	}
