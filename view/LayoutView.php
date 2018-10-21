@@ -51,8 +51,6 @@ class LayoutView {
           return "";
   }
   
-
-  // i login View kanske??
   private function renderIsLoggedIn() : string {
     if ($this->userIsLoggedIn()) {
       return '<h2>Logged in</h2>';

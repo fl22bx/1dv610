@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 /**
+ * is always started first to nake sure if logged in or not
  * 
  */
 class LogInHandler

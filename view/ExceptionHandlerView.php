@@ -1,8 +1,6 @@
 <?php 
 namespace View;
-/**
- * 
- */
+
 class ExceptionHandlerView 
 {
 

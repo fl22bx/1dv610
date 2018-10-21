@@ -1,9 +1,6 @@
 <?php 
 namespace Model\LogInModel;
 
-/**
- * 
- */
 class User
 {
 	private  $_name;

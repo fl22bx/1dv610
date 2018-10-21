@@ -1,9 +1,6 @@
 <?php
 namespace Model\Calendar;
-// sätt i view
-/**
- * 
- */
+
 class CalendarSettings
 {
 	private $_nameOfMonths;

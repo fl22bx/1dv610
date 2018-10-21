@@ -1,9 +1,7 @@
 <?php
 namespace View\Calender;
 
-/**
- * 
- */
+
 class CalendarView implements \View\IDivHtml
 {
 

@@ -1,8 +1,7 @@
 <?php
 namespace Model\Calendar;
-/**
- * 
- */
+
+
 class EventPercistency
 {
 	private $_sqlDatabase;

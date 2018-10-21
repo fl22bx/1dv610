@@ -1,8 +1,7 @@
 <?php
 namespace Model\LogInModel;
-/**
- * 
- */
+
+
 class LogInPercistency
 {
 

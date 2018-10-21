@@ -1,9 +1,6 @@
 <?php
 namespace Controller;
 
-/**
- * 
- */
 class Navigator
 {
 	private $_layoutView;

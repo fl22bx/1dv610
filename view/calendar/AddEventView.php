@@ -1,9 +1,6 @@
 <?php
 namespace View\Calender;
 
-/**
- * 
- */
 class AddEventView
 {
 	private static $eventName = "Event::Name";

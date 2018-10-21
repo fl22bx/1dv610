@@ -1,9 +1,6 @@
 <?php
 namespace View\Calender;
 
-/**
- * 
- */
 class EventView
 {
 	

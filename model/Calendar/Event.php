@@ -1,9 +1,7 @@
 <?php
 namespace Model\Calendar;
 
-/**
- * 
- */
+
 class Event
 {
 	private $_day;

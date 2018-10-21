@@ -2,7 +2,8 @@
 namespace Controller;
 
 /**
- * 
+ * Manages all the creation and rendering for the calender thru
+ * teh view and model
  */
 class CalenderHandler
 {
