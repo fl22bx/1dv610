@@ -32,16 +32,16 @@ class User
 
 	private function setName (string $name) : void {
 		if(strlen($name) <= 3)
-			throw new Exception("name_to_short", 12);
+			throw new \Exception("name_to_short", 12);
 		if (preg_match('/[<>]/', $name))
-			throw new Exception("invalid_char", 13);
+			throw new \Exception("invalid_char", 13);
 		
 		$this->_name = $name;
 	}
 
 	private function setPassword (string $password) : void {
 		if(strlen($password) < 6)
-			throw new Exception("password_to_short", 14);
+			throw new \Exception("password_to_short", 14);
 		$this->_password = $password;
 	}
 

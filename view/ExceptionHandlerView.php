@@ -6,7 +6,7 @@ namespace View;
 class ExceptionHandlerView 
 {
 
-	public function handleErrorRendering (Exception $e) {
+	public function handleErrorRendering (\Exception $e) {
 		switch ($e->getCode()) {
 			case 10:
 				return "Username is missing";

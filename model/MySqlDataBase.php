@@ -43,7 +43,7 @@
 			$db->connect();
 			$isDuplicate = $this->isUserDuplicate($this->dbConnection,$username);
 			if($isDuplicate)
-				throw new Exception();
+				throw new \Exception();
 
 			$sql = "INSERT INTO User (name, password)
 					VALUES('$username', '$password')

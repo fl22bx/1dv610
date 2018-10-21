@@ -84,9 +84,9 @@ class LoginView implements \View\IDivHtml {
 		if ($logInTrytUsername || $logInTrytPassword) {
 			// sätt i en validate funktion
 			if($_POST[self::$name] == "") 
-				throw new Exception("name_missing", 10);
+				throw new \Exception("name_missing", 10);
 			if($_POST[self::$password] == "")
-				throw new Exception("password_missing", 11);
+				throw new \Exception("password_missing", 11);
 			return true;
 		} else
 			return false;

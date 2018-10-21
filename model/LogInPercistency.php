@@ -41,7 +41,7 @@ class LogInPercistency
 		$tmp = mysqli_fetch_assoc($result);
 
 		if(isset($tmp["name"]))
-			throw new Exception("user_duplication", 41);
+			throw new \Exception("user_duplication", 41);
 			
 
 	}
@@ -82,7 +82,7 @@ class LogInPercistency
 				$result = mysqli_query($this->_sqlDatabase->getConnection(), $sql);
 				$ResultInAssArray = mysqli_fetch_assoc($result);
 				if (!isset($ResultInAssArray))
-					throw new Exception("user_dont_exist", 22);
+					throw new \Exception("user_dont_exist", 22);
 
 				return $ResultInAssArray;
 

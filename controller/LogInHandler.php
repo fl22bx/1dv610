@@ -31,8 +31,7 @@ class LogInHandler
 			$this->handleCookiesLogIn();
 			$this->handleLogInTry();
 			$this->handleWantsToRegister();
-
-		} catch (exception $e) {
+		} catch (\Exception $e) {
 			$msg = $this->_exceptionHandlerview->handleErrorRendering($e);
 		} finally {
 			$viewToRender = $this->navigateLogInView();
@@ -85,7 +84,7 @@ class LogInHandler
 			$user->authenticate($this->_logInDb->isAuthenticated($user));
 			$this->setUserInView($user);
 		if (!$user->isLoggedIn())
-			throw new Exception("not_auth", 21);
+			throw new \Exception("not_auth", 21);
 			
 		$this->_logInDb->setSession($user);
 		$this->handleKeepMeLoggedIn($user);
@@ -107,7 +106,7 @@ class LogInHandler
 			$user = $this->_logInView->cookieLogInTry();
 			$user->authenticate($this->_logInDb->isAuthenticated($user));
 			if (!$user->isLoggedIn())
-				throw new Exception("wrong_cookies",31);
+				throw new \Exception("wrong_cookies",31);
 			
 			$this->setUserInView($user);
 			$this->_logInView->setCookieMessage();
