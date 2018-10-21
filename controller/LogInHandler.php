@@ -97,9 +97,6 @@ class LogInHandler
 
 	}
 
-	private function setUserInView (\Model\LogInModel\User $user) : void {
-		$this->_layoutView->setUser($user);
-	}
 
 	private function handleCookiesLogIn() : void {
 		if($this->_logInView->isCookieSet()) {
@@ -111,5 +108,9 @@ class LogInHandler
 			$this->setUserInView($user);
 			$this->_logInView->setCookieMessage();
 		} 
+	}
+
+	private function setUserInView (\Model\LogInModel\User $user) : void {
+		$this->_layoutView->setUser($user);
 	}
 }

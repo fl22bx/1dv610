@@ -26,21 +26,23 @@ require_once('controller/LogInHandler.php');
 require_once('controller/Navigator.php');
 require_once('controller/CalenderHandler.php');
 
+require_once('dbCred.php');
 
 //MAKE SURE ERRORS ARE SHOWN... MIGHT WANT TO TURN THIS OFF ON A PUBLIC SERVER
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
-
 
 // start session
 session_start();
 
 // Create DataBase
 // put in seperate file and gitignore
-	$dbServername = "localhost";
-	$dbUsername = "fredrik";
-	$dbPassword = "test";
-	$dbName = "user";
+	$bbCred = new dbCred();
+	$dbServername = $bbCred->dbServername();
+	$dbUsername = $bbCred->dbUsername();
+	$dbPassword = $bbCred->dbPassword();
+	$dbName = $bbCred->dbName();
+
 	$SqlDatabase = new DatabaseMySQL($dbServername,$dbUsername, $dbPassword, $dbName);
 
 	$SqlLogInDatabase = new Model\LogInModel\LogInPercistency($SqlDatabase);

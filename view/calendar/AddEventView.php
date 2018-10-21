@@ -78,7 +78,6 @@ class AddEventView
 
 
     public function getEvent() : \Model\Calendar\Event {
-    	var_dump($_POST);
     	return new \Model\Calendar\Event($this->getEventDay(), $this->getEventMont(), 
     		$this->getEventName(), $this->getEventPlace(), $this->getEventDescription());
     }

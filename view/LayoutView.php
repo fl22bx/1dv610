@@ -30,6 +30,7 @@ class LayoutView {
         <body>
           <h1>Assignment 2</h1>
           ' . $this->showNavigator() . '
+          
           ' . $this->renderIsLoggedIn() . '
           
           <div class="container">

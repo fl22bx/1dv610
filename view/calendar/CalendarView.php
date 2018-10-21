@@ -82,7 +82,7 @@ class CalendarView implements \View\IDivHtml
 	 	if(isset($_GET[Self::$_monthToView ]))
 	 		return $_GET[Self::$_monthToView];
 	 	else 
-	 		return date('n');;
+	 		return date('n') - 1;
 	 }
 
 	 private function calenderHeader() : string {
@@ -115,7 +115,7 @@ class CalendarView implements \View\IDivHtml
 			$result .=  '
 				<li class="li day">	
 				<p class="dateNumber">' . $day->getDate() .' </p>
-				<div class="add"><a href="?calendar&'.Self::$_add.'&'.Self::$_eventDay.'='.$day->getDate().'&'.Self::$_eventMonth.'='.$monthToView.'">+</a></div>
+				<div class="add"><a href="?calendar&'.Self::$_add.'&'.Self::$_eventDay.'='.$day->getDate().'&'.Self::$_eventMonth.'='.$monthToView.'&'.Self::$_monthToView.'='.$this->getMonthToView().'">+</a></div>
 				
 				<p class="event" > '.$this->events($day->getDate(), $monthToView).'</p>
 
@@ -140,7 +140,7 @@ class CalendarView implements \View\IDivHtml
 	 	} else {
 	 		return '
 	 		<p><a href="?calendar&'.Self::$_view.'&'.Self::$_eventMonth.'='.$month.'&
-	 		'.Self::$_eventDay.'='.$day.'" class="eventCalc event'.$eventsCalc.'">Events('.$eventsCalc.')</a></p>
+	 		'.Self::$_eventDay.'='.$day.'&'.Self::$_monthToView.'='.$this->getMonthToView().'" class="eventCalc event'.$eventsCalc.'">Events('.$eventsCalc.')</a></p>
 	 		';
 	 	}
 

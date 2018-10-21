@@ -28,18 +28,4 @@ class CalendarSettings
 		return $this->_nameOfWeekDays;
 	}
 
-	public function isRedDay(Day $day) : bool {
-		// check if red day
-		return false;
-	}
-
-	private function setRedDays() : void {
-		$this->_redDays = [
-			// ej räknat ut påsk,
-			// kasnke köra med namn 1 = 1 ?
-			"1/1", "5/1", "6/1", "30/4", "1/5", "6/6", "24/12", "25/12", "26/12" 
-			// midsommarRörligt datum, fredagen och lördagen mellan 19 juni och 25 juni (fredagen före midsommardagen) 
-			// Rörligt datum, fredag mellan 30 oktober och 5 november
-		];
-	}
 }

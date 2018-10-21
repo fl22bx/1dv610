@@ -11,7 +11,8 @@ class CalenderHandler
 	private $_exceptionHandler;
 	private $_eventPercistency;
 
-	function __construct(\View\Calender\CalendarView $calenderView, $eventView, \View\ExceptionHandlerView $exceptionHandlerview, 
+	function __construct(\View\Calender\CalendarView $calenderView, $eventView,
+	 \View\ExceptionHandlerView $exceptionHandlerview, 
 		\Model\Calendar\EventPercistency $eventPercistency)
 	{
 		$this->_calendarView = $calenderView;

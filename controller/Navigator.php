@@ -11,7 +11,9 @@ class Navigator
 	private $_calenderHandler;
 	private $_navigation;
 
-	function __construct(\View\LayoutView $layoutView, LogInHandler $logInHandler, CalenderHandler $calenderHandler, \View\NavigatorView $navigation)
+	function __construct(\View\LayoutView $layoutView, 
+		LogInHandler $logInHandler, CalenderHandler $calenderHandler, 
+		\View\NavigatorView $navigation)
 	{
 		$this->_layoutView = $layoutView;
 		$this->_logInHandler = $logInHandler;
