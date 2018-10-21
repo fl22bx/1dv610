@@ -1,5 +1,5 @@
 <?php
-
+namespace Model\LogInModel;
 /**
  * 
  */
@@ -12,7 +12,7 @@ class LogInPercistency
 	private $_sqlDatabase;
 	private $SQLTableForUsers = 'User';
 	
-	function __construct(DatabaseMySQL $SqlDatabase)
+	function __construct(\DatabaseMySQL $SqlDatabase)
 	{
 		$this->_sqlDatabase = $SqlDatabase;
 	}

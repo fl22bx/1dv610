@@ -1,8 +1,8 @@
 <?php
+namespace View\LogInView;
 require_once('view/IDivHtml.php');
-require_once('model/User.php');
 
-class LoginView implements IDivHtml {
+class LoginView implements \View\IDivHtml {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
@@ -140,14 +140,14 @@ class LoginView implements IDivHtml {
 			$this->setMessage("Welcome back with cookie");
 	}
 
-	 public function setUser(User $user = null) : void {
+	 public function setUser(\Model\LogInModel\User $user = null) : void {
 	 	$this->_loggedInUser = $user;
 	 }
 
-	public function logInTry() : User {
+	public function logInTry() : \Model\LogInModel\User {
 		$username =  $_POST[self::$name];
 		$password = $_POST[self::$password];
-		$user = new User($username, password_hash($password, PASSWORD_DEFAULT));
+		$user = new \Model\LogInModel\User($username, password_hash($password, PASSWORD_DEFAULT));
 		return $user;
 	}
 
@@ -156,10 +156,10 @@ class LoginView implements IDivHtml {
 		return $bool;
 	}
 
-		public function cookieLogInTry () : User {
+		public function cookieLogInTry () : \Model\LogInModel\User {
 		$username = $_COOKIE[self::$cookieName];
 		$password = $_COOKIE[self::$cookiePassword];
-		return new User($username, $password);
+		return new \Model\LogInModel\User($username, $password);
 	}
 
 	public function wantsToLogOut() : bool {

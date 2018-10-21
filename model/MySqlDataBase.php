@@ -37,8 +37,9 @@
 			$this->dbConnection->close();
 		}
 
-
-			public function setNewUser (User $user) : void {
+//använs nog inte?
+		
+			public function setNewUser (\Model\Authentication\User $user) : void {
 			$db->connect();
 			$isDuplicate = $this->isUserDuplicate($this->dbConnection,$username);
 			if($isDuplicate)

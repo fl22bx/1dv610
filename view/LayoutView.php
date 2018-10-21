@@ -1,5 +1,5 @@
 <?php
-
+namespace View;
 class LayoutView {
   
   private $_loggedInUser;
@@ -61,7 +61,7 @@ class LayoutView {
     }
   }
 
-  public function setUser(User $user = null) : void {
+  public function setUser(\Model\LogInModel\User $user = null) : void {
     $this->_loggedInUser = $user;
   }
 

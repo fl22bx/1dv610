@@ -1,4 +1,5 @@
 <?php
+namespace View;
 
 class NavigatorView {
 	private static $calendar = "calendar";

@@ -1,5 +1,5 @@
 <?php
-
+namespace Controller;
 /**
  * 
  */
@@ -14,7 +14,7 @@ class LogInHandler
 
 
 	
-	function __construct(LoginView $logInView, LayoutView $layoutView, LogInPercistency $logInDb, ExceptionHandlerView $exceptionHandlerview, RegisterView $registerView)
+	function __construct(\View\LogInView\LoginView $logInView, \View\LayoutView $layoutView, \Model\LogInModel\LogInPercistency $logInDb, \View\ExceptionHandlerView $exceptionHandlerview, \View\Calender\RegisterView $registerView)
 	{
 			$this->_layoutView = $layoutView;
 			$this->_logInView = $logInView;
@@ -44,7 +44,7 @@ class LogInHandler
 
 	}
 
-	private function navigateLogInView () : IDivHtml {
+	private function navigateLogInView () : \View\IDivHtml {
 		if ($this->_logInView->wantsToRegister())
 			return $this->_registerView;
 		else 
@@ -92,13 +92,13 @@ class LogInHandler
 		}
 	}
 
-	private function handleKeepMeLoggedIn(User $user) : void {
+	private function handleKeepMeLoggedIn(\Model\LogInModel\User $user) : void {
 		if ($this->_logInView->wantsToStayLoggedIn())
 			$this->_logInView->stayLoggedIn($user->GetName(),$user->GetPassword());
 
 	}
 
-	private function setUserInView (User $user) : void {
+	private function setUserInView (\Model\LogInModel\User $user) : void {
 		$this->_layoutView->setUser($user);
 	}
 

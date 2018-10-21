@@ -1,4 +1,5 @@
 <?php
+namespace Model\Calendar;
 /**
  * 
  */
@@ -6,12 +7,12 @@ class EventPercistency
 {
 	private $_sqlDatabase;
 	
-	function __construct(DatabaseMySQL $SqlDatabase)
+	function __construct(\DatabaseMySQL $SqlDatabase)
 	{
 		$this->_sqlDatabase = $SqlDatabase;
 	}
 
-	public function setNewUser (Model\Calendar\Event $event) {
+	public function setNewEvent(Event $event) { // nej fel event
 		$this->_sqlDatabase->connect();
 		$day = $event->getDay();
 		$month = $event->getMonth();
@@ -28,12 +29,21 @@ class EventPercistency
 		$this->_sqlDatabase->stopDb();
 	}
 
-	public function getEvents(string $userName) {
-		$sql = "SELECT * from Events WHERE owner = '$userName'";
+	public function getEvents(string $userName, int $month) : Array {
+		$this->_sqlDatabase->connect();
+		$sql = " SELECT * from Events 
+		WHERE owner = '$userName' AND
+		month = '$month';
+		";
 
 		$result = mysqli_query($this->_sqlDatabase->getConnection(), $sql);
-		$ResultInAssArray = mysqli_fetch_assoc($result);
-
-		return $ResultInAssArray;
+		$array = [];
+		$data = mysqli_fetch_all($result,MYSQLI_ASSOC);
+		$this->_sqlDatabase->stopDb();
+		foreach ($data as $event) {
+			$event = new Event($event["day"],$event["month"],$event["place"],$event["name"],$event["description"]);
+			array_push($array, $event);	
+		};
+		return $array;
 	}
 }

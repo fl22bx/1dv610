@@ -1,9 +1,9 @@
 <?php 
-
+namespace View\Calender;
 /**
  * 
  */
-class RegisterView implements IDivHtml
+class RegisterView implements \View\IDivHtml
 {
 	private static $userName = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
@@ -54,7 +54,7 @@ class RegisterView implements IDivHtml
 		return isset($_GET[username]);
 	}
 
-	 public function setUser(User $user = null) : void {
+	 public function setUser(\Model\LogInModel\User $user = null) : void {
     	$this->_loggedInUser = $user;
   	}	
 
@@ -69,10 +69,10 @@ class RegisterView implements IDivHtml
 			return false;
 	}
 
-	public function newUser() : User {
+	public function newUser() : \Model\LogInModel\User {
 		if($_POST[self::$password] != $_POST[self::$passwordRepeat])
 			throw new Exception("password_match", 42);
 			
-		return new User($_POST[self::$userName], $_POST[self::$password]);
+		return new \Model\LogInModel\User($_POST[self::$userName], $_POST[self::$password]);
 	}
 }

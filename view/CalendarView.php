@@ -1,10 +1,10 @@
 <?php
-require_once('view/IDivHtml.php');
+namespace View\Calender;
 
 /**
  * 
  */
-class CalendarView implements IDivHtml
+class CalendarView implements \View\IDivHtml
 {
 
 	private static $_eventMonth = "Event::Month";
@@ -14,9 +14,10 @@ class CalendarView implements IDivHtml
 	private $_registerForm;
 	private $_message = "";
 	private $_user;
+	private $_events;
 
 
-	function __construct(Model\Calendar\Calendar $calendar, model\Calendar\CalendarSettings $calSetting)
+	function __construct(\Model\Calendar\Calendar $calendar, \model\Calendar\CalendarSettings $calSetting)
 		 {
 		    $this->_calendar = $calendar;
 		    $this->_calenderSettings = $calSetting;
@@ -79,7 +80,7 @@ class CalendarView implements IDivHtml
 				<p class="dateNumber">' . $day->getDate() .' </p>
 				<div class="add"><a href="?calendar&'.Self::$_eventDay.'='.$day->getDate().'&'.Self::$_eventMonth.'='.$monthToView.'">+</a></div>
 				
-				<p class="event" >möte /p>
+				<p class="event" > '.$this->events($day->getDate()).'</p>
 
 				</li>
 				';
@@ -88,6 +89,29 @@ class CalendarView implements IDivHtml
 
 	 	return $result;
 	 }
+
+	 private function events(int $day) : string {
+	 	$name = "";
+	 	$place = "";
+	 	$description = "";
+	 	foreach ($this->_events as $event) {
+	 		if($event->getDay() == $day) {
+	 			$name = $event->getName();
+	 			$place = $event->getPlace();
+	 			$description = $event->getDescription();
+	 		}
+	 	}
+	 	return '
+	 	<p class="eventdet">'.$name.'</p>
+	 	<p class="eventdet">'.$place.'</p>
+	 	<p class="eventdet">'.$description.'</p>
+	 	';
+	 }
+
+	 public function setEvents(array $userEvents) : void {
+	 	$this->_events = $userEvents;
+	 }
+
 
 	public function setMessage (string $message) : void {
 		$this->_message = $message;
@@ -100,7 +124,7 @@ class CalendarView implements IDivHtml
     		return false;
     }
 
-    public function setUser(User $user = null) : void {
+    public function setUser(\Model\LogInModel\User $user = null) : void {
     	$this->_user = $user;
     }
 

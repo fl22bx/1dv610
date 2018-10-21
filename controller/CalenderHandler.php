@@ -11,18 +11,22 @@ class CalenderHandler
 	private $_exceptionHandler;
 	private $_eventPercistency;
 
-	function __construct($calenderView, $eventView, \ExceptionHandlerView $exceptionHandlerview, 
-		\EventPercistency $eventPercistency)
+	function __construct(\View\Calender\CalendarView $calenderView, $eventView, \View\ExceptionHandlerView $exceptionHandlerview, 
+		\Model\Calendar\EventPercistency $eventPercistency)
 	{
-
 		$this->_calendarView = $calenderView;
 		$this->_eventView = $eventView;
 		$this->_exceptionHandler = $exceptionHandlerview;
 		$this->_eventPercistency = $eventPercistency;
 	}
 
-	public function startCalender(string $nameOfloggedInUser) {
+	public function startCalender(string $nameOfloggedInUser, int $month = 13 ) {
+		if($month == 13)
+			$month = date('n') - 1;
+
+		$userEvents = $this->_eventPercistency->getEvents($nameOfloggedInUser, $month);
 		$this->registerEvent($nameOfloggedInUser);
+		$this->_calendarView->setEvents($userEvents);
 		return $this->_calendarView;
 	} 
 
@@ -37,7 +41,7 @@ class CalenderHandler
 			if($this->_eventView->isEventRegistered()){
 				$event = $this->_eventView->getEvent();
 				$event->setOwner($nameOfloggedInUser);
-				$this->_eventPercistency->setNewUser($event);
+				$this->_eventPercistency->setNewEvent($event);
 				$msg = "Event Succefull Added";
 			}
 		} catch (\Exception $e) {

@@ -1,6 +1,5 @@
 <?php
 namespace Model\Calendar;
-require_once('Day.php');
 /**
  * 
  */
