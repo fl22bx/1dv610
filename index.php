@@ -9,11 +9,11 @@ require_once('view/RegisterView.php');
 require_once('view/ExceptionHandlerView.php');
 require_once('view/calendar/AddEventView.php');
 require_once('view/NavigatorView.php');
-require_once('view/Calendar/CalendarView.php');
+require_once('view/calendar/CalendarView.php');
 require_once('view/calendar/SpecificEventView.php');
 
 require_once('model/MySqlDataBase.php');
-require_once('model/User.php');
+require_once('model/LogInModel/User.php');
 require_once('model/LogInModel/LogInPercistency.php');
 require_once('model/Calendar/Event.php');
 require_once('model/Calendar/EventPercistency.php');
